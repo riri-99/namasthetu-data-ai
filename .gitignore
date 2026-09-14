@@ -48,6 +48,7 @@ logs/
 
 # Scraper data and scratch output
 /scrapper/
+/sample/
 
 # IDE and editor metadata
 .idea/
