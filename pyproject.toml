@@ -1,0 +1,20 @@
+[project]
+name = "namasthetu-ai-workers"
+version = "1.0.0"
+description = "High-throughput asynchronous AI worker fleet for Namasthetu"
+requires-python = ">=3.13"
+dependencies = [
+    "valkey>=0.2.0",            # Linux Foundation Valkey/Redis client
+    "asyncpg>=0.30.0",          # Fast async PostgreSQL driver
+    "pydantic-settings>=2.6.0", # Configuration and env parsing
+    "anthropic>=0.40.0",        # Claude 3.5 Sonnet official SDK
+    "aioboto3>=13.2.0",         # Async AWS S3 client
+    "weasyprint>=63.0",         # Production HTML/CSS-to-PDF rendering engine
+    "jinja2>=3.1.4",            # Templating engine for reports
+    "pillow>=11.0.0",           # Image validation & EXIF inspection
+    "structlog>=24.4.0",        # Production JSON logging
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

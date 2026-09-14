@@ -1,0 +1,70 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+.env/
+
+# Environment and local secrets
+.env
+.env.*
+!.env.example
+*.local
+
+# Packaging and build output
+.eggs/
+*.egg-info/
+dist/
+build/
+sdist/
+pip-wheel-metadata/
+wheelhouse/
+
+# Test, coverage, and type-checker output
+.pytest_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.mypy_cache/
+.pyright/
+.ruff_cache/
+
+# Application and tool logs
+*.log
+logs/
+
+# Local databases and generated runtime files
+*.db
+*.sqlite
+*.sqlite3
+
+# Scraper data and scratch output
+/scrapper/
+
+# IDE and editor metadata
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Operating system metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
