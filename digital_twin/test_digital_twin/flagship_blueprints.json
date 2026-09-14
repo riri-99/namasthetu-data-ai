@@ -1,0 +1,8454 @@
+{
+  "goodwill-enclave-4-5bhk-191": {
+    "propertyId": "prop-191",
+    "propertyTitle": "Goodwill Enclave 4 5 BHK Premium Corner Suite with Italian Marble",
+    "locality": "Koregaon Park",
+    "city": "Pune",
+    "state": "Maharashtra",
+    "propertyType": "Villa",
+    "configuration": "5 BHK",
+    "bhkCount": 5,
+    "carpetSqft": 3208,
+    "builtUpSqft": 4090,
+    "floor": "G + 2 Independent Villa",
+    "floorHeight": "11.0 ft (Double Height Void: 22 ft)",
+    "conditionScore": 9.7,
+    "efficiency": 84,
+    "orientation": "North-East-Facing",
+    "archetype": "villa_g2",
+    "levelsCount": 3,
+    "environmentalTheme": "pune_hills",
+    "aboutSummary": "Compiled directly from property listing: 'Goodwill Enclave 4 5 BHK Premium Corner Suite with Italian Marble'. Architecture: Villa (5 BHK), 3,208 sq.ft carpet on G + 2 Independent Villa. Physical layout strictly allocates 5 bedrooms with calibrated 3:1 hall-to-kitchen ratio, enclosed structural walls, door portals, window casements, and outdoor balconies. Verified by civil inspection audit (9.7/10 composite structural score).",
+    "floors": [
+      {
+        "id": "floor_0",
+        "name": "Ground Floor (Grand Living & Pool Deck)",
+        "elevation": 0.0,
+        "roomIds": [
+          "living",
+          "kitchen",
+          "pool_deck",
+          "foyer"
+        ]
+      },
+      {
+        "id": "floor_1",
+        "name": "First Floor (Master Suite & Mezzanine)",
+        "elevation": 3.7,
+        "roomIds": [
+          "master",
+          "mezzanine",
+          "bedroom_2"
+        ]
+      },
+      {
+        "id": "floor_2",
+        "name": "Second Floor (Bedrooms 3 & 4 & Sky Deck)",
+        "elevation": 7.4,
+        "roomIds": [
+          "bedroom_3",
+          "bedroom_4",
+          "sky_terrace"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "living",
+        "name": "Double-Height Grand Living & Dining Hall",
+        "floorLevel": 0,
+        "dimensions": "32' x 24' (22ft Ceiling)",
+        "carpetSqft": 1090,
+        "highlight": "22ft double-height floor-to-ceiling glass looking out to Championship Fairway and private pool deck",
+        "floorType": "Greek Thassos White Marble",
+        "floorColor": "#FBF9F5",
+        "wallColor": "#FFFFFF",
+        "bounds": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 10.0,
+          "d": 7.5,
+          "h": 6.4
+        },
+        "furniture": [
+          {
+            "id": "sofa_main",
+            "name": "Sectional White Boucle Sofa",
+            "type": "sofa",
+            "position": [
+              -1.2,
+              0.45,
+              1.8
+            ],
+            "size": [
+              4.5,
+              0.85,
+              2.0
+            ],
+            "materialKey": "sofa",
+            "color": "#D9D1C0"
+          },
+          {
+            "id": "coffee_tbl",
+            "name": "Low Marble Coffee Table",
+            "type": "table",
+            "position": [
+              -1.2,
+              0.25,
+              0.2
+            ],
+            "size": [
+              2.4,
+              0.45,
+              1.2
+            ],
+            "materialKey": "white",
+            "color": "#FAFAF6"
+          },
+          {
+            "id": "living_rug",
+            "name": "Textured Hand-Woven Rug",
+            "type": "rug",
+            "position": [
+              -1.2,
+              0.02,
+              1.0
+            ],
+            "size": [
+              5.6,
+              0.02,
+              4.0
+            ],
+            "materialKey": "rug",
+            "color": "#CABFA8"
+          },
+          {
+            "id": "dining_tbl",
+            "name": "8-Seater Smoked Oak Dining Table",
+            "type": "table",
+            "position": [
+              2.5,
+              0.45,
+              -1.0
+            ],
+            "size": [
+              2.8,
+              0.85,
+              1.4
+            ],
+            "materialKey": "wood2",
+            "color": "#A87042"
+          },
+          {
+            "id": "tv_console",
+            "name": "Fluted Marble Media Console",
+            "type": "tv_unit",
+            "position": [
+              -1.2,
+              0.35,
+              -3.2
+            ],
+            "size": [
+              3.6,
+              0.6,
+              0.5
+            ],
+            "materialKey": "dark",
+            "color": "#3A3A40"
+          }
+        ],
+        "lights": [
+          {
+            "position": [
+              -1.2,
+              5.2,
+              0.5
+            ],
+            "color": "#FFD9A0",
+            "intensity": 1.2,
+            "distance": 16.0
+          }
+        ]
+      },
+      {
+        "id": "kitchen",
+        "name": "Siemens Integrated Gourmet Kitchen",
+        "floorLevel": 0,
+        "dimensions": "16' x 16'",
+        "carpetSqft": 352,
+        "highlight": "Corian central island with wine chiller, integrated induction downdraft & soft-close Blum hardware",
+        "floorType": "Honed Dark Quartzite",
+        "floorColor": "#263238",
+        "wallColor": "#F8F8F8",
+        "bounds": {
+          "x": 7.6,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 4.8,
+          "d": 4.8,
+          "h": 3.2
+        },
+        "furniture": [
+          {
+            "id": "k_island",
+            "name": "Corian Central Island with Wine Chiller",
+            "type": "counter",
+            "position": [
+              7.6,
+              0.5,
+              0.0
+            ],
+            "size": [
+              3.2,
+              0.95,
+              1.4
+            ],
+            "materialKey": "counter",
+            "color": "#8D6F50"
+          },
+          {
+            "id": "k_stools",
+            "name": "Bar Stools Set",
+            "type": "stool",
+            "position": [
+              7.6,
+              0.4,
+              -1.1
+            ],
+            "size": [
+              2.4,
+              0.75,
+              0.45
+            ],
+            "materialKey": "wood2",
+            "color": "#A87042"
+          }
+        ],
+        "lights": [
+          {
+            "position": [
+              7.6,
+              2.8,
+              0.0
+            ],
+            "color": "#FFFFFF",
+            "intensity": 0.9,
+            "distance": 11.0
+          }
+        ]
+      },
+      {
+        "id": "pool_deck",
+        "name": "Private Heated Plunge Pool & Deck",
+        "floorLevel": 0,
+        "dimensions": "28' x 16'",
+        "carpetSqft": 481,
+        "highlight": "Balinese Sukabumi stone infinity plunge pool, teak decking, and private garden vista",
+        "floorType": "Weatherproof Teak Composite Deck",
+        "floorColor": "#A87042",
+        "wallColor": "#ECE9E2",
+        "bounds": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 8.0,
+          "w": 9.0,
+          "d": 5.0,
+          "h": 1.2
+        },
+        "furniture": [
+          {
+            "id": "pool_water",
+            "name": "Heated Infinity Plunge Pool",
+            "type": "counter",
+            "position": [
+              0.0,
+              0.35,
+              8.5
+            ],
+            "size": [
+              6.0,
+              0.45,
+              2.8
+            ],
+            "materialKey": "pool",
+            "color": "#0F2B36"
+          },
+          {
+            "id": "lounger_1",
+            "name": "Balinese Teak Sun Lounger",
+            "type": "chair",
+            "position": [
+              -3.2,
+              0.35,
+              7.2
+            ],
+            "size": [
+              1.8,
+              0.4,
+              0.8
+            ],
+            "materialKey": "wood2",
+            "color": "#A87042"
+          },
+          {
+            "id": "lounger_2",
+            "name": "Balinese Teak Sun Lounger",
+            "type": "chair",
+            "position": [
+              3.2,
+              0.35,
+              7.2
+            ],
+            "size": [
+              1.8,
+              0.4,
+              0.8
+            ],
+            "materialKey": "wood2",
+            "color": "#A87042"
+          }
+        ]
+      },
+      {
+        "id": "master",
+        "name": "Presidential Master Suite (1st Floor)",
+        "floorLevel": 1,
+        "dimensions": "22' x 19'",
+        "carpetSqft": 705,
+        "highlight": "Natural walnut hardwood flooring, wrap-around fairway balcony, and private jacuzzi pavilion",
+        "floorType": "Natural Walnut Hardwood",
+        "floorColor": "#5D4037",
+        "wallColor": "#ECEAE4",
+        "bounds": {
+          "x": -6.5,
+          "y": 3.7,
+          "z": 0.5,
+          "w": 6.8,
+          "d": 5.8,
+          "h": 3.2
+        },
+        "furniture": [
+          {
+            "id": "m_bed",
+            "name": "King Master Bed",
+            "type": "bed",
+            "position": [
+              -6.5,
+              4.15,
+              0.0
+            ],
+            "size": [
+              2.2,
+              0.5,
+              2.1
+            ],
+            "materialKey": "white",
+            "color": "#FAFAF6"
+          },
+          {
+            "id": "m_headboard",
+            "name": "Natural Walnut Slat Headboard",
+            "type": "wardrobe",
+            "position": [
+              -6.5,
+              4.65,
+              -1.4
+            ],
+            "size": [
+              2.8,
+              1.2,
+              0.12
+            ],
+            "materialKey": "walnut",
+            "color": "#5D4037"
+          },
+          {
+            "id": "m_nightstand_1",
+            "name": "Floating Nightstand",
+            "type": "table",
+            "position": [
+              -8.0,
+              4.05,
+              -1.2
+            ],
+            "size": [
+              0.6,
+              0.35,
+              0.45
+            ],
+            "materialKey": "accent",
+            "color": "#C9A66B"
+          },
+          {
+            "id": "m_nightstand_2",
+            "name": "Floating Nightstand",
+            "type": "table",
+            "position": [
+              -5.0,
+              4.05,
+              -1.2
+            ],
+            "size": [
+              0.6,
+              0.35,
+              0.45
+            ],
+            "materialKey": "accent",
+            "color": "#C9A66B"
+          },
+          {
+            "id": "m_sofa",
+            "name": "Master Balcony Daybed",
+            "type": "sofa",
+            "position": [
+              -6.5,
+              4.1,
+              2.4
+            ],
+            "size": [
+              2.0,
+              0.4,
+              0.8
+            ],
+            "materialKey": "sofa",
+            "color": "#D9D1C0"
+          }
+        ],
+        "lights": [
+          {
+            "position": [
+              -6.5,
+              6.2,
+              0.5
+            ],
+            "color": "#FFD9A0",
+            "intensity": 0.9,
+            "distance": 12.0
+          }
+        ]
+      },
+      {
+        "id": "mezzanine",
+        "name": "Mezzanine Family Lounge (1st Floor)",
+        "floorLevel": 1,
+        "dimensions": "20' x 12'",
+        "carpetSqft": 320,
+        "highlight": "Glass-railed gallery bridge overlooking the double-height grand living hall",
+        "floorType": "Engineered Oak Hardwood",
+        "floorColor": "#C9A275",
+        "wallColor": "#EAE7DF",
+        "bounds": {
+          "x": 0.0,
+          "y": 3.7,
+          "z": -2.2,
+          "w": 6.0,
+          "d": 3.8,
+          "h": 3.2
+        },
+        "furniture": [
+          {
+            "id": "mezz_sofa",
+            "name": "Mezzanine Reading Couch",
+            "type": "sofa",
+            "position": [
+              0.0,
+              4.1,
+              -2.4
+            ],
+            "size": [
+              2.4,
+              0.65,
+              0.9
+            ],
+            "materialKey": "sofa",
+            "color": "#D9D1C0"
+          },
+          {
+            "id": "mezz_bookcase",
+            "name": "Floor-to-Ceiling Oak Bookcase",
+            "type": "wardrobe",
+            "position": [
+              0.0,
+              4.8,
+              -3.9
+            ],
+            "size": [
+              3.6,
+              1.8,
+              0.4
+            ],
+            "materialKey": "wood",
+            "color": "#B9824E"
+          }
+        ]
+      },
+      {
+        "id": "bedroom_2",
+        "name": "Junior Master Suite (Bedroom 2 - 1st Floor)",
+        "floorLevel": 1,
+        "dimensions": "18' x 16'",
+        "carpetSqft": 449,
+        "highlight": "Engineered German oak wood flooring with ensuite bath and morning sun balcony",
+        "floorType": "Engineered Oak Hardwood",
+        "floorColor": "#C9A275",
+        "wallColor": "#EAE7DF",
+        "bounds": {
+          "x": 6.8,
+          "y": 3.7,
+          "z": 0.5,
+          "w": 5.4,
+          "d": 5.0,
+          "h": 3.2
+        },
+        "furniture": [
+          {
+            "id": "b2_bed",
+            "name": "Queen Bed",
+            "type": "bed",
+            "position": [
+              6.8,
+              4.15,
+              0.0
+            ],
+            "size": [
+              1.9,
+              0.5,
+              2.0
+            ],
+            "materialKey": "white",
+            "color": "#FAFAF6"
+          },
+          {
+            "id": "b2_desk",
+            "name": "Study Writing Desk",
+            "type": "table",
+            "position": [
+              8.5,
+              4.1,
+              1.5
+            ],
+            "size": [
+              1.4,
+              0.75,
+              0.6
+            ],
+            "materialKey": "wood2",
+            "color": "#A87042"
+          }
+        ]
+      },
+      {
+        "id": "bedroom_3",
+        "name": "Fairway Guest Suite (Bedroom 3 - 2nd Floor)",
+        "floorLevel": 2,
+        "dimensions": "16' x 16'",
+        "carpetSqft": 384,
+        "highlight": "Private upper-level vista suite overlooking championship greenery",
+        "floorType": "Vitrified Matte Tile",
+        "floorColor": "#ECE9E2",
+        "wallColor": "#F1EEE7",
+        "bounds": {
+          "x": -5.0,
+          "y": 7.4,
+          "z": -0.5,
+          "w": 5.0,
+          "d": 4.8,
+          "h": 3.2
+        },
+        "furniture": [
+          {
+            "id": "b3_bed",
+            "name": "Queen Suite Bed",
+            "type": "bed",
+            "position": [
+              -5.0,
+              7.85,
+              -0.8
+            ],
+            "size": [
+              1.9,
+              0.5,
+              2.0
+            ],
+            "materialKey": "white",
+            "color": "#FAFAF6"
+          },
+          {
+            "id": "b3_side",
+            "name": "Nightstand",
+            "type": "table",
+            "position": [
+              -6.3,
+              7.75,
+              -1.8
+            ],
+            "size": [
+              0.55,
+              0.35,
+              0.45
+            ],
+            "materialKey": "accent",
+            "color": "#C9A66B"
+          }
+        ]
+      },
+      {
+        "id": "bedroom_4",
+        "name": "Sky Den & Study (Bedroom 4 - 2nd Floor)",
+        "floorLevel": 2,
+        "dimensions": "16' x 16'",
+        "carpetSqft": 384,
+        "highlight": "Panoramic upper-level bedroom suite with executive library",
+        "floorType": "Engineered Oak Hardwood",
+        "floorColor": "#C9A275",
+        "wallColor": "#EAE7DF",
+        "bounds": {
+          "x": 5.0,
+          "y": 7.4,
+          "z": -0.5,
+          "w": 5.0,
+          "d": 4.8,
+          "h": 3.2
+        },
+        "furniture": [
+          {
+            "id": "b4_bed",
+            "name": "Convertible Lounge Bed",
+            "type": "bed",
+            "position": [
+              5.0,
+              7.85,
+              -0.8
+            ],
+            "size": [
+              1.9,
+              0.5,
+              2.0
+            ],
+            "materialKey": "white",
+            "color": "#FAFAF6"
+          },
+          {
+            "id": "b4_chair",
+            "name": "Reading Armchair",
+            "type": "chair",
+            "position": [
+              6.4,
+              7.8,
+              0.8
+            ],
+            "size": [
+              0.85,
+              0.75,
+              0.85
+            ],
+            "materialKey": "sofa",
+            "color": "#D9D1C0"
+          }
+        ]
+      },
+      {
+        "id": "sky_terrace",
+        "name": "Rooftop Sky Terrace & Pergola Deck",
+        "floorLevel": 2,
+        "dimensions": "28' x 15'",
+        "carpetSqft": 417,
+        "highlight": "Unobstructed 360-degree fairway skyline views, stargazing deck, and tempered safety balustrade",
+        "floorType": "Weatherproof Teak Composite Deck",
+        "floorColor": "#A87042",
+        "wallColor": "#ECE9E2",
+        "bounds": {
+          "x": 0.0,
+          "y": 7.4,
+          "z": 4.5,
+          "w": 8.4,
+          "d": 4.6,
+          "h": 1.1
+        },
+        "furniture": [
+          {
+            "id": "terr_sofa",
+            "name": "Rooftop Outdoor Lounge",
+            "type": "sofa",
+            "position": [
+              0.0,
+              7.75,
+              5.0
+            ],
+            "size": [
+              2.6,
+              0.45,
+              1.0
+            ],
+            "materialKey": "sofa",
+            "color": "#D9D1C0"
+          },
+          {
+            "id": "terr_tbl",
+            "name": "Weatherproof Coffee Table",
+            "type": "table",
+            "position": [
+              0.0,
+              7.65,
+              3.6
+            ],
+            "size": [
+              1.4,
+              0.35,
+              0.8
+            ],
+            "materialKey": "wood2",
+            "color": "#A87042"
+          }
+        ]
+      }
+    ],
+    "structuralWalls": [
+      {
+        "id": "g_living_north_seg_0",
+        "position": [
+          -4.3,
+          3.2,
+          -3.75
+        ],
+        "size": [
+          1.4,
+          6.4,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "g_living_north_sill_0",
+        "position": [
+          -2.5,
+          1.9,
+          -3.75
+        ],
+        "size": [
+          2.2,
+          3.8,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "g_living_north_lintel_0",
+        "position": [
+          -2.5,
+          5.7,
+          -3.75
+        ],
+        "size": [
+          2.2,
+          1.4,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "g_living_north_seg_1",
+        "position": [
+          0.0,
+          3.2,
+          -3.75
+        ],
+        "size": [
+          2.8,
+          6.4,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "g_living_north_sill_1",
+        "position": [
+          2.5,
+          1.9,
+          -3.75
+        ],
+        "size": [
+          2.2,
+          3.8,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "g_living_north_lintel_1",
+        "position": [
+          2.5,
+          5.7,
+          -3.75
+        ],
+        "size": [
+          2.2,
+          1.4,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "g_living_north_seg_final",
+        "position": [
+          4.3,
+          3.2,
+          -3.75
+        ],
+        "size": [
+          1.4,
+          6.4,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "g_living_kitchen_seg_0",
+        "position": [
+          5.0,
+          1.6,
+          -2.675
+        ],
+        "size": [
+          0.18,
+          3.2,
+          2.15
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "g_living_kitchen_lintel_0",
+        "position": [
+          5.0,
+          2.9,
+          0.0
+        ],
+        "size": [
+          0.18,
+          0.6,
+          3.2
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "g_living_kitchen_seg_final",
+        "position": [
+          5.0,
+          1.6,
+          2.0
+        ],
+        "size": [
+          0.18,
+          3.2,
+          0.8
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "g_kit_north_seg_0",
+        "position": [
+          5.8,
+          1.6,
+          -2.4
+        ],
+        "size": [
+          1.6,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "g_kit_north_sill_0",
+        "position": [
+          7.6,
+          0.55,
+          -2.4
+        ],
+        "size": [
+          2.0,
+          1.1,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "g_kit_north_lintel_0",
+        "position": [
+          7.6,
+          2.7,
+          -2.4
+        ],
+        "size": [
+          2.0,
+          1.0,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "g_kit_north_seg_final",
+        "position": [
+          9.3,
+          1.6,
+          -2.4
+        ],
+        "size": [
+          1.4,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "g_kit_east_seg_0",
+        "position": [
+          10.0,
+          1.6,
+          -1.65
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.5
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "g_kit_east_sill_0",
+        "position": [
+          10.0,
+          0.55,
+          0.0
+        ],
+        "size": [
+          0.22,
+          1.1,
+          1.8
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "g_kit_east_lintel_0",
+        "position": [
+          10.0,
+          2.75,
+          0.0
+        ],
+        "size": [
+          0.22,
+          0.9,
+          1.8
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "g_kit_east_seg_final",
+        "position": [
+          10.0,
+          1.6,
+          1.65
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.5
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "g_kit_south_seg_final",
+        "position": [
+          7.5,
+          1.6,
+          2.4
+        ],
+        "size": [
+          5.0,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "g_living_west_seg_0",
+        "position": [
+          -5.0,
+          3.2,
+          -3.075
+        ],
+        "size": [
+          0.22,
+          6.4,
+          1.35
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "g_living_west_lintel_0",
+        "position": [
+          -5.0,
+          4.4,
+          -1.8
+        ],
+        "size": [
+          0.22,
+          4.0,
+          1.2
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "g_living_west_seg_final",
+        "position": [
+          -5.0,
+          3.2,
+          1.275
+        ],
+        "size": [
+          0.22,
+          6.4,
+          4.95
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "l1_master_east_seg_0",
+        "position": [
+          -3.1,
+          5.3,
+          -1.2
+        ],
+        "size": [
+          0.18,
+          3.2,
+          2.4
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 1
+      },
+      {
+        "id": "l1_master_east_lintel_0",
+        "position": [
+          -3.1,
+          6.4,
+          0.5
+        ],
+        "size": [
+          0.18,
+          1.0,
+          1.0
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 1
+      },
+      {
+        "id": "l1_master_east_seg_final",
+        "position": [
+          -3.1,
+          5.3,
+          2.2
+        ],
+        "size": [
+          0.18,
+          3.2,
+          2.4
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 1
+      },
+      {
+        "id": "l1_master_west_seg_0",
+        "position": [
+          -9.9,
+          5.3,
+          -1.6
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.6
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 1
+      },
+      {
+        "id": "l1_master_west_sill_0",
+        "position": [
+          -9.9,
+          4.125,
+          0.5
+        ],
+        "size": [
+          0.22,
+          0.85,
+          2.6
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 1
+      },
+      {
+        "id": "l1_master_west_lintel_0",
+        "position": [
+          -9.9,
+          6.475,
+          0.5
+        ],
+        "size": [
+          0.22,
+          0.85,
+          2.6
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 1
+      },
+      {
+        "id": "l1_master_west_seg_final",
+        "position": [
+          -9.9,
+          5.3,
+          2.6
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.6
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 1
+      },
+      {
+        "id": "l1_master_south_seg_0",
+        "position": [
+          -8.8,
+          5.3,
+          3.4
+        ],
+        "size": [
+          2.2,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 1
+      },
+      {
+        "id": "l1_master_south_lintel_0",
+        "position": [
+          -6.5,
+          6.5,
+          3.4
+        ],
+        "size": [
+          2.4,
+          0.8,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 1
+      },
+      {
+        "id": "l1_master_south_seg_final",
+        "position": [
+          -4.2,
+          5.3,
+          3.4
+        ],
+        "size": [
+          2.2,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 1
+      },
+      {
+        "id": "l1_bed2_west_seg_0",
+        "position": [
+          4.1,
+          5.3,
+          -1.0
+        ],
+        "size": [
+          0.18,
+          3.2,
+          2.0
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 1
+      },
+      {
+        "id": "l1_bed2_west_lintel_0",
+        "position": [
+          4.1,
+          6.4,
+          0.5
+        ],
+        "size": [
+          0.18,
+          1.0,
+          1.0
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 1
+      },
+      {
+        "id": "l1_bed2_west_seg_final",
+        "position": [
+          4.1,
+          5.3,
+          2.0
+        ],
+        "size": [
+          0.18,
+          3.2,
+          2.0
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 1
+      },
+      {
+        "id": "l1_bed2_east_seg_0",
+        "position": [
+          9.5,
+          5.3,
+          -1.3
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.4
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 1
+      },
+      {
+        "id": "l1_bed2_east_sill_0",
+        "position": [
+          9.5,
+          4.125,
+          0.5
+        ],
+        "size": [
+          0.22,
+          0.85,
+          2.2
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 1
+      },
+      {
+        "id": "l1_bed2_east_lintel_0",
+        "position": [
+          9.5,
+          6.425,
+          0.5
+        ],
+        "size": [
+          0.22,
+          0.95,
+          2.2
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 1
+      },
+      {
+        "id": "l1_bed2_east_seg_final",
+        "position": [
+          9.5,
+          5.3,
+          2.3
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.4
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 1
+      },
+      {
+        "id": "l1_bed2_south_seg_0",
+        "position": [
+          4.9,
+          5.3,
+          3.0
+        ],
+        "size": [
+          1.6,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 1
+      },
+      {
+        "id": "l1_bed2_south_lintel_0",
+        "position": [
+          6.8,
+          6.5,
+          3.0
+        ],
+        "size": [
+          2.2,
+          0.8,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 1
+      },
+      {
+        "id": "l1_bed2_south_seg_final",
+        "position": [
+          8.7,
+          5.3,
+          3.0
+        ],
+        "size": [
+          1.6,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 1
+      },
+      {
+        "id": "l2_bed3_door_seg_0",
+        "position": [
+          -2.5,
+          9.0,
+          -1.938
+        ],
+        "size": [
+          0.18,
+          3.2,
+          1.925
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 2
+      },
+      {
+        "id": "l2_bed3_door_lintel_0",
+        "position": [
+          -2.5,
+          10.075,
+          -0.5
+        ],
+        "size": [
+          0.18,
+          1.05,
+          0.95
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 2
+      },
+      {
+        "id": "l2_bed3_door_seg_final",
+        "position": [
+          -2.5,
+          9.0,
+          0.937
+        ],
+        "size": [
+          0.18,
+          3.2,
+          1.925
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 2
+      },
+      {
+        "id": "l2_bed3_north_seg_0",
+        "position": [
+          -6.75,
+          9.0,
+          -2.9
+        ],
+        "size": [
+          1.5,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 2
+      },
+      {
+        "id": "l2_bed3_north_sill_0",
+        "position": [
+          -5.0,
+          7.825,
+          -2.9
+        ],
+        "size": [
+          2.0,
+          0.85,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 2
+      },
+      {
+        "id": "l2_bed3_north_lintel_0",
+        "position": [
+          -5.0,
+          10.125,
+          -2.9
+        ],
+        "size": [
+          2.0,
+          0.95,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 2
+      },
+      {
+        "id": "l2_bed3_north_seg_final",
+        "position": [
+          -3.25,
+          9.0,
+          -2.9
+        ],
+        "size": [
+          1.5,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 2
+      },
+      {
+        "id": "l2_bed4_door_seg_0",
+        "position": [
+          2.5,
+          9.0,
+          -1.938
+        ],
+        "size": [
+          0.18,
+          3.2,
+          1.925
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 2
+      },
+      {
+        "id": "l2_bed4_door_lintel_0",
+        "position": [
+          2.5,
+          10.075,
+          -0.5
+        ],
+        "size": [
+          0.18,
+          1.05,
+          0.95
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 2
+      },
+      {
+        "id": "l2_bed4_door_seg_final",
+        "position": [
+          2.5,
+          9.0,
+          0.937
+        ],
+        "size": [
+          0.18,
+          3.2,
+          1.925
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 2
+      },
+      {
+        "id": "l2_bed4_north_seg_0",
+        "position": [
+          3.25,
+          9.0,
+          -2.9
+        ],
+        "size": [
+          1.5,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 2
+      },
+      {
+        "id": "l2_bed4_north_sill_0",
+        "position": [
+          5.0,
+          7.825,
+          -2.9
+        ],
+        "size": [
+          2.0,
+          0.85,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 2
+      },
+      {
+        "id": "l2_bed4_north_lintel_0",
+        "position": [
+          5.0,
+          10.125,
+          -2.9
+        ],
+        "size": [
+          2.0,
+          0.95,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 2
+      },
+      {
+        "id": "l2_bed4_north_seg_final",
+        "position": [
+          6.75,
+          9.0,
+          -2.9
+        ],
+        "size": [
+          1.5,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 2
+      }
+    ],
+    "doors": [
+      {
+        "id": "door_g_living_kitchen_0",
+        "name": "Culinary Portal Archway",
+        "position": [
+          5.0,
+          1.3,
+          0.0
+        ],
+        "size": [
+          0.18,
+          2.6,
+          3.2
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 0,
+        "doorType": "portal",
+        "openAngle": 0.5,
+        "frameMaterial": "dark",
+        "leafMaterial": "wood2"
+      },
+      {
+        "id": "door_g_living_west_0",
+        "name": "Grand Foyer Entry Door",
+        "position": [
+          -5.0,
+          1.2,
+          -1.8
+        ],
+        "size": [
+          0.22,
+          2.4,
+          1.2
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 0,
+        "doorType": "swing",
+        "openAngle": 0.5,
+        "frameMaterial": "dark",
+        "leafMaterial": "wood2"
+      },
+      {
+        "id": "slider_ground_pool",
+        "name": "Double-Height Glass Sliders to Pool Deck",
+        "position": [
+          0.0,
+          1.4,
+          3.75
+        ],
+        "size": [
+          5.6,
+          2.8,
+          0.12
+        ],
+        "rotationY": 0.0,
+        "floorLevel": 0,
+        "doorType": "sliding",
+        "panelsCount": 4,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "door_l1_master_east_0",
+        "name": "Presidential Master Suite Door",
+        "position": [
+          -3.1,
+          4.8,
+          0.5
+        ],
+        "size": [
+          0.18,
+          2.2,
+          1.0
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 1,
+        "doorType": "swing",
+        "openAngle": 0.5,
+        "frameMaterial": "dark",
+        "leafMaterial": "wood2"
+      },
+      {
+        "id": "slider_l1_master_south_0",
+        "name": "Master Balcony Slider",
+        "position": [
+          -6.5,
+          4.9,
+          3.4
+        ],
+        "size": [
+          2.4,
+          2.4,
+          0.22
+        ],
+        "rotationY": 0.0,
+        "floorLevel": 1,
+        "doorType": "sliding",
+        "panelsCount": 2,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "door_l1_bed2_west_0",
+        "name": "Bedroom 2 Suite Door",
+        "position": [
+          4.1,
+          4.8,
+          0.5
+        ],
+        "size": [
+          0.18,
+          2.2,
+          1.0
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 1,
+        "doorType": "swing",
+        "openAngle": 0.5,
+        "frameMaterial": "dark",
+        "leafMaterial": "wood2"
+      },
+      {
+        "id": "slider_l1_bed2_south_0",
+        "name": "Bedroom 2 Balcony Slider",
+        "position": [
+          6.8,
+          4.9,
+          3.0
+        ],
+        "size": [
+          2.2,
+          2.4,
+          0.22
+        ],
+        "rotationY": 0.0,
+        "floorLevel": 1,
+        "doorType": "sliding",
+        "panelsCount": 2,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "door_l2_bed3_door_0",
+        "name": "Bedroom 3 Suite Door",
+        "position": [
+          -2.5,
+          8.475,
+          -0.5
+        ],
+        "size": [
+          0.18,
+          2.15,
+          0.95
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 2,
+        "doorType": "swing",
+        "openAngle": 0.5,
+        "frameMaterial": "dark",
+        "leafMaterial": "wood2"
+      },
+      {
+        "id": "door_l2_bed4_door_0",
+        "name": "Bedroom 4 Suite Door",
+        "position": [
+          2.5,
+          8.475,
+          -0.5
+        ],
+        "size": [
+          0.18,
+          2.15,
+          0.95
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 2,
+        "doorType": "swing",
+        "openAngle": 0.5,
+        "frameMaterial": "dark",
+        "leafMaterial": "wood2"
+      }
+    ],
+    "windows": [
+      {
+        "id": "win_g_living_north_0",
+        "name": "High Clerestory Window Left",
+        "position": [
+          -2.5,
+          4.4,
+          -3.75
+        ],
+        "size": [
+          2.2,
+          1.2
+        ],
+        "rotationY": 0.0,
+        "sillHeight": 3.8,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_g_living_north_1",
+        "name": "High Clerestory Window Right",
+        "position": [
+          2.5,
+          4.4,
+          -3.75
+        ],
+        "size": [
+          2.2,
+          1.2
+        ],
+        "rotationY": 0.0,
+        "sillHeight": 3.8,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_g_kit_north_0",
+        "name": "Kitchen Counter Window",
+        "position": [
+          7.6,
+          1.65,
+          -2.4
+        ],
+        "size": [
+          2.0,
+          1.1
+        ],
+        "rotationY": 0.0,
+        "sillHeight": 1.1,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_g_kit_east_0",
+        "name": "Kitchen Garden Window",
+        "position": [
+          10.0,
+          1.7,
+          0.0
+        ],
+        "size": [
+          1.8,
+          1.2
+        ],
+        "rotationY": 1.5707963267948966,
+        "sillHeight": 1.1,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_l1_master_west_0",
+        "name": "Master Panoramic Horizon Window",
+        "position": [
+          -9.9,
+          5.3,
+          0.5
+        ],
+        "size": [
+          2.6,
+          1.5
+        ],
+        "rotationY": 1.5707963267948966,
+        "sillHeight": 0.85,
+        "floorLevel": 1,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_l1_bed2_east_0",
+        "name": "Bedroom 2 Sunrise Window",
+        "position": [
+          9.5,
+          5.25,
+          0.5
+        ],
+        "size": [
+          2.2,
+          1.4
+        ],
+        "rotationY": 1.5707963267948966,
+        "sillHeight": 0.85,
+        "floorLevel": 1,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_l2_bed3_north_0",
+        "name": "Bedroom 3 Vista Window",
+        "position": [
+          -5.0,
+          8.95,
+          -2.9
+        ],
+        "size": [
+          2.0,
+          1.4
+        ],
+        "rotationY": 0.0,
+        "sillHeight": 0.85,
+        "floorLevel": 2,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_l2_bed4_north_0",
+        "name": "Bedroom 4 Vista Window",
+        "position": [
+          5.0,
+          8.95,
+          -2.9
+        ],
+        "size": [
+          2.0,
+          1.4
+        ],
+        "rotationY": 0.0,
+        "sillHeight": 0.85,
+        "floorLevel": 2,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      }
+    ],
+    "balconies": [
+      {
+        "id": "balc_pool_ground",
+        "name": "Private Pool Sun Deck",
+        "floorLevel": 0,
+        "bounds": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 8.0,
+          "w": 9.0,
+          "d": 5.0,
+          "h": 0.2
+        },
+        "deckMaterial": "deck",
+        "railings": [
+          {
+            "id": "balc_pool_ground_rail_front",
+            "position": [
+              0.0,
+              0.55,
+              10.5
+            ],
+            "size": [
+              9.0,
+              1.1
+            ],
+            "rotationY": 0.0,
+            "floorLevel": 0,
+            "type": "glass",
+            "handrail": true
+          },
+          {
+            "id": "balc_pool_ground_rail_left",
+            "position": [
+              -4.5,
+              0.55,
+              8.0
+            ],
+            "size": [
+              5.0,
+              1.1
+            ],
+            "rotationY": 1.5707963267948966,
+            "floorLevel": 0,
+            "type": "glass",
+            "handrail": true
+          },
+          {
+            "id": "balc_pool_ground_rail_right",
+            "position": [
+              4.5,
+              0.55,
+              8.0
+            ],
+            "size": [
+              5.0,
+              1.1
+            ],
+            "rotationY": 1.5707963267948966,
+            "floorLevel": 0,
+            "type": "glass",
+            "handrail": true
+          }
+        ]
+      },
+      {
+        "id": "balc_master_l1",
+        "name": "Master Fairway Balcony",
+        "floorLevel": 1,
+        "bounds": {
+          "x": -6.5,
+          "y": 3.7,
+          "z": 4.5,
+          "w": 4.2,
+          "d": 2.0,
+          "h": 0.2
+        },
+        "deckMaterial": "deck",
+        "railings": [
+          {
+            "id": "balc_master_l1_rail_front",
+            "position": [
+              -6.5,
+              4.25,
+              5.5
+            ],
+            "size": [
+              4.2,
+              1.1
+            ],
+            "rotationY": 0.0,
+            "floorLevel": 1,
+            "type": "glass",
+            "handrail": true
+          },
+          {
+            "id": "balc_master_l1_rail_left",
+            "position": [
+              -8.6,
+              4.25,
+              4.5
+            ],
+            "size": [
+              2.0,
+              1.1
+            ],
+            "rotationY": 1.5707963267948966,
+            "floorLevel": 1,
+            "type": "glass",
+            "handrail": true
+          },
+          {
+            "id": "balc_master_l1_rail_right",
+            "position": [
+              -4.4,
+              4.25,
+              4.5
+            ],
+            "size": [
+              2.0,
+              1.1
+            ],
+            "rotationY": 1.5707963267948966,
+            "floorLevel": 1,
+            "type": "glass",
+            "handrail": true
+          }
+        ]
+      },
+      {
+        "id": "balc_bed2_l1",
+        "name": "Bedroom 2 Morning Sun Balcony",
+        "floorLevel": 1,
+        "bounds": {
+          "x": 6.8,
+          "y": 3.7,
+          "z": 4.0,
+          "w": 3.6,
+          "d": 1.8,
+          "h": 0.2
+        },
+        "deckMaterial": "deck",
+        "railings": [
+          {
+            "id": "balc_bed2_l1_rail_front",
+            "position": [
+              6.8,
+              4.25,
+              4.9
+            ],
+            "size": [
+              3.6,
+              1.1
+            ],
+            "rotationY": 0.0,
+            "floorLevel": 1,
+            "type": "glass",
+            "handrail": true
+          },
+          {
+            "id": "balc_bed2_l1_rail_left",
+            "position": [
+              5.0,
+              4.25,
+              4.0
+            ],
+            "size": [
+              1.8,
+              1.1
+            ],
+            "rotationY": 1.5707963267948966,
+            "floorLevel": 1,
+            "type": "glass",
+            "handrail": true
+          },
+          {
+            "id": "balc_bed2_l1_rail_right",
+            "position": [
+              8.6,
+              4.25,
+              4.0
+            ],
+            "size": [
+              1.8,
+              1.1
+            ],
+            "rotationY": 1.5707963267948966,
+            "floorLevel": 1,
+            "type": "glass",
+            "handrail": true
+          }
+        ]
+      },
+      {
+        "id": "balc_sky_terrace_l2",
+        "name": "Rooftop Sky Pergola Deck",
+        "floorLevel": 2,
+        "bounds": {
+          "x": 0.0,
+          "y": 7.4,
+          "z": 4.5,
+          "w": 8.4,
+          "d": 4.6,
+          "h": 0.2
+        },
+        "deckMaterial": "deck",
+        "railings": [
+          {
+            "id": "balc_sky_terrace_l2_rail_front",
+            "position": [
+              0.0,
+              7.95,
+              6.8
+            ],
+            "size": [
+              8.4,
+              1.1
+            ],
+            "rotationY": 0.0,
+            "floorLevel": 2,
+            "type": "glass",
+            "handrail": true
+          },
+          {
+            "id": "balc_sky_terrace_l2_rail_left",
+            "position": [
+              -4.2,
+              7.95,
+              4.5
+            ],
+            "size": [
+              4.6,
+              1.1
+            ],
+            "rotationY": 1.5707963267948966,
+            "floorLevel": 2,
+            "type": "glass",
+            "handrail": true
+          },
+          {
+            "id": "balc_sky_terrace_l2_rail_right",
+            "position": [
+              4.2,
+              7.95,
+              4.5
+            ],
+            "size": [
+              4.6,
+              1.1
+            ],
+            "rotationY": 1.5707963267948966,
+            "floorLevel": 2,
+            "type": "glass",
+            "handrail": true
+          }
+        ]
+      }
+    ],
+    "glassPanels": [
+      {
+        "id": "glass_double_height_facade",
+        "position": [
+          0.0,
+          3.2,
+          3.75
+        ],
+        "size": [
+          9.6,
+          6.2
+        ],
+        "rotationY": 0.0,
+        "floorLevel": 0
+      },
+      {
+        "id": "balc_pool_ground_rail_front",
+        "position": [
+          0.0,
+          0.55,
+          10.5
+        ],
+        "size": [
+          9.0,
+          1.1
+        ],
+        "rotationY": 0.0,
+        "floorLevel": 0,
+        "type": "glass",
+        "handrail": true
+      },
+      {
+        "id": "balc_pool_ground_rail_left",
+        "position": [
+          -4.5,
+          0.55,
+          8.0
+        ],
+        "size": [
+          5.0,
+          1.1
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 0,
+        "type": "glass",
+        "handrail": true
+      },
+      {
+        "id": "balc_pool_ground_rail_right",
+        "position": [
+          4.5,
+          0.55,
+          8.0
+        ],
+        "size": [
+          5.0,
+          1.1
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 0,
+        "type": "glass",
+        "handrail": true
+      },
+      {
+        "id": "balc_master_l1_rail_front",
+        "position": [
+          -6.5,
+          4.25,
+          5.5
+        ],
+        "size": [
+          4.2,
+          1.1
+        ],
+        "rotationY": 0.0,
+        "floorLevel": 1,
+        "type": "glass",
+        "handrail": true
+      },
+      {
+        "id": "balc_master_l1_rail_left",
+        "position": [
+          -8.6,
+          4.25,
+          4.5
+        ],
+        "size": [
+          2.0,
+          1.1
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 1,
+        "type": "glass",
+        "handrail": true
+      },
+      {
+        "id": "balc_master_l1_rail_right",
+        "position": [
+          -4.4,
+          4.25,
+          4.5
+        ],
+        "size": [
+          2.0,
+          1.1
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 1,
+        "type": "glass",
+        "handrail": true
+      },
+      {
+        "id": "mezzanine_gallery_rail",
+        "position": [
+          0.0,
+          4.25,
+          -0.3
+        ],
+        "size": [
+          6.0,
+          1.1
+        ],
+        "rotationY": 0.0,
+        "floorLevel": 1,
+        "handrail": true
+      },
+      {
+        "id": "balc_bed2_l1_rail_front",
+        "position": [
+          6.8,
+          4.25,
+          4.9
+        ],
+        "size": [
+          3.6,
+          1.1
+        ],
+        "rotationY": 0.0,
+        "floorLevel": 1,
+        "type": "glass",
+        "handrail": true
+      },
+      {
+        "id": "balc_bed2_l1_rail_left",
+        "position": [
+          5.0,
+          4.25,
+          4.0
+        ],
+        "size": [
+          1.8,
+          1.1
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 1,
+        "type": "glass",
+        "handrail": true
+      },
+      {
+        "id": "balc_bed2_l1_rail_right",
+        "position": [
+          8.6,
+          4.25,
+          4.0
+        ],
+        "size": [
+          1.8,
+          1.1
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 1,
+        "type": "glass",
+        "handrail": true
+      },
+      {
+        "id": "balc_sky_terrace_l2_rail_front",
+        "position": [
+          0.0,
+          7.95,
+          6.8
+        ],
+        "size": [
+          8.4,
+          1.1
+        ],
+        "rotationY": 0.0,
+        "floorLevel": 2,
+        "type": "glass",
+        "handrail": true
+      },
+      {
+        "id": "balc_sky_terrace_l2_rail_left",
+        "position": [
+          -4.2,
+          7.95,
+          4.5
+        ],
+        "size": [
+          4.6,
+          1.1
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 2,
+        "type": "glass",
+        "handrail": true
+      },
+      {
+        "id": "balc_sky_terrace_l2_rail_right",
+        "position": [
+          4.2,
+          7.95,
+          4.5
+        ],
+        "size": [
+          4.6,
+          1.1
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 2,
+        "type": "glass",
+        "handrail": true
+      }
+    ],
+    "focalTargets": {
+      "living": {
+        "target": [
+          0.0,
+          2.2,
+          0.5
+        ],
+        "theta": 0.45,
+        "phi": 1.05,
+        "radius": 16.0,
+        "walk": [
+          -1.0,
+          1.65,
+          3.2
+        ]
+      },
+      "kitchen": {
+        "target": [
+          7.6,
+          1.6,
+          0.0
+        ],
+        "theta": 1.95,
+        "phi": 1.05,
+        "radius": 13.0,
+        "walk": [
+          6.5,
+          1.65,
+          1.2
+        ]
+      },
+      "pool_deck": {
+        "target": [
+          0.0,
+          1.0,
+          8.0
+        ],
+        "theta": 2.35,
+        "phi": 1.1,
+        "radius": 14.0,
+        "walk": [
+          0.0,
+          1.65,
+          5.8
+        ]
+      },
+      "master": {
+        "target": [
+          -6.5,
+          4.8,
+          0.5
+        ],
+        "theta": 0.35,
+        "phi": 1.08,
+        "radius": 14.0,
+        "walk": [
+          -4.5,
+          5.35,
+          2.0
+        ]
+      },
+      "mezzanine": {
+        "target": [
+          0.0,
+          4.8,
+          -2.0
+        ],
+        "theta": 0.85,
+        "phi": 1.05,
+        "radius": 12.0,
+        "walk": [
+          0.0,
+          5.35,
+          -1.0
+        ]
+      },
+      "bedroom_2": {
+        "target": [
+          6.8,
+          4.8,
+          0.5
+        ],
+        "theta": 1.85,
+        "phi": 1.08,
+        "radius": 13.0,
+        "walk": [
+          5.2,
+          5.35,
+          1.8
+        ]
+      },
+      "bedroom_3": {
+        "target": [
+          -5.0,
+          8.4,
+          -0.5
+        ],
+        "theta": 0.45,
+        "phi": 1.08,
+        "radius": 13.0,
+        "walk": [
+          -3.5,
+          8.95,
+          1.2
+        ]
+      },
+      "bedroom_4": {
+        "target": [
+          5.0,
+          8.4,
+          -0.5
+        ],
+        "theta": 1.75,
+        "phi": 1.08,
+        "radius": 13.0,
+        "walk": [
+          3.5,
+          8.95,
+          1.2
+        ]
+      },
+      "sky_terrace": {
+        "target": [
+          0.0,
+          8.0,
+          4.5
+        ],
+        "theta": 2.25,
+        "phi": 1.05,
+        "radius": 14.0,
+        "walk": [
+          0.0,
+          8.95,
+          2.8
+        ]
+      },
+      "all": {
+        "target": [
+          0.0,
+          2.8,
+          0.0
+        ],
+        "theta": 0.72,
+        "phi": 1.05,
+        "radius": 34.0,
+        "walk": [
+          0.0,
+          1.65,
+          12.0
+        ]
+      }
+    },
+    "waypoints": [
+      {
+        "p": [
+          4.0,
+          3.5,
+          18.0
+        ],
+        "l": [
+          0.0,
+          2.5,
+          0.0
+        ],
+        "label": "Approach · Architectural Facade"
+      },
+      {
+        "p": [
+          -1.0,
+          1.65,
+          3.2
+        ],
+        "l": [
+          2.0,
+          1.5,
+          -0.5
+        ],
+        "label": "Ground Floor · Double-Height Living (32' x 24')"
+      },
+      {
+        "p": [
+          6.5,
+          1.65,
+          1.2
+        ],
+        "l": [
+          8.5,
+          1.2,
+          -1.0
+        ],
+        "label": "Ground Floor · Gourmet Kitchen Studio (3.2:1 Ratio)"
+      },
+      {
+        "p": [
+          0.0,
+          1.65,
+          5.8
+        ],
+        "l": [
+          0.0,
+          0.8,
+          9.5
+        ],
+        "label": "Ground Floor · Heated Plunge Pool & Deck"
+      },
+      {
+        "p": [
+          -4.5,
+          5.35,
+          2.0
+        ],
+        "l": [
+          -7.5,
+          4.6,
+          -0.5
+        ],
+        "label": "1st Floor · Presidential Master Suite (22' x 19')"
+      },
+      {
+        "p": [
+          5.2,
+          5.35,
+          1.8
+        ],
+        "l": [
+          7.8,
+          4.6,
+          -0.2
+        ],
+        "label": "1st Floor · Junior Master Suite (18' x 16')"
+      },
+      {
+        "p": [
+          -3.5,
+          8.95,
+          1.2
+        ],
+        "l": [
+          -5.5,
+          8.2,
+          -1.5
+        ],
+        "label": "2nd Floor · Fairway Suite (Bedroom 3)"
+      },
+      {
+        "p": [
+          3.5,
+          8.95,
+          1.2
+        ],
+        "l": [
+          5.5,
+          8.2,
+          -1.5
+        ],
+        "label": "2nd Floor · Sky Den & Study (Bedroom 4)"
+      },
+      {
+        "p": [
+          0.0,
+          8.95,
+          2.8
+        ],
+        "l": [
+          0.0,
+          8.0,
+          6.5
+        ],
+        "label": "2nd Floor · Rooftop Sky Terrace & Pergola"
+      },
+      {
+        "p": [
+          18.0,
+          16.0,
+          18.0
+        ],
+        "l": [
+          0.0,
+          3.0,
+          0.0
+        ],
+        "label": "Aerial · Full 3D Spatial Digital Twin"
+      }
+    ],
+    "fixtures": [
+      {
+        "item": "5 Distinct Bedroom Suites",
+        "detail": "Accurately mapped with Master Suite + 4 secondary suites",
+        "included": true
+      },
+      {
+        "item": "Calibrated 3:1 Living Hall to Kitchen Ratio",
+        "detail": "Grand entertainment volume with dedicated ergonomic culinary studio",
+        "included": true
+      },
+      {
+        "item": "Structural BIM Perimeter & Partition Walls",
+        "detail": "Full height architectural walls with proper openings and skirting",
+        "included": true
+      },
+      {
+        "item": "Engineered Teak Doors & Smart Handles",
+        "detail": "8-foot height door portals with brass handles and smooth frames",
+        "included": true
+      },
+      {
+        "item": "Double-Glazed Acoustic Window Casements",
+        "detail": "42dB street noise attenuation with bronze profiles and sills",
+        "included": true
+      },
+      {
+        "item": "Teak Balconies with Safety Glass Balustrades",
+        "detail": "Tempered laminated glass with continuous top handrail",
+        "included": true
+      },
+      {
+        "item": "Turnkey Designer Staging Packages",
+        "detail": "Available as staged turnkey package upon conveyance",
+        "included": false
+      }
+    ]
+  },
+  "the-balmoral-estates-3bhk-1": {
+    "propertyId": "prop-1",
+    "propertyTitle": "The Balmoral Estates 3 BHK with Sunrise Facing Balcony & 3D Twin",
+    "locality": "Baner & Pan Card Club Rd",
+    "city": "Pune",
+    "state": "Maharashtra",
+    "propertyType": "Apartment",
+    "configuration": "3 BHK",
+    "bhkCount": 3,
+    "carpetSqft": 1904,
+    "builtUpSqft": 2502,
+    "floor": "15th of 16 Floors",
+    "floorHeight": "10.5 ft",
+    "conditionScore": 9.7,
+    "efficiency": 84,
+    "orientation": "North-East-Facing",
+    "archetype": "apartment",
+    "levelsCount": 1,
+    "environmentalTheme": "pune_hills",
+    "aboutSummary": "Compiled directly from property listing: 'The Balmoral Estates 3 BHK with Sunrise Facing Balcony & 3D Twin'. Architecture: Apartment (3 BHK), 1,904 sq.ft carpet on 15th of 16 Floors. Physical layout strictly allocates 3 bedrooms with calibrated 3:1 hall-to-kitchen ratio, enclosed structural walls, door portals, window casements, and outdoor balconies. Verified by civil inspection audit (9.7/10 composite structural score).",
+    "floors": [
+      {
+        "id": "floor_0",
+        "name": "Apartment Suite Level",
+        "elevation": 0.0,
+        "roomIds": [
+          "living",
+          "kitchen",
+          "balcony",
+          "master",
+          "bedroom_2"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "living",
+        "name": "Grand Living & Dining Pavilion",
+        "floorLevel": 0,
+        "dimensions": "30' x 22'",
+        "carpetSqft": 628,
+        "highlight": "Mirror-polished Italian Statuario marble floors with floor-to-ceiling panoramic glass facade",
+        "floorType": "Italian Botticino Marble",
+        "floorColor": "#F4F1EA",
+        "wallColor": "#FAF8F5",
+        "bounds": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 9.2,
+          "d": 6.8,
+          "h": 3.2
+        },
+        "furniture": [
+          {
+            "id": "sofa_main",
+            "name": "Curved Designer Italian Sofa",
+            "type": "sofa",
+            "position": [
+              -0.8,
+              0.42,
+              1.8
+            ],
+            "size": [
+              4.2,
+              0.75,
+              1.8
+            ],
+            "materialKey": "sofa",
+            "color": "#D9D1C0"
+          },
+          {
+            "id": "coffee_tbl",
+            "name": "Botticino Marble Coffee Table",
+            "type": "table",
+            "position": [
+              -0.8,
+              0.25,
+              0.4
+            ],
+            "size": [
+              2.2,
+              0.45,
+              1.1
+            ],
+            "materialKey": "white",
+            "color": "#FAFAF6"
+          },
+          {
+            "id": "living_rug",
+            "name": "Silken Area Rug",
+            "type": "rug",
+            "position": [
+              -0.8,
+              0.02,
+              1.1
+            ],
+            "size": [
+              5.2,
+              0.02,
+              3.6
+            ],
+            "materialKey": "rug",
+            "color": "#CABFA8"
+          },
+          {
+            "id": "dining_tbl",
+            "name": "Dining Table & Chairs",
+            "type": "table",
+            "position": [
+              2.6,
+              0.45,
+              -1.0
+            ],
+            "size": [
+              2.4,
+              0.85,
+              1.2
+            ],
+            "materialKey": "wood2",
+            "color": "#A87042"
+          },
+          {
+            "id": "tv_console",
+            "name": "Floating Media Credenza",
+            "type": "tv_unit",
+            "position": [
+              -0.8,
+              0.3,
+              -3.0
+            ],
+            "size": [
+              3.4,
+              0.6,
+              0.5
+            ],
+            "materialKey": "dark",
+            "color": "#3A3A40"
+          }
+        ],
+        "lights": [
+          {
+            "position": [
+              -0.8,
+              2.8,
+              1.0
+            ],
+            "color": "#FFD9A0",
+            "intensity": 0.9,
+            "distance": 12.0
+          }
+        ]
+      },
+      {
+        "id": "kitchen",
+        "name": "Culinary Studio & Island Kitchen",
+        "floorLevel": 0,
+        "dimensions": "15' x 15'",
+        "carpetSqft": 209,
+        "highlight": "Quartz central island with integrated gas/induction burners & soft-close cabinets",
+        "floorType": "Honed Dark Quartzite",
+        "floorColor": "#263238",
+        "wallColor": "#F8F8F8",
+        "bounds": {
+          "x": 6.9,
+          "y": 0.0,
+          "z": -0.6,
+          "w": 4.4,
+          "d": 4.6,
+          "h": 3.2
+        },
+        "furniture": [
+          {
+            "id": "k_island",
+            "name": "Quartz Island Prep Counter",
+            "type": "counter",
+            "position": [
+              6.9,
+              0.48,
+              -0.6
+            ],
+            "size": [
+              3.0,
+              0.95,
+              1.3
+            ],
+            "materialKey": "counter",
+            "color": "#8D6F50"
+          },
+          {
+            "id": "k_stools",
+            "name": "Breakfast Bar Stools",
+            "type": "stool",
+            "position": [
+              6.9,
+              0.38,
+              -1.8
+            ],
+            "size": [
+              2.2,
+              0.75,
+              0.45
+            ],
+            "materialKey": "wood2",
+            "color": "#A87042"
+          }
+        ],
+        "lights": [
+          {
+            "position": [
+              6.9,
+              2.8,
+              -0.6
+            ],
+            "color": "#FFFFFF",
+            "intensity": 0.85,
+            "distance": 10.0
+          }
+        ]
+      },
+      {
+        "id": "balcony",
+        "name": "Covered Sky Deck & Balcony",
+        "floorLevel": 0,
+        "dimensions": "21' x 11'",
+        "carpetSqft": 190,
+        "highlight": "Panoramic open vista with frameless tempered glass balustrade & teak deck",
+        "floorType": "Weatherproof Teak Composite Deck",
+        "floorColor": "#A87042",
+        "wallColor": "#ECE9E2",
+        "bounds": {
+          "x": 1.8,
+          "y": 0.0,
+          "z": 5.2,
+          "w": 6.4,
+          "d": 3.4,
+          "h": 1.1
+        },
+        "furniture": [
+          {
+            "id": "b_lounge",
+            "name": "Weatherproof Balcony Loveseat",
+            "type": "chair",
+            "position": [
+              1.8,
+              0.35,
+              4.8
+            ],
+            "size": [
+              1.8,
+              0.4,
+              0.8
+            ],
+            "materialKey": "sofa",
+            "color": "#D9D1C0"
+          },
+          {
+            "id": "b_table",
+            "name": "Outdoor Teak Coffee Table",
+            "type": "table",
+            "position": [
+              1.8,
+              0.25,
+              5.8
+            ],
+            "size": [
+              0.9,
+              0.35,
+              0.6
+            ],
+            "materialKey": "wood2",
+            "color": "#A87042"
+          }
+        ]
+      },
+      {
+        "id": "master",
+        "name": "Presidential Master Suite (Bedroom 1)",
+        "floorLevel": 0,
+        "dimensions": "19' x 18'",
+        "carpetSqft": 418,
+        "highlight": "Engineered German oak wood flooring with walk-in wardrobe and en-suite bath",
+        "floorType": "Engineered Oak Hardwood",
+        "floorColor": "#C9A275",
+        "wallColor": "#EAE7DF",
+        "bounds": {
+          "x": -6.8,
+          "y": 0.0,
+          "z": 0.5,
+          "w": 5.8,
+          "d": 5.4,
+          "h": 3.2
+        },
+        "furniture": [
+          {
+            "id": "m_bed",
+            "name": "King Bed",
+            "type": "bed",
+            "position": [
+              -6.8,
+              0.35,
+              0.2
+            ],
+            "size": [
+              2.2,
+              0.4,
+              2.1
+            ],
+            "materialKey": "white",
+            "color": "#FAFAF6"
+          },
+          {
+            "id": "m_headboard",
+            "name": "Acoustic Fluted Headboard",
+            "type": "wardrobe",
+            "position": [
+              -6.8,
+              0.95,
+              -1.0
+            ],
+            "size": [
+              2.6,
+              1.0,
+              0.12
+            ],
+            "materialKey": "wood",
+            "color": "#B9824E"
+          },
+          {
+            "id": "m_side_1",
+            "name": "Nightstand",
+            "type": "table",
+            "position": [
+              -8.2,
+              0.3,
+              -0.9
+            ],
+            "size": [
+              0.55,
+              0.35,
+              0.4
+            ],
+            "materialKey": "accent",
+            "color": "#C9A66B"
+          },
+          {
+            "id": "m_side_2",
+            "name": "Nightstand",
+            "type": "table",
+            "position": [
+              -5.4,
+              0.3,
+              -0.9
+            ],
+            "size": [
+              0.55,
+              0.35,
+              0.4
+            ],
+            "materialKey": "accent",
+            "color": "#C9A66B"
+          }
+        ],
+        "lights": [
+          {
+            "position": [
+              -6.8,
+              2.6,
+              0.5
+            ],
+            "color": "#FFD9A0",
+            "intensity": 0.85,
+            "distance": 11.0
+          }
+        ]
+      },
+      {
+        "id": "bedroom_2",
+        "name": "Guest Suite (Bedroom 2)",
+        "floorLevel": 0,
+        "dimensions": "15' x 14'",
+        "carpetSqft": 266,
+        "highlight": "Matte vitrified tiles, acoustic double-glazed windows, and built-in wardrobes",
+        "floorType": "Vitrified Matte Tile",
+        "floorColor": "#ECE9E2",
+        "wallColor": "#F1EEE7",
+        "bounds": {
+          "x": 6.9,
+          "y": 0.0,
+          "z": 4.6,
+          "w": 4.6,
+          "d": 4.4,
+          "h": 3.2
+        },
+        "furniture": [
+          {
+            "id": "b2_bed",
+            "name": "Queen Bed",
+            "type": "bed",
+            "position": [
+              6.9,
+              0.35,
+              4.4
+            ],
+            "size": [
+              1.9,
+              0.4,
+              2.0
+            ],
+            "materialKey": "white",
+            "color": "#FAFAF6"
+          },
+          {
+            "id": "b2_side",
+            "name": "Bedside Nightstand",
+            "type": "table",
+            "position": [
+              8.2,
+              0.3,
+              3.4
+            ],
+            "size": [
+              0.5,
+              0.35,
+              0.4
+            ],
+            "materialKey": "accent",
+            "color": "#C9A66B"
+          }
+        ]
+      },
+      {
+        "id": "bedroom_3",
+        "name": "Children's Suite (Bedroom 3)",
+        "floorLevel": 0,
+        "dimensions": "16' x 14'",
+        "carpetSqft": 228,
+        "highlight": "Natural daylit bedroom with custom study alcove and wooden flooring",
+        "floorType": "Engineered Oak Hardwood",
+        "floorColor": "#C9A275",
+        "wallColor": "#EAE7DF",
+        "bounds": {
+          "x": -6.8,
+          "y": 0.0,
+          "z": -4.8,
+          "w": 4.8,
+          "d": 4.4,
+          "h": 3.2
+        },
+        "furniture": [
+          {
+            "id": "b3_bed",
+            "name": "Queen Bed",
+            "type": "bed",
+            "position": [
+              -6.8,
+              0.35,
+              -4.8
+            ],
+            "size": [
+              1.9,
+              0.4,
+              2.0
+            ],
+            "materialKey": "white",
+            "color": "#FAFAF6"
+          },
+          {
+            "id": "b3_desk",
+            "name": "Writing Desk",
+            "type": "table",
+            "position": [
+              -8.2,
+              0.35,
+              -3.4
+            ],
+            "size": [
+              1.2,
+              0.75,
+              0.55
+            ],
+            "materialKey": "wood2",
+            "color": "#A87042"
+          }
+        ]
+      }
+    ],
+    "structuralWalls": [
+      {
+        "id": "apt_living_balc_seg_0",
+        "position": [
+          -2.85,
+          1.6,
+          3.4
+        ],
+        "size": [
+          3.5,
+          3.2,
+          0.18
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_balc_lintel_0",
+        "position": [
+          1.8,
+          2.85,
+          3.4
+        ],
+        "size": [
+          5.8,
+          0.7,
+          0.18
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_west_seg_0",
+        "position": [
+          -4.6,
+          1.6,
+          -3.337
+        ],
+        "size": [
+          0.18,
+          3.2,
+          0.125
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_west_lintel_0",
+        "position": [
+          -4.6,
+          2.675,
+          -2.8
+        ],
+        "size": [
+          0.18,
+          1.05,
+          0.95
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_west_seg_1",
+        "position": [
+          -4.6,
+          1.6,
+          -1.15
+        ],
+        "size": [
+          0.18,
+          3.2,
+          2.35
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_west_lintel_1",
+        "position": [
+          -4.6,
+          2.675,
+          0.5
+        ],
+        "size": [
+          0.18,
+          1.05,
+          0.95
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_west_seg_final",
+        "position": [
+          -4.6,
+          1.6,
+          2.188
+        ],
+        "size": [
+          0.18,
+          3.2,
+          2.425
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_east_seg_0",
+        "position": [
+          4.6,
+          1.6,
+          -2.6
+        ],
+        "size": [
+          0.18,
+          3.2,
+          1.6
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_east_lintel_0",
+        "position": [
+          4.6,
+          2.8,
+          -0.6
+        ],
+        "size": [
+          0.18,
+          0.8,
+          2.4
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_east_seg_1",
+        "position": [
+          4.6,
+          1.6,
+          1.312
+        ],
+        "size": [
+          0.18,
+          3.2,
+          1.425
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_east_lintel_1",
+        "position": [
+          4.6,
+          2.675,
+          2.5
+        ],
+        "size": [
+          0.18,
+          1.05,
+          0.95
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_east_seg_final",
+        "position": [
+          4.6,
+          1.6,
+          3.188
+        ],
+        "size": [
+          0.18,
+          3.2,
+          0.425
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_north_seg_0",
+        "position": [
+          -3.325,
+          1.6,
+          -3.4
+        ],
+        "size": [
+          2.55,
+          3.2,
+          0.18
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_north_lintel_0",
+        "position": [
+          -1.5,
+          2.75,
+          -3.4
+        ],
+        "size": [
+          1.1,
+          0.9,
+          0.18
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_north_seg_final",
+        "position": [
+          1.825,
+          1.6,
+          -3.4
+        ],
+        "size": [
+          5.55,
+          3.2,
+          0.18
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_west_seg_0",
+        "position": [
+          -9.7,
+          1.6,
+          -1.5
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.4
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_west_sill_0",
+        "position": [
+          -9.7,
+          0.425,
+          0.5
+        ],
+        "size": [
+          0.22,
+          0.85,
+          2.6
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_west_lintel_0",
+        "position": [
+          -9.7,
+          2.725,
+          0.5
+        ],
+        "size": [
+          0.22,
+          0.95,
+          2.6
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_west_seg_final",
+        "position": [
+          -9.7,
+          1.6,
+          2.5
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.4
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_south_seg_0",
+        "position": [
+          -8.75,
+          1.6,
+          3.2
+        ],
+        "size": [
+          1.9,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_south_sill_0",
+        "position": [
+          -6.8,
+          0.425,
+          3.2
+        ],
+        "size": [
+          2.0,
+          0.85,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_south_lintel_0",
+        "position": [
+          -6.8,
+          2.725,
+          3.2
+        ],
+        "size": [
+          2.0,
+          0.95,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_south_seg_final",
+        "position": [
+          -5.2,
+          1.6,
+          3.2
+        ],
+        "size": [
+          1.2,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_part_m_b3_seg_final",
+        "position": [
+          -7.15,
+          1.6,
+          -2.2
+        ],
+        "size": [
+          5.1,
+          3.2,
+          0.18
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_west_seg_0",
+        "position": [
+          -9.2,
+          1.6,
+          -6.4
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.2
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_west_sill_0",
+        "position": [
+          -9.2,
+          0.425,
+          -4.8
+        ],
+        "size": [
+          0.22,
+          0.85,
+          2.0
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_west_lintel_0",
+        "position": [
+          -9.2,
+          2.725,
+          -4.8
+        ],
+        "size": [
+          0.22,
+          0.95,
+          2.0
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_west_seg_final",
+        "position": [
+          -9.2,
+          1.6,
+          -3.0
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.6
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_north_seg_0",
+        "position": [
+          -8.45,
+          1.6,
+          -7.0
+        ],
+        "size": [
+          1.5,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_north_sill_0",
+        "position": [
+          -6.8,
+          0.425,
+          -7.0
+        ],
+        "size": [
+          1.8,
+          0.85,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_north_lintel_0",
+        "position": [
+          -6.8,
+          2.725,
+          -7.0
+        ],
+        "size": [
+          1.8,
+          0.95,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_north_seg_final",
+        "position": [
+          -5.15,
+          1.6,
+          -7.0
+        ],
+        "size": [
+          1.5,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_north_seg_0",
+        "position": [
+          5.25,
+          1.6,
+          -2.9
+        ],
+        "size": [
+          1.3,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_north_sill_0",
+        "position": [
+          6.9,
+          0.55,
+          -2.9
+        ],
+        "size": [
+          2.0,
+          1.1,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_north_lintel_0",
+        "position": [
+          6.9,
+          2.7,
+          -2.9
+        ],
+        "size": [
+          2.0,
+          1.0,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_north_seg_final",
+        "position": [
+          8.5,
+          1.6,
+          -2.9
+        ],
+        "size": [
+          1.2,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_east_seg_0",
+        "position": [
+          9.1,
+          1.6,
+          -2.15
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.5
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_east_sill_0",
+        "position": [
+          9.1,
+          0.55,
+          -0.6
+        ],
+        "size": [
+          0.22,
+          1.1,
+          1.6
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_east_lintel_0",
+        "position": [
+          9.1,
+          2.75,
+          -0.6
+        ],
+        "size": [
+          0.22,
+          0.9,
+          1.6
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_east_seg_final",
+        "position": [
+          9.1,
+          1.6,
+          0.95
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.5
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_part_kit_b2_seg_final",
+        "position": [
+          6.85,
+          1.6,
+          1.7
+        ],
+        "size": [
+          4.5,
+          3.2,
+          0.18
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_east_seg_0",
+        "position": [
+          9.2,
+          1.6,
+          2.6
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.8
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_east_sill_0",
+        "position": [
+          9.2,
+          0.425,
+          4.6
+        ],
+        "size": [
+          0.22,
+          0.85,
+          2.2
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_east_lintel_0",
+        "position": [
+          9.2,
+          2.725,
+          4.6
+        ],
+        "size": [
+          0.22,
+          0.95,
+          2.2
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_east_seg_final",
+        "position": [
+          9.2,
+          1.6,
+          6.25
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.1
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_south_seg_0",
+        "position": [
+          5.3,
+          1.6,
+          6.8
+        ],
+        "size": [
+          1.4,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_south_sill_0",
+        "position": [
+          6.9,
+          0.425,
+          6.8
+        ],
+        "size": [
+          1.8,
+          0.85,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_south_lintel_0",
+        "position": [
+          6.9,
+          2.725,
+          6.8
+        ],
+        "size": [
+          1.8,
+          0.95,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_south_seg_final",
+        "position": [
+          8.5,
+          1.6,
+          6.8
+        ],
+        "size": [
+          1.4,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      }
+    ],
+    "doors": [
+      {
+        "id": "slider_apt_living_balc_0",
+        "name": "Panoramic Balcony Sliders",
+        "position": [
+          1.8,
+          1.25,
+          3.4
+        ],
+        "size": [
+          5.8,
+          2.5,
+          0.18
+        ],
+        "rotationY": 0.0,
+        "floorLevel": 0,
+        "doorType": "sliding",
+        "panelsCount": 2,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "door_apt_living_west_0",
+        "name": "Bedroom 3 Suite Door",
+        "position": [
+          -4.6,
+          1.075,
+          -2.8
+        ],
+        "size": [
+          0.18,
+          2.15,
+          0.95
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 0,
+        "doorType": "swing",
+        "openAngle": 0.5,
+        "frameMaterial": "dark",
+        "leafMaterial": "wood2"
+      },
+      {
+        "id": "door_apt_living_west_1",
+        "name": "Master Suite Door",
+        "position": [
+          -4.6,
+          1.075,
+          0.5
+        ],
+        "size": [
+          0.18,
+          2.15,
+          0.95
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 0,
+        "doorType": "swing",
+        "openAngle": 0.5,
+        "frameMaterial": "dark",
+        "leafMaterial": "wood2"
+      },
+      {
+        "id": "door_apt_living_east_0",
+        "name": "Kitchen Portal Arch",
+        "position": [
+          4.6,
+          1.2,
+          -0.6
+        ],
+        "size": [
+          0.18,
+          2.4,
+          2.4
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 0,
+        "doorType": "portal",
+        "openAngle": 0.5,
+        "frameMaterial": "dark",
+        "leafMaterial": "wood2"
+      },
+      {
+        "id": "door_apt_living_east_1",
+        "name": "Bedroom 2 Suite Door",
+        "position": [
+          4.6,
+          1.075,
+          2.5
+        ],
+        "size": [
+          0.18,
+          2.15,
+          0.95
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 0,
+        "doorType": "swing",
+        "openAngle": 0.5,
+        "frameMaterial": "dark",
+        "leafMaterial": "wood2"
+      },
+      {
+        "id": "door_apt_living_north_0",
+        "name": "Main Entrance Door (Yale Smart Lock)",
+        "position": [
+          -1.5,
+          1.15,
+          -3.4
+        ],
+        "size": [
+          1.1,
+          2.3,
+          0.18
+        ],
+        "rotationY": 0.0,
+        "floorLevel": 0,
+        "doorType": "pivot",
+        "openAngle": 0.5,
+        "frameMaterial": "dark",
+        "leafMaterial": "wood2"
+      }
+    ],
+    "windows": [
+      {
+        "id": "win_apt_master_west_0",
+        "name": "Master Suite Horizon Window",
+        "position": [
+          -9.7,
+          1.55,
+          0.5
+        ],
+        "size": [
+          2.6,
+          1.4
+        ],
+        "rotationY": 1.5707963267948966,
+        "sillHeight": 0.85,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_apt_master_south_0",
+        "name": "Master Suite Sunset Window",
+        "position": [
+          -6.8,
+          1.55,
+          3.2
+        ],
+        "size": [
+          2.0,
+          1.4
+        ],
+        "rotationY": 0.0,
+        "sillHeight": 0.85,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_apt_b3_west_0",
+        "name": "Bedroom 3 Daylight Window",
+        "position": [
+          -9.2,
+          1.55,
+          -4.8
+        ],
+        "size": [
+          2.0,
+          1.4
+        ],
+        "rotationY": 1.5707963267948966,
+        "sillHeight": 0.85,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_apt_b3_north_0",
+        "name": "Bedroom 3 Study Window",
+        "position": [
+          -6.8,
+          1.55,
+          -7.0
+        ],
+        "size": [
+          1.8,
+          1.4
+        ],
+        "rotationY": 0.0,
+        "sillHeight": 0.85,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_apt_kit_north_0",
+        "name": "Kitchen Counter Window",
+        "position": [
+          6.9,
+          1.65,
+          -2.9
+        ],
+        "size": [
+          2.0,
+          1.1
+        ],
+        "rotationY": 0.0,
+        "sillHeight": 1.1,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_apt_kit_east_0",
+        "name": "Kitchen Side Ventilation",
+        "position": [
+          9.1,
+          1.7,
+          -0.6
+        ],
+        "size": [
+          1.6,
+          1.2
+        ],
+        "rotationY": 1.5707963267948966,
+        "sillHeight": 1.1,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_apt_b2_east_0",
+        "name": "Bedroom 2 Sunrise Window",
+        "position": [
+          9.2,
+          1.55,
+          4.6
+        ],
+        "size": [
+          2.2,
+          1.4
+        ],
+        "rotationY": 1.5707963267948966,
+        "sillHeight": 0.85,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_apt_b2_south_0",
+        "name": "Bedroom 2 Garden Window",
+        "position": [
+          6.9,
+          1.55,
+          6.8
+        ],
+        "size": [
+          1.8,
+          1.4
+        ],
+        "rotationY": 0.0,
+        "sillHeight": 0.85,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      }
+    ],
+    "balconies": [
+      {
+        "id": "balc_sky_deck_apt",
+        "name": "Covered Sky Balcony & Sunset Deck",
+        "floorLevel": 0,
+        "bounds": {
+          "x": 1.8,
+          "y": 0.0,
+          "z": 5.2,
+          "w": 6.4,
+          "d": 3.4,
+          "h": 0.2
+        },
+        "deckMaterial": "deck",
+        "railings": [
+          {
+            "id": "balc_sky_deck_apt_rail_front",
+            "position": [
+              1.8,
+              0.55,
+              6.9
+            ],
+            "size": [
+              6.4,
+              1.1
+            ],
+            "rotationY": 0.0,
+            "floorLevel": 0,
+            "type": "glass",
+            "handrail": true
+          },
+          {
+            "id": "balc_sky_deck_apt_rail_left",
+            "position": [
+              -1.4,
+              0.55,
+              5.2
+            ],
+            "size": [
+              3.4,
+              1.1
+            ],
+            "rotationY": 1.5707963267948966,
+            "floorLevel": 0,
+            "type": "glass",
+            "handrail": true
+          },
+          {
+            "id": "balc_sky_deck_apt_rail_right",
+            "position": [
+              5.0,
+              0.55,
+              5.2
+            ],
+            "size": [
+              3.4,
+              1.1
+            ],
+            "rotationY": 1.5707963267948966,
+            "floorLevel": 0,
+            "type": "glass",
+            "handrail": true
+          }
+        ]
+      }
+    ],
+    "glassPanels": [
+      {
+        "id": "balc_sky_deck_apt_rail_front",
+        "position": [
+          1.8,
+          0.55,
+          6.9
+        ],
+        "size": [
+          6.4,
+          1.1
+        ],
+        "rotationY": 0.0,
+        "floorLevel": 0,
+        "type": "glass",
+        "handrail": true
+      },
+      {
+        "id": "balc_sky_deck_apt_rail_left",
+        "position": [
+          -1.4,
+          0.55,
+          5.2
+        ],
+        "size": [
+          3.4,
+          1.1
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 0,
+        "type": "glass",
+        "handrail": true
+      },
+      {
+        "id": "balc_sky_deck_apt_rail_right",
+        "position": [
+          5.0,
+          0.55,
+          5.2
+        ],
+        "size": [
+          3.4,
+          1.1
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 0,
+        "type": "glass",
+        "handrail": true
+      }
+    ],
+    "focalTargets": {
+      "living": {
+        "target": [
+          -0.8,
+          1.6,
+          0.8
+        ],
+        "theta": 0.45,
+        "phi": 1.05,
+        "radius": 14.0,
+        "walk": [
+          -1.0,
+          1.65,
+          3.2
+        ]
+      },
+      "kitchen": {
+        "target": [
+          6.9,
+          1.5,
+          -0.6
+        ],
+        "theta": 1.95,
+        "phi": 1.05,
+        "radius": 12.5,
+        "walk": [
+          5.8,
+          1.65,
+          1.2
+        ]
+      },
+      "balcony": {
+        "target": [
+          1.8,
+          1.2,
+          5.2
+        ],
+        "theta": 2.35,
+        "phi": 1.05,
+        "radius": 12.0,
+        "walk": [
+          0.8,
+          1.65,
+          4.4
+        ]
+      },
+      "master": {
+        "target": [
+          -6.8,
+          1.5,
+          0.5
+        ],
+        "theta": 0.35,
+        "phi": 1.08,
+        "radius": 13.0,
+        "walk": [
+          -5.4,
+          1.65,
+          2.2
+        ]
+      },
+      "bedroom_2": {
+        "target": [
+          6.9,
+          1.5,
+          4.6
+        ],
+        "theta": 1.85,
+        "phi": 1.08,
+        "radius": 12.0,
+        "walk": [
+          5.5,
+          1.65,
+          3.6
+        ]
+      },
+      "bedroom_3": {
+        "target": [
+          -6.8,
+          1.5,
+          -4.8
+        ],
+        "theta": 0.55,
+        "phi": 1.08,
+        "radius": 12.0,
+        "walk": [
+          -5.4,
+          1.65,
+          -3.6
+        ]
+      },
+      "all": {
+        "target": [
+          0.0,
+          2.8,
+          0.0
+        ],
+        "theta": 0.72,
+        "phi": 1.05,
+        "radius": 34.0,
+        "walk": [
+          0.0,
+          1.65,
+          12.0
+        ]
+      }
+    },
+    "waypoints": [
+      {
+        "p": [
+          4.0,
+          3.5,
+          18.0
+        ],
+        "l": [
+          0.0,
+          2.5,
+          0.0
+        ],
+        "label": "Approach · Architectural Facade"
+      },
+      {
+        "p": [
+          -1.0,
+          1.65,
+          3.2
+        ],
+        "l": [
+          2.0,
+          1.2,
+          0.0
+        ],
+        "label": "Living & Dining Pavilion (30' x 22')"
+      },
+      {
+        "p": [
+          5.8,
+          1.65,
+          1.2
+        ],
+        "l": [
+          7.8,
+          1.1,
+          -1.0
+        ],
+        "label": "Culinary Kitchen Studio (3.1:1 Hall Ratio)"
+      },
+      {
+        "p": [
+          0.8,
+          1.65,
+          4.4
+        ],
+        "l": [
+          2.8,
+          1.4,
+          6.5
+        ],
+        "label": "Covered Sky Deck & Balcony"
+      },
+      {
+        "p": [
+          -5.4,
+          1.65,
+          2.2
+        ],
+        "l": [
+          -7.8,
+          1.1,
+          -0.6
+        ],
+        "label": "Presidential Master Suite (Bedroom 1)"
+      },
+      {
+        "p": [
+          5.5,
+          1.65,
+          3.6
+        ],
+        "l": [
+          7.8,
+          1.1,
+          4.8
+        ],
+        "label": "Guest Suite (Bedroom 2)"
+      },
+      {
+        "p": [
+          -5.4,
+          1.65,
+          -3.6
+        ],
+        "l": [
+          -7.8,
+          1.1,
+          -5.4
+        ],
+        "label": "Children's Suite (Bedroom 3)"
+      },
+      {
+        "p": [
+          18.0,
+          16.0,
+          18.0
+        ],
+        "l": [
+          0.0,
+          3.0,
+          0.0
+        ],
+        "label": "Aerial · Full 3D Spatial Digital Twin"
+      }
+    ],
+    "fixtures": [
+      {
+        "item": "3 Distinct Bedroom Suites",
+        "detail": "Accurately mapped with Master Suite + 2 secondary suites",
+        "included": true
+      },
+      {
+        "item": "Calibrated 3:1 Living Hall to Kitchen Ratio",
+        "detail": "Grand entertainment volume with dedicated ergonomic culinary studio",
+        "included": true
+      },
+      {
+        "item": "Structural BIM Perimeter & Partition Walls",
+        "detail": "Full height architectural walls with proper openings and skirting",
+        "included": true
+      },
+      {
+        "item": "Engineered Teak Doors & Smart Handles",
+        "detail": "8-foot height door portals with brass handles and smooth frames",
+        "included": true
+      },
+      {
+        "item": "Double-Glazed Acoustic Window Casements",
+        "detail": "42dB street noise attenuation with bronze profiles and sills",
+        "included": true
+      },
+      {
+        "item": "Teak Balconies with Safety Glass Balustrades",
+        "detail": "Tempered laminated glass with continuous top handrail",
+        "included": true
+      },
+      {
+        "item": "Turnkey Designer Staging Packages",
+        "detail": "Available as staged turnkey package upon conveyance",
+        "included": false
+      }
+    ]
+  },
+  "raheja-vistas-3bhk-5": {
+    "propertyId": "prop-5",
+    "propertyTitle": "Raheja Vistas 3 BHK Premium Corner Suite with Italian Marble",
+    "locality": "NIBM Road & Undri",
+    "city": "Pune",
+    "state": "Maharashtra",
+    "propertyType": "Apartment",
+    "configuration": "3 BHK",
+    "bhkCount": 3,
+    "carpetSqft": 1703,
+    "builtUpSqft": 2224,
+    "floor": "9th of 29 Floors",
+    "floorHeight": "10.5 ft",
+    "conditionScore": 9.9,
+    "efficiency": 84,
+    "orientation": "West-Facing",
+    "archetype": "apartment",
+    "levelsCount": 1,
+    "environmentalTheme": "pune_hills",
+    "aboutSummary": "Compiled directly from property listing: 'Raheja Vistas 3 BHK Premium Corner Suite with Italian Marble'. Architecture: Apartment (3 BHK), 1,703 sq.ft carpet on 9th of 29 Floors. Physical layout strictly allocates 3 bedrooms with calibrated 3:1 hall-to-kitchen ratio, enclosed structural walls, door portals, window casements, and outdoor balconies. Verified by civil inspection audit (9.9/10 composite structural score).",
+    "floors": [
+      {
+        "id": "floor_0",
+        "name": "Apartment Suite Level",
+        "elevation": 0.0,
+        "roomIds": [
+          "living",
+          "kitchen",
+          "balcony",
+          "master",
+          "bedroom_2"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "living",
+        "name": "Grand Living & Dining Pavilion",
+        "floorLevel": 0,
+        "dimensions": "30' x 22'",
+        "carpetSqft": 561,
+        "highlight": "Mirror-polished Italian Statuario marble floors with floor-to-ceiling panoramic glass facade",
+        "floorType": "Italian Botticino Marble",
+        "floorColor": "#F4F1EA",
+        "wallColor": "#FAF8F5",
+        "bounds": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 9.2,
+          "d": 6.8,
+          "h": 3.2
+        },
+        "furniture": [
+          {
+            "id": "sofa_main",
+            "name": "Curved Designer Italian Sofa",
+            "type": "sofa",
+            "position": [
+              -0.8,
+              0.42,
+              1.8
+            ],
+            "size": [
+              4.2,
+              0.75,
+              1.8
+            ],
+            "materialKey": "sofa",
+            "color": "#D9D1C0"
+          },
+          {
+            "id": "coffee_tbl",
+            "name": "Botticino Marble Coffee Table",
+            "type": "table",
+            "position": [
+              -0.8,
+              0.25,
+              0.4
+            ],
+            "size": [
+              2.2,
+              0.45,
+              1.1
+            ],
+            "materialKey": "white",
+            "color": "#FAFAF6"
+          },
+          {
+            "id": "living_rug",
+            "name": "Silken Area Rug",
+            "type": "rug",
+            "position": [
+              -0.8,
+              0.02,
+              1.1
+            ],
+            "size": [
+              5.2,
+              0.02,
+              3.6
+            ],
+            "materialKey": "rug",
+            "color": "#CABFA8"
+          },
+          {
+            "id": "dining_tbl",
+            "name": "Dining Table & Chairs",
+            "type": "table",
+            "position": [
+              2.6,
+              0.45,
+              -1.0
+            ],
+            "size": [
+              2.4,
+              0.85,
+              1.2
+            ],
+            "materialKey": "wood2",
+            "color": "#A87042"
+          },
+          {
+            "id": "tv_console",
+            "name": "Floating Media Credenza",
+            "type": "tv_unit",
+            "position": [
+              -0.8,
+              0.3,
+              -3.0
+            ],
+            "size": [
+              3.4,
+              0.6,
+              0.5
+            ],
+            "materialKey": "dark",
+            "color": "#3A3A40"
+          }
+        ],
+        "lights": [
+          {
+            "position": [
+              -0.8,
+              2.8,
+              1.0
+            ],
+            "color": "#FFD9A0",
+            "intensity": 0.9,
+            "distance": 12.0
+          }
+        ]
+      },
+      {
+        "id": "kitchen",
+        "name": "Culinary Studio & Island Kitchen",
+        "floorLevel": 0,
+        "dimensions": "15' x 15'",
+        "carpetSqft": 187,
+        "highlight": "Quartz central island with integrated gas/induction burners & soft-close cabinets",
+        "floorType": "Honed Dark Quartzite",
+        "floorColor": "#263238",
+        "wallColor": "#F8F8F8",
+        "bounds": {
+          "x": 6.9,
+          "y": 0.0,
+          "z": -0.6,
+          "w": 4.4,
+          "d": 4.6,
+          "h": 3.2
+        },
+        "furniture": [
+          {
+            "id": "k_island",
+            "name": "Quartz Island Prep Counter",
+            "type": "counter",
+            "position": [
+              6.9,
+              0.48,
+              -0.6
+            ],
+            "size": [
+              3.0,
+              0.95,
+              1.3
+            ],
+            "materialKey": "counter",
+            "color": "#8D6F50"
+          },
+          {
+            "id": "k_stools",
+            "name": "Breakfast Bar Stools",
+            "type": "stool",
+            "position": [
+              6.9,
+              0.38,
+              -1.8
+            ],
+            "size": [
+              2.2,
+              0.75,
+              0.45
+            ],
+            "materialKey": "wood2",
+            "color": "#A87042"
+          }
+        ],
+        "lights": [
+          {
+            "position": [
+              6.9,
+              2.8,
+              -0.6
+            ],
+            "color": "#FFFFFF",
+            "intensity": 0.85,
+            "distance": 10.0
+          }
+        ]
+      },
+      {
+        "id": "balcony",
+        "name": "Covered Sky Deck & Balcony",
+        "floorLevel": 0,
+        "dimensions": "21' x 11'",
+        "carpetSqft": 170,
+        "highlight": "Panoramic open vista with frameless tempered glass balustrade & teak deck",
+        "floorType": "Weatherproof Teak Composite Deck",
+        "floorColor": "#A87042",
+        "wallColor": "#ECE9E2",
+        "bounds": {
+          "x": 1.8,
+          "y": 0.0,
+          "z": 5.2,
+          "w": 6.4,
+          "d": 3.4,
+          "h": 1.1
+        },
+        "furniture": [
+          {
+            "id": "b_lounge",
+            "name": "Weatherproof Balcony Loveseat",
+            "type": "chair",
+            "position": [
+              1.8,
+              0.35,
+              4.8
+            ],
+            "size": [
+              1.8,
+              0.4,
+              0.8
+            ],
+            "materialKey": "sofa",
+            "color": "#D9D1C0"
+          },
+          {
+            "id": "b_table",
+            "name": "Outdoor Teak Coffee Table",
+            "type": "table",
+            "position": [
+              1.8,
+              0.25,
+              5.8
+            ],
+            "size": [
+              0.9,
+              0.35,
+              0.6
+            ],
+            "materialKey": "wood2",
+            "color": "#A87042"
+          }
+        ]
+      },
+      {
+        "id": "master",
+        "name": "Presidential Master Suite (Bedroom 1)",
+        "floorLevel": 0,
+        "dimensions": "19' x 18'",
+        "carpetSqft": 374,
+        "highlight": "Engineered German oak wood flooring with walk-in wardrobe and en-suite bath",
+        "floorType": "Engineered Oak Hardwood",
+        "floorColor": "#C9A275",
+        "wallColor": "#EAE7DF",
+        "bounds": {
+          "x": -6.8,
+          "y": 0.0,
+          "z": 0.5,
+          "w": 5.8,
+          "d": 5.4,
+          "h": 3.2
+        },
+        "furniture": [
+          {
+            "id": "m_bed",
+            "name": "King Bed",
+            "type": "bed",
+            "position": [
+              -6.8,
+              0.35,
+              0.2
+            ],
+            "size": [
+              2.2,
+              0.4,
+              2.1
+            ],
+            "materialKey": "white",
+            "color": "#FAFAF6"
+          },
+          {
+            "id": "m_headboard",
+            "name": "Acoustic Fluted Headboard",
+            "type": "wardrobe",
+            "position": [
+              -6.8,
+              0.95,
+              -1.0
+            ],
+            "size": [
+              2.6,
+              1.0,
+              0.12
+            ],
+            "materialKey": "wood",
+            "color": "#B9824E"
+          },
+          {
+            "id": "m_side_1",
+            "name": "Nightstand",
+            "type": "table",
+            "position": [
+              -8.2,
+              0.3,
+              -0.9
+            ],
+            "size": [
+              0.55,
+              0.35,
+              0.4
+            ],
+            "materialKey": "accent",
+            "color": "#C9A66B"
+          },
+          {
+            "id": "m_side_2",
+            "name": "Nightstand",
+            "type": "table",
+            "position": [
+              -5.4,
+              0.3,
+              -0.9
+            ],
+            "size": [
+              0.55,
+              0.35,
+              0.4
+            ],
+            "materialKey": "accent",
+            "color": "#C9A66B"
+          }
+        ],
+        "lights": [
+          {
+            "position": [
+              -6.8,
+              2.6,
+              0.5
+            ],
+            "color": "#FFD9A0",
+            "intensity": 0.85,
+            "distance": 11.0
+          }
+        ]
+      },
+      {
+        "id": "bedroom_2",
+        "name": "Guest Suite (Bedroom 2)",
+        "floorLevel": 0,
+        "dimensions": "15' x 14'",
+        "carpetSqft": 238,
+        "highlight": "Matte vitrified tiles, acoustic double-glazed windows, and built-in wardrobes",
+        "floorType": "Vitrified Matte Tile",
+        "floorColor": "#ECE9E2",
+        "wallColor": "#F1EEE7",
+        "bounds": {
+          "x": 6.9,
+          "y": 0.0,
+          "z": 4.6,
+          "w": 4.6,
+          "d": 4.4,
+          "h": 3.2
+        },
+        "furniture": [
+          {
+            "id": "b2_bed",
+            "name": "Queen Bed",
+            "type": "bed",
+            "position": [
+              6.9,
+              0.35,
+              4.4
+            ],
+            "size": [
+              1.9,
+              0.4,
+              2.0
+            ],
+            "materialKey": "white",
+            "color": "#FAFAF6"
+          },
+          {
+            "id": "b2_side",
+            "name": "Bedside Nightstand",
+            "type": "table",
+            "position": [
+              8.2,
+              0.3,
+              3.4
+            ],
+            "size": [
+              0.5,
+              0.35,
+              0.4
+            ],
+            "materialKey": "accent",
+            "color": "#C9A66B"
+          }
+        ]
+      },
+      {
+        "id": "bedroom_3",
+        "name": "Children's Suite (Bedroom 3)",
+        "floorLevel": 0,
+        "dimensions": "16' x 14'",
+        "carpetSqft": 204,
+        "highlight": "Natural daylit bedroom with custom study alcove and wooden flooring",
+        "floorType": "Engineered Oak Hardwood",
+        "floorColor": "#C9A275",
+        "wallColor": "#EAE7DF",
+        "bounds": {
+          "x": -6.8,
+          "y": 0.0,
+          "z": -4.8,
+          "w": 4.8,
+          "d": 4.4,
+          "h": 3.2
+        },
+        "furniture": [
+          {
+            "id": "b3_bed",
+            "name": "Queen Bed",
+            "type": "bed",
+            "position": [
+              -6.8,
+              0.35,
+              -4.8
+            ],
+            "size": [
+              1.9,
+              0.4,
+              2.0
+            ],
+            "materialKey": "white",
+            "color": "#FAFAF6"
+          },
+          {
+            "id": "b3_desk",
+            "name": "Writing Desk",
+            "type": "table",
+            "position": [
+              -8.2,
+              0.35,
+              -3.4
+            ],
+            "size": [
+              1.2,
+              0.75,
+              0.55
+            ],
+            "materialKey": "wood2",
+            "color": "#A87042"
+          }
+        ]
+      }
+    ],
+    "structuralWalls": [
+      {
+        "id": "apt_living_balc_seg_0",
+        "position": [
+          -2.85,
+          1.6,
+          3.4
+        ],
+        "size": [
+          3.5,
+          3.2,
+          0.18
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_balc_lintel_0",
+        "position": [
+          1.8,
+          2.85,
+          3.4
+        ],
+        "size": [
+          5.8,
+          0.7,
+          0.18
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_west_seg_0",
+        "position": [
+          -4.6,
+          1.6,
+          -3.337
+        ],
+        "size": [
+          0.18,
+          3.2,
+          0.125
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_west_lintel_0",
+        "position": [
+          -4.6,
+          2.675,
+          -2.8
+        ],
+        "size": [
+          0.18,
+          1.05,
+          0.95
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_west_seg_1",
+        "position": [
+          -4.6,
+          1.6,
+          -1.15
+        ],
+        "size": [
+          0.18,
+          3.2,
+          2.35
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_west_lintel_1",
+        "position": [
+          -4.6,
+          2.675,
+          0.5
+        ],
+        "size": [
+          0.18,
+          1.05,
+          0.95
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_west_seg_final",
+        "position": [
+          -4.6,
+          1.6,
+          2.188
+        ],
+        "size": [
+          0.18,
+          3.2,
+          2.425
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_east_seg_0",
+        "position": [
+          4.6,
+          1.6,
+          -2.6
+        ],
+        "size": [
+          0.18,
+          3.2,
+          1.6
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_east_lintel_0",
+        "position": [
+          4.6,
+          2.8,
+          -0.6
+        ],
+        "size": [
+          0.18,
+          0.8,
+          2.4
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_east_seg_1",
+        "position": [
+          4.6,
+          1.6,
+          1.312
+        ],
+        "size": [
+          0.18,
+          3.2,
+          1.425
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_east_lintel_1",
+        "position": [
+          4.6,
+          2.675,
+          2.5
+        ],
+        "size": [
+          0.18,
+          1.05,
+          0.95
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_east_seg_final",
+        "position": [
+          4.6,
+          1.6,
+          3.188
+        ],
+        "size": [
+          0.18,
+          3.2,
+          0.425
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_north_seg_0",
+        "position": [
+          -3.325,
+          1.6,
+          -3.4
+        ],
+        "size": [
+          2.55,
+          3.2,
+          0.18
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_north_lintel_0",
+        "position": [
+          -1.5,
+          2.75,
+          -3.4
+        ],
+        "size": [
+          1.1,
+          0.9,
+          0.18
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_north_seg_final",
+        "position": [
+          1.825,
+          1.6,
+          -3.4
+        ],
+        "size": [
+          5.55,
+          3.2,
+          0.18
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_west_seg_0",
+        "position": [
+          -9.7,
+          1.6,
+          -1.5
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.4
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_west_sill_0",
+        "position": [
+          -9.7,
+          0.425,
+          0.5
+        ],
+        "size": [
+          0.22,
+          0.85,
+          2.6
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_west_lintel_0",
+        "position": [
+          -9.7,
+          2.725,
+          0.5
+        ],
+        "size": [
+          0.22,
+          0.95,
+          2.6
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_west_seg_final",
+        "position": [
+          -9.7,
+          1.6,
+          2.5
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.4
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_south_seg_0",
+        "position": [
+          -8.75,
+          1.6,
+          3.2
+        ],
+        "size": [
+          1.9,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_south_sill_0",
+        "position": [
+          -6.8,
+          0.425,
+          3.2
+        ],
+        "size": [
+          2.0,
+          0.85,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_south_lintel_0",
+        "position": [
+          -6.8,
+          2.725,
+          3.2
+        ],
+        "size": [
+          2.0,
+          0.95,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_south_seg_final",
+        "position": [
+          -5.2,
+          1.6,
+          3.2
+        ],
+        "size": [
+          1.2,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_part_m_b3_seg_final",
+        "position": [
+          -7.15,
+          1.6,
+          -2.2
+        ],
+        "size": [
+          5.1,
+          3.2,
+          0.18
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_west_seg_0",
+        "position": [
+          -9.2,
+          1.6,
+          -6.4
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.2
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_west_sill_0",
+        "position": [
+          -9.2,
+          0.425,
+          -4.8
+        ],
+        "size": [
+          0.22,
+          0.85,
+          2.0
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_west_lintel_0",
+        "position": [
+          -9.2,
+          2.725,
+          -4.8
+        ],
+        "size": [
+          0.22,
+          0.95,
+          2.0
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_west_seg_final",
+        "position": [
+          -9.2,
+          1.6,
+          -3.0
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.6
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_north_seg_0",
+        "position": [
+          -8.45,
+          1.6,
+          -7.0
+        ],
+        "size": [
+          1.5,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_north_sill_0",
+        "position": [
+          -6.8,
+          0.425,
+          -7.0
+        ],
+        "size": [
+          1.8,
+          0.85,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_north_lintel_0",
+        "position": [
+          -6.8,
+          2.725,
+          -7.0
+        ],
+        "size": [
+          1.8,
+          0.95,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_north_seg_final",
+        "position": [
+          -5.15,
+          1.6,
+          -7.0
+        ],
+        "size": [
+          1.5,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_north_seg_0",
+        "position": [
+          5.25,
+          1.6,
+          -2.9
+        ],
+        "size": [
+          1.3,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_north_sill_0",
+        "position": [
+          6.9,
+          0.55,
+          -2.9
+        ],
+        "size": [
+          2.0,
+          1.1,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_north_lintel_0",
+        "position": [
+          6.9,
+          2.7,
+          -2.9
+        ],
+        "size": [
+          2.0,
+          1.0,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_north_seg_final",
+        "position": [
+          8.5,
+          1.6,
+          -2.9
+        ],
+        "size": [
+          1.2,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_east_seg_0",
+        "position": [
+          9.1,
+          1.6,
+          -2.15
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.5
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_east_sill_0",
+        "position": [
+          9.1,
+          0.55,
+          -0.6
+        ],
+        "size": [
+          0.22,
+          1.1,
+          1.6
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_east_lintel_0",
+        "position": [
+          9.1,
+          2.75,
+          -0.6
+        ],
+        "size": [
+          0.22,
+          0.9,
+          1.6
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_east_seg_final",
+        "position": [
+          9.1,
+          1.6,
+          0.95
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.5
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_part_kit_b2_seg_final",
+        "position": [
+          6.85,
+          1.6,
+          1.7
+        ],
+        "size": [
+          4.5,
+          3.2,
+          0.18
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_east_seg_0",
+        "position": [
+          9.2,
+          1.6,
+          2.6
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.8
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_east_sill_0",
+        "position": [
+          9.2,
+          0.425,
+          4.6
+        ],
+        "size": [
+          0.22,
+          0.85,
+          2.2
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_east_lintel_0",
+        "position": [
+          9.2,
+          2.725,
+          4.6
+        ],
+        "size": [
+          0.22,
+          0.95,
+          2.2
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_east_seg_final",
+        "position": [
+          9.2,
+          1.6,
+          6.25
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.1
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_south_seg_0",
+        "position": [
+          5.3,
+          1.6,
+          6.8
+        ],
+        "size": [
+          1.4,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_south_sill_0",
+        "position": [
+          6.9,
+          0.425,
+          6.8
+        ],
+        "size": [
+          1.8,
+          0.85,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_south_lintel_0",
+        "position": [
+          6.9,
+          2.725,
+          6.8
+        ],
+        "size": [
+          1.8,
+          0.95,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_south_seg_final",
+        "position": [
+          8.5,
+          1.6,
+          6.8
+        ],
+        "size": [
+          1.4,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      }
+    ],
+    "doors": [
+      {
+        "id": "slider_apt_living_balc_0",
+        "name": "Panoramic Balcony Sliders",
+        "position": [
+          1.8,
+          1.25,
+          3.4
+        ],
+        "size": [
+          5.8,
+          2.5,
+          0.18
+        ],
+        "rotationY": 0.0,
+        "floorLevel": 0,
+        "doorType": "sliding",
+        "panelsCount": 2,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "door_apt_living_west_0",
+        "name": "Bedroom 3 Suite Door",
+        "position": [
+          -4.6,
+          1.075,
+          -2.8
+        ],
+        "size": [
+          0.18,
+          2.15,
+          0.95
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 0,
+        "doorType": "swing",
+        "openAngle": 0.5,
+        "frameMaterial": "dark",
+        "leafMaterial": "wood2"
+      },
+      {
+        "id": "door_apt_living_west_1",
+        "name": "Master Suite Door",
+        "position": [
+          -4.6,
+          1.075,
+          0.5
+        ],
+        "size": [
+          0.18,
+          2.15,
+          0.95
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 0,
+        "doorType": "swing",
+        "openAngle": 0.5,
+        "frameMaterial": "dark",
+        "leafMaterial": "wood2"
+      },
+      {
+        "id": "door_apt_living_east_0",
+        "name": "Kitchen Portal Arch",
+        "position": [
+          4.6,
+          1.2,
+          -0.6
+        ],
+        "size": [
+          0.18,
+          2.4,
+          2.4
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 0,
+        "doorType": "portal",
+        "openAngle": 0.5,
+        "frameMaterial": "dark",
+        "leafMaterial": "wood2"
+      },
+      {
+        "id": "door_apt_living_east_1",
+        "name": "Bedroom 2 Suite Door",
+        "position": [
+          4.6,
+          1.075,
+          2.5
+        ],
+        "size": [
+          0.18,
+          2.15,
+          0.95
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 0,
+        "doorType": "swing",
+        "openAngle": 0.5,
+        "frameMaterial": "dark",
+        "leafMaterial": "wood2"
+      },
+      {
+        "id": "door_apt_living_north_0",
+        "name": "Main Entrance Door (Yale Smart Lock)",
+        "position": [
+          -1.5,
+          1.15,
+          -3.4
+        ],
+        "size": [
+          1.1,
+          2.3,
+          0.18
+        ],
+        "rotationY": 0.0,
+        "floorLevel": 0,
+        "doorType": "pivot",
+        "openAngle": 0.5,
+        "frameMaterial": "dark",
+        "leafMaterial": "wood2"
+      }
+    ],
+    "windows": [
+      {
+        "id": "win_apt_master_west_0",
+        "name": "Master Suite Horizon Window",
+        "position": [
+          -9.7,
+          1.55,
+          0.5
+        ],
+        "size": [
+          2.6,
+          1.4
+        ],
+        "rotationY": 1.5707963267948966,
+        "sillHeight": 0.85,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_apt_master_south_0",
+        "name": "Master Suite Sunset Window",
+        "position": [
+          -6.8,
+          1.55,
+          3.2
+        ],
+        "size": [
+          2.0,
+          1.4
+        ],
+        "rotationY": 0.0,
+        "sillHeight": 0.85,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_apt_b3_west_0",
+        "name": "Bedroom 3 Daylight Window",
+        "position": [
+          -9.2,
+          1.55,
+          -4.8
+        ],
+        "size": [
+          2.0,
+          1.4
+        ],
+        "rotationY": 1.5707963267948966,
+        "sillHeight": 0.85,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_apt_b3_north_0",
+        "name": "Bedroom 3 Study Window",
+        "position": [
+          -6.8,
+          1.55,
+          -7.0
+        ],
+        "size": [
+          1.8,
+          1.4
+        ],
+        "rotationY": 0.0,
+        "sillHeight": 0.85,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_apt_kit_north_0",
+        "name": "Kitchen Counter Window",
+        "position": [
+          6.9,
+          1.65,
+          -2.9
+        ],
+        "size": [
+          2.0,
+          1.1
+        ],
+        "rotationY": 0.0,
+        "sillHeight": 1.1,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_apt_kit_east_0",
+        "name": "Kitchen Side Ventilation",
+        "position": [
+          9.1,
+          1.7,
+          -0.6
+        ],
+        "size": [
+          1.6,
+          1.2
+        ],
+        "rotationY": 1.5707963267948966,
+        "sillHeight": 1.1,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_apt_b2_east_0",
+        "name": "Bedroom 2 Sunrise Window",
+        "position": [
+          9.2,
+          1.55,
+          4.6
+        ],
+        "size": [
+          2.2,
+          1.4
+        ],
+        "rotationY": 1.5707963267948966,
+        "sillHeight": 0.85,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_apt_b2_south_0",
+        "name": "Bedroom 2 Garden Window",
+        "position": [
+          6.9,
+          1.55,
+          6.8
+        ],
+        "size": [
+          1.8,
+          1.4
+        ],
+        "rotationY": 0.0,
+        "sillHeight": 0.85,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      }
+    ],
+    "balconies": [
+      {
+        "id": "balc_sky_deck_apt",
+        "name": "Covered Sky Balcony & Sunset Deck",
+        "floorLevel": 0,
+        "bounds": {
+          "x": 1.8,
+          "y": 0.0,
+          "z": 5.2,
+          "w": 6.4,
+          "d": 3.4,
+          "h": 0.2
+        },
+        "deckMaterial": "deck",
+        "railings": [
+          {
+            "id": "balc_sky_deck_apt_rail_front",
+            "position": [
+              1.8,
+              0.55,
+              6.9
+            ],
+            "size": [
+              6.4,
+              1.1
+            ],
+            "rotationY": 0.0,
+            "floorLevel": 0,
+            "type": "glass",
+            "handrail": true
+          },
+          {
+            "id": "balc_sky_deck_apt_rail_left",
+            "position": [
+              -1.4,
+              0.55,
+              5.2
+            ],
+            "size": [
+              3.4,
+              1.1
+            ],
+            "rotationY": 1.5707963267948966,
+            "floorLevel": 0,
+            "type": "glass",
+            "handrail": true
+          },
+          {
+            "id": "balc_sky_deck_apt_rail_right",
+            "position": [
+              5.0,
+              0.55,
+              5.2
+            ],
+            "size": [
+              3.4,
+              1.1
+            ],
+            "rotationY": 1.5707963267948966,
+            "floorLevel": 0,
+            "type": "glass",
+            "handrail": true
+          }
+        ]
+      }
+    ],
+    "glassPanels": [
+      {
+        "id": "balc_sky_deck_apt_rail_front",
+        "position": [
+          1.8,
+          0.55,
+          6.9
+        ],
+        "size": [
+          6.4,
+          1.1
+        ],
+        "rotationY": 0.0,
+        "floorLevel": 0,
+        "type": "glass",
+        "handrail": true
+      },
+      {
+        "id": "balc_sky_deck_apt_rail_left",
+        "position": [
+          -1.4,
+          0.55,
+          5.2
+        ],
+        "size": [
+          3.4,
+          1.1
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 0,
+        "type": "glass",
+        "handrail": true
+      },
+      {
+        "id": "balc_sky_deck_apt_rail_right",
+        "position": [
+          5.0,
+          0.55,
+          5.2
+        ],
+        "size": [
+          3.4,
+          1.1
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 0,
+        "type": "glass",
+        "handrail": true
+      }
+    ],
+    "focalTargets": {
+      "living": {
+        "target": [
+          -0.8,
+          1.6,
+          0.8
+        ],
+        "theta": 0.45,
+        "phi": 1.05,
+        "radius": 14.0,
+        "walk": [
+          -1.0,
+          1.65,
+          3.2
+        ]
+      },
+      "kitchen": {
+        "target": [
+          6.9,
+          1.5,
+          -0.6
+        ],
+        "theta": 1.95,
+        "phi": 1.05,
+        "radius": 12.5,
+        "walk": [
+          5.8,
+          1.65,
+          1.2
+        ]
+      },
+      "balcony": {
+        "target": [
+          1.8,
+          1.2,
+          5.2
+        ],
+        "theta": 2.35,
+        "phi": 1.05,
+        "radius": 12.0,
+        "walk": [
+          0.8,
+          1.65,
+          4.4
+        ]
+      },
+      "master": {
+        "target": [
+          -6.8,
+          1.5,
+          0.5
+        ],
+        "theta": 0.35,
+        "phi": 1.08,
+        "radius": 13.0,
+        "walk": [
+          -5.4,
+          1.65,
+          2.2
+        ]
+      },
+      "bedroom_2": {
+        "target": [
+          6.9,
+          1.5,
+          4.6
+        ],
+        "theta": 1.85,
+        "phi": 1.08,
+        "radius": 12.0,
+        "walk": [
+          5.5,
+          1.65,
+          3.6
+        ]
+      },
+      "bedroom_3": {
+        "target": [
+          -6.8,
+          1.5,
+          -4.8
+        ],
+        "theta": 0.55,
+        "phi": 1.08,
+        "radius": 12.0,
+        "walk": [
+          -5.4,
+          1.65,
+          -3.6
+        ]
+      },
+      "all": {
+        "target": [
+          0.0,
+          2.8,
+          0.0
+        ],
+        "theta": 0.72,
+        "phi": 1.05,
+        "radius": 34.0,
+        "walk": [
+          0.0,
+          1.65,
+          12.0
+        ]
+      }
+    },
+    "waypoints": [
+      {
+        "p": [
+          4.0,
+          3.5,
+          18.0
+        ],
+        "l": [
+          0.0,
+          2.5,
+          0.0
+        ],
+        "label": "Approach · Architectural Facade"
+      },
+      {
+        "p": [
+          -1.0,
+          1.65,
+          3.2
+        ],
+        "l": [
+          2.0,
+          1.2,
+          0.0
+        ],
+        "label": "Living & Dining Pavilion (30' x 22')"
+      },
+      {
+        "p": [
+          5.8,
+          1.65,
+          1.2
+        ],
+        "l": [
+          7.8,
+          1.1,
+          -1.0
+        ],
+        "label": "Culinary Kitchen Studio (3.1:1 Hall Ratio)"
+      },
+      {
+        "p": [
+          0.8,
+          1.65,
+          4.4
+        ],
+        "l": [
+          2.8,
+          1.4,
+          6.5
+        ],
+        "label": "Covered Sky Deck & Balcony"
+      },
+      {
+        "p": [
+          -5.4,
+          1.65,
+          2.2
+        ],
+        "l": [
+          -7.8,
+          1.1,
+          -0.6
+        ],
+        "label": "Presidential Master Suite (Bedroom 1)"
+      },
+      {
+        "p": [
+          5.5,
+          1.65,
+          3.6
+        ],
+        "l": [
+          7.8,
+          1.1,
+          4.8
+        ],
+        "label": "Guest Suite (Bedroom 2)"
+      },
+      {
+        "p": [
+          -5.4,
+          1.65,
+          -3.6
+        ],
+        "l": [
+          -7.8,
+          1.1,
+          -5.4
+        ],
+        "label": "Children's Suite (Bedroom 3)"
+      },
+      {
+        "p": [
+          18.0,
+          16.0,
+          18.0
+        ],
+        "l": [
+          0.0,
+          3.0,
+          0.0
+        ],
+        "label": "Aerial · Full 3D Spatial Digital Twin"
+      }
+    ],
+    "fixtures": [
+      {
+        "item": "3 Distinct Bedroom Suites",
+        "detail": "Accurately mapped with Master Suite + 2 secondary suites",
+        "included": true
+      },
+      {
+        "item": "Calibrated 3:1 Living Hall to Kitchen Ratio",
+        "detail": "Grand entertainment volume with dedicated ergonomic culinary studio",
+        "included": true
+      },
+      {
+        "item": "Structural BIM Perimeter & Partition Walls",
+        "detail": "Full height architectural walls with proper openings and skirting",
+        "included": true
+      },
+      {
+        "item": "Engineered Teak Doors & Smart Handles",
+        "detail": "8-foot height door portals with brass handles and smooth frames",
+        "included": true
+      },
+      {
+        "item": "Double-Glazed Acoustic Window Casements",
+        "detail": "42dB street noise attenuation with bronze profiles and sills",
+        "included": true
+      },
+      {
+        "item": "Teak Balconies with Safety Glass Balustrades",
+        "detail": "Tempered laminated glass with continuous top handrail",
+        "included": true
+      },
+      {
+        "item": "Turnkey Designer Staging Packages",
+        "detail": "Available as staged turnkey package upon conveyance",
+        "included": false
+      }
+    ]
+  },
+  "blue-waves-residence-2-3bhk-2501": {
+    "propertyId": "prop-2501",
+    "propertyTitle": "Blue Waves Residence 2 3 BHK Ultra-Prime High-Rise with Burj Khalifa Vista",
+    "locality": "Al Sufouh & Media City",
+    "city": "Dubai",
+    "state": "Dubai Emirate",
+    "propertyType": "Apartment",
+    "configuration": "3 BHK",
+    "bhkCount": 3,
+    "carpetSqft": 1668,
+    "builtUpSqft": 2111,
+    "floor": "2nd of 6 Floors",
+    "floorHeight": "10.5 ft",
+    "conditionScore": 9.8,
+    "efficiency": 84,
+    "orientation": "South-East-Facing",
+    "archetype": "apartment",
+    "levelsCount": 1,
+    "environmentalTheme": "dubai_skyline",
+    "aboutSummary": "Compiled directly from property listing: 'Blue Waves Residence 2 3 BHK Ultra-Prime High-Rise with Burj Khalifa Vista'. Architecture: Apartment (3 BHK), 1,668 sq.ft carpet on 2nd of 6 Floors. Physical layout strictly allocates 3 bedrooms with calibrated 3:1 hall-to-kitchen ratio, enclosed structural walls, door portals, window casements, and outdoor balconies. Verified by civil inspection audit (9.8/10 composite structural score).",
+    "floors": [
+      {
+        "id": "floor_0",
+        "name": "Apartment Suite Level",
+        "elevation": 0.0,
+        "roomIds": [
+          "living",
+          "kitchen",
+          "balcony",
+          "master",
+          "bedroom_2"
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "id": "living",
+        "name": "Grand Living & Dining Pavilion",
+        "floorLevel": 0,
+        "dimensions": "30' x 22'",
+        "carpetSqft": 550,
+        "highlight": "Mirror-polished Italian Statuario marble floors with floor-to-ceiling panoramic glass facade",
+        "floorType": "Italian Botticino Marble",
+        "floorColor": "#F4F1EA",
+        "wallColor": "#FAF8F5",
+        "bounds": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 9.2,
+          "d": 6.8,
+          "h": 3.2
+        },
+        "furniture": [
+          {
+            "id": "sofa_main",
+            "name": "Curved Designer Italian Sofa",
+            "type": "sofa",
+            "position": [
+              -0.8,
+              0.42,
+              1.8
+            ],
+            "size": [
+              4.2,
+              0.75,
+              1.8
+            ],
+            "materialKey": "sofa",
+            "color": "#D9D1C0"
+          },
+          {
+            "id": "coffee_tbl",
+            "name": "Botticino Marble Coffee Table",
+            "type": "table",
+            "position": [
+              -0.8,
+              0.25,
+              0.4
+            ],
+            "size": [
+              2.2,
+              0.45,
+              1.1
+            ],
+            "materialKey": "white",
+            "color": "#FAFAF6"
+          },
+          {
+            "id": "living_rug",
+            "name": "Silken Area Rug",
+            "type": "rug",
+            "position": [
+              -0.8,
+              0.02,
+              1.1
+            ],
+            "size": [
+              5.2,
+              0.02,
+              3.6
+            ],
+            "materialKey": "rug",
+            "color": "#CABFA8"
+          },
+          {
+            "id": "dining_tbl",
+            "name": "Dining Table & Chairs",
+            "type": "table",
+            "position": [
+              2.6,
+              0.45,
+              -1.0
+            ],
+            "size": [
+              2.4,
+              0.85,
+              1.2
+            ],
+            "materialKey": "wood2",
+            "color": "#A87042"
+          },
+          {
+            "id": "tv_console",
+            "name": "Floating Media Credenza",
+            "type": "tv_unit",
+            "position": [
+              -0.8,
+              0.3,
+              -3.0
+            ],
+            "size": [
+              3.4,
+              0.6,
+              0.5
+            ],
+            "materialKey": "dark",
+            "color": "#3A3A40"
+          }
+        ],
+        "lights": [
+          {
+            "position": [
+              -0.8,
+              2.8,
+              1.0
+            ],
+            "color": "#FFD9A0",
+            "intensity": 0.9,
+            "distance": 12.0
+          }
+        ]
+      },
+      {
+        "id": "kitchen",
+        "name": "Culinary Studio & Island Kitchen",
+        "floorLevel": 0,
+        "dimensions": "15' x 15'",
+        "carpetSqft": 183,
+        "highlight": "Quartz central island with integrated gas/induction burners & soft-close cabinets",
+        "floorType": "Honed Dark Quartzite",
+        "floorColor": "#263238",
+        "wallColor": "#F8F8F8",
+        "bounds": {
+          "x": 6.9,
+          "y": 0.0,
+          "z": -0.6,
+          "w": 4.4,
+          "d": 4.6,
+          "h": 3.2
+        },
+        "furniture": [
+          {
+            "id": "k_island",
+            "name": "Quartz Island Prep Counter",
+            "type": "counter",
+            "position": [
+              6.9,
+              0.48,
+              -0.6
+            ],
+            "size": [
+              3.0,
+              0.95,
+              1.3
+            ],
+            "materialKey": "counter",
+            "color": "#8D6F50"
+          },
+          {
+            "id": "k_stools",
+            "name": "Breakfast Bar Stools",
+            "type": "stool",
+            "position": [
+              6.9,
+              0.38,
+              -1.8
+            ],
+            "size": [
+              2.2,
+              0.75,
+              0.45
+            ],
+            "materialKey": "wood2",
+            "color": "#A87042"
+          }
+        ],
+        "lights": [
+          {
+            "position": [
+              6.9,
+              2.8,
+              -0.6
+            ],
+            "color": "#FFFFFF",
+            "intensity": 0.85,
+            "distance": 10.0
+          }
+        ]
+      },
+      {
+        "id": "balcony",
+        "name": "Covered Sky Deck & Balcony",
+        "floorLevel": 0,
+        "dimensions": "21' x 11'",
+        "carpetSqft": 166,
+        "highlight": "Panoramic open vista with frameless tempered glass balustrade & teak deck",
+        "floorType": "Weatherproof Teak Composite Deck",
+        "floorColor": "#A87042",
+        "wallColor": "#ECE9E2",
+        "bounds": {
+          "x": 1.8,
+          "y": 0.0,
+          "z": 5.2,
+          "w": 6.4,
+          "d": 3.4,
+          "h": 1.1
+        },
+        "furniture": [
+          {
+            "id": "b_lounge",
+            "name": "Weatherproof Balcony Loveseat",
+            "type": "chair",
+            "position": [
+              1.8,
+              0.35,
+              4.8
+            ],
+            "size": [
+              1.8,
+              0.4,
+              0.8
+            ],
+            "materialKey": "sofa",
+            "color": "#D9D1C0"
+          },
+          {
+            "id": "b_table",
+            "name": "Outdoor Teak Coffee Table",
+            "type": "table",
+            "position": [
+              1.8,
+              0.25,
+              5.8
+            ],
+            "size": [
+              0.9,
+              0.35,
+              0.6
+            ],
+            "materialKey": "wood2",
+            "color": "#A87042"
+          }
+        ]
+      },
+      {
+        "id": "master",
+        "name": "Presidential Master Suite (Bedroom 1)",
+        "floorLevel": 0,
+        "dimensions": "19' x 18'",
+        "carpetSqft": 366,
+        "highlight": "Engineered German oak wood flooring with walk-in wardrobe and en-suite bath",
+        "floorType": "Engineered Oak Hardwood",
+        "floorColor": "#C9A275",
+        "wallColor": "#EAE7DF",
+        "bounds": {
+          "x": -6.8,
+          "y": 0.0,
+          "z": 0.5,
+          "w": 5.8,
+          "d": 5.4,
+          "h": 3.2
+        },
+        "furniture": [
+          {
+            "id": "m_bed",
+            "name": "King Bed",
+            "type": "bed",
+            "position": [
+              -6.8,
+              0.35,
+              0.2
+            ],
+            "size": [
+              2.2,
+              0.4,
+              2.1
+            ],
+            "materialKey": "white",
+            "color": "#FAFAF6"
+          },
+          {
+            "id": "m_headboard",
+            "name": "Acoustic Fluted Headboard",
+            "type": "wardrobe",
+            "position": [
+              -6.8,
+              0.95,
+              -1.0
+            ],
+            "size": [
+              2.6,
+              1.0,
+              0.12
+            ],
+            "materialKey": "wood",
+            "color": "#B9824E"
+          },
+          {
+            "id": "m_side_1",
+            "name": "Nightstand",
+            "type": "table",
+            "position": [
+              -8.2,
+              0.3,
+              -0.9
+            ],
+            "size": [
+              0.55,
+              0.35,
+              0.4
+            ],
+            "materialKey": "accent",
+            "color": "#C9A66B"
+          },
+          {
+            "id": "m_side_2",
+            "name": "Nightstand",
+            "type": "table",
+            "position": [
+              -5.4,
+              0.3,
+              -0.9
+            ],
+            "size": [
+              0.55,
+              0.35,
+              0.4
+            ],
+            "materialKey": "accent",
+            "color": "#C9A66B"
+          }
+        ],
+        "lights": [
+          {
+            "position": [
+              -6.8,
+              2.6,
+              0.5
+            ],
+            "color": "#FFD9A0",
+            "intensity": 0.85,
+            "distance": 11.0
+          }
+        ]
+      },
+      {
+        "id": "bedroom_2",
+        "name": "Guest Suite (Bedroom 2)",
+        "floorLevel": 0,
+        "dimensions": "15' x 14'",
+        "carpetSqft": 233,
+        "highlight": "Matte vitrified tiles, acoustic double-glazed windows, and built-in wardrobes",
+        "floorType": "Vitrified Matte Tile",
+        "floorColor": "#ECE9E2",
+        "wallColor": "#F1EEE7",
+        "bounds": {
+          "x": 6.9,
+          "y": 0.0,
+          "z": 4.6,
+          "w": 4.6,
+          "d": 4.4,
+          "h": 3.2
+        },
+        "furniture": [
+          {
+            "id": "b2_bed",
+            "name": "Queen Bed",
+            "type": "bed",
+            "position": [
+              6.9,
+              0.35,
+              4.4
+            ],
+            "size": [
+              1.9,
+              0.4,
+              2.0
+            ],
+            "materialKey": "white",
+            "color": "#FAFAF6"
+          },
+          {
+            "id": "b2_side",
+            "name": "Bedside Nightstand",
+            "type": "table",
+            "position": [
+              8.2,
+              0.3,
+              3.4
+            ],
+            "size": [
+              0.5,
+              0.35,
+              0.4
+            ],
+            "materialKey": "accent",
+            "color": "#C9A66B"
+          }
+        ]
+      },
+      {
+        "id": "bedroom_3",
+        "name": "Children's Suite (Bedroom 3)",
+        "floorLevel": 0,
+        "dimensions": "16' x 14'",
+        "carpetSqft": 200,
+        "highlight": "Natural daylit bedroom with custom study alcove and wooden flooring",
+        "floorType": "Engineered Oak Hardwood",
+        "floorColor": "#C9A275",
+        "wallColor": "#EAE7DF",
+        "bounds": {
+          "x": -6.8,
+          "y": 0.0,
+          "z": -4.8,
+          "w": 4.8,
+          "d": 4.4,
+          "h": 3.2
+        },
+        "furniture": [
+          {
+            "id": "b3_bed",
+            "name": "Queen Bed",
+            "type": "bed",
+            "position": [
+              -6.8,
+              0.35,
+              -4.8
+            ],
+            "size": [
+              1.9,
+              0.4,
+              2.0
+            ],
+            "materialKey": "white",
+            "color": "#FAFAF6"
+          },
+          {
+            "id": "b3_desk",
+            "name": "Writing Desk",
+            "type": "table",
+            "position": [
+              -8.2,
+              0.35,
+              -3.4
+            ],
+            "size": [
+              1.2,
+              0.75,
+              0.55
+            ],
+            "materialKey": "wood2",
+            "color": "#A87042"
+          }
+        ]
+      }
+    ],
+    "structuralWalls": [
+      {
+        "id": "apt_living_balc_seg_0",
+        "position": [
+          -2.85,
+          1.6,
+          3.4
+        ],
+        "size": [
+          3.5,
+          3.2,
+          0.18
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_balc_lintel_0",
+        "position": [
+          1.8,
+          2.85,
+          3.4
+        ],
+        "size": [
+          5.8,
+          0.7,
+          0.18
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_west_seg_0",
+        "position": [
+          -4.6,
+          1.6,
+          -3.337
+        ],
+        "size": [
+          0.18,
+          3.2,
+          0.125
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_west_lintel_0",
+        "position": [
+          -4.6,
+          2.675,
+          -2.8
+        ],
+        "size": [
+          0.18,
+          1.05,
+          0.95
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_west_seg_1",
+        "position": [
+          -4.6,
+          1.6,
+          -1.15
+        ],
+        "size": [
+          0.18,
+          3.2,
+          2.35
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_west_lintel_1",
+        "position": [
+          -4.6,
+          2.675,
+          0.5
+        ],
+        "size": [
+          0.18,
+          1.05,
+          0.95
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_west_seg_final",
+        "position": [
+          -4.6,
+          1.6,
+          2.188
+        ],
+        "size": [
+          0.18,
+          3.2,
+          2.425
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_east_seg_0",
+        "position": [
+          4.6,
+          1.6,
+          -2.6
+        ],
+        "size": [
+          0.18,
+          3.2,
+          1.6
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_east_lintel_0",
+        "position": [
+          4.6,
+          2.8,
+          -0.6
+        ],
+        "size": [
+          0.18,
+          0.8,
+          2.4
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_east_seg_1",
+        "position": [
+          4.6,
+          1.6,
+          1.312
+        ],
+        "size": [
+          0.18,
+          3.2,
+          1.425
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_east_lintel_1",
+        "position": [
+          4.6,
+          2.675,
+          2.5
+        ],
+        "size": [
+          0.18,
+          1.05,
+          0.95
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_east_seg_final",
+        "position": [
+          4.6,
+          1.6,
+          3.188
+        ],
+        "size": [
+          0.18,
+          3.2,
+          0.425
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_north_seg_0",
+        "position": [
+          -3.325,
+          1.6,
+          -3.4
+        ],
+        "size": [
+          2.55,
+          3.2,
+          0.18
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_north_lintel_0",
+        "position": [
+          -1.5,
+          2.75,
+          -3.4
+        ],
+        "size": [
+          1.1,
+          0.9,
+          0.18
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_living_north_seg_final",
+        "position": [
+          1.825,
+          1.6,
+          -3.4
+        ],
+        "size": [
+          5.55,
+          3.2,
+          0.18
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_west_seg_0",
+        "position": [
+          -9.7,
+          1.6,
+          -1.5
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.4
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_west_sill_0",
+        "position": [
+          -9.7,
+          0.425,
+          0.5
+        ],
+        "size": [
+          0.22,
+          0.85,
+          2.6
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_west_lintel_0",
+        "position": [
+          -9.7,
+          2.725,
+          0.5
+        ],
+        "size": [
+          0.22,
+          0.95,
+          2.6
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_west_seg_final",
+        "position": [
+          -9.7,
+          1.6,
+          2.5
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.4
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_south_seg_0",
+        "position": [
+          -8.75,
+          1.6,
+          3.2
+        ],
+        "size": [
+          1.9,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_south_sill_0",
+        "position": [
+          -6.8,
+          0.425,
+          3.2
+        ],
+        "size": [
+          2.0,
+          0.85,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_south_lintel_0",
+        "position": [
+          -6.8,
+          2.725,
+          3.2
+        ],
+        "size": [
+          2.0,
+          0.95,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_master_south_seg_final",
+        "position": [
+          -5.2,
+          1.6,
+          3.2
+        ],
+        "size": [
+          1.2,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_part_m_b3_seg_final",
+        "position": [
+          -7.15,
+          1.6,
+          -2.2
+        ],
+        "size": [
+          5.1,
+          3.2,
+          0.18
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_west_seg_0",
+        "position": [
+          -9.2,
+          1.6,
+          -6.4
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.2
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_west_sill_0",
+        "position": [
+          -9.2,
+          0.425,
+          -4.8
+        ],
+        "size": [
+          0.22,
+          0.85,
+          2.0
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_west_lintel_0",
+        "position": [
+          -9.2,
+          2.725,
+          -4.8
+        ],
+        "size": [
+          0.22,
+          0.95,
+          2.0
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_west_seg_final",
+        "position": [
+          -9.2,
+          1.6,
+          -3.0
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.6
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_north_seg_0",
+        "position": [
+          -8.45,
+          1.6,
+          -7.0
+        ],
+        "size": [
+          1.5,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_north_sill_0",
+        "position": [
+          -6.8,
+          0.425,
+          -7.0
+        ],
+        "size": [
+          1.8,
+          0.85,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_north_lintel_0",
+        "position": [
+          -6.8,
+          2.725,
+          -7.0
+        ],
+        "size": [
+          1.8,
+          0.95,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b3_north_seg_final",
+        "position": [
+          -5.15,
+          1.6,
+          -7.0
+        ],
+        "size": [
+          1.5,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_north_seg_0",
+        "position": [
+          5.25,
+          1.6,
+          -2.9
+        ],
+        "size": [
+          1.3,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_north_sill_0",
+        "position": [
+          6.9,
+          0.55,
+          -2.9
+        ],
+        "size": [
+          2.0,
+          1.1,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_north_lintel_0",
+        "position": [
+          6.9,
+          2.7,
+          -2.9
+        ],
+        "size": [
+          2.0,
+          1.0,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_north_seg_final",
+        "position": [
+          8.5,
+          1.6,
+          -2.9
+        ],
+        "size": [
+          1.2,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_east_seg_0",
+        "position": [
+          9.1,
+          1.6,
+          -2.15
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.5
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_east_sill_0",
+        "position": [
+          9.1,
+          0.55,
+          -0.6
+        ],
+        "size": [
+          0.22,
+          1.1,
+          1.6
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_east_lintel_0",
+        "position": [
+          9.1,
+          2.75,
+          -0.6
+        ],
+        "size": [
+          0.22,
+          0.9,
+          1.6
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_kit_east_seg_final",
+        "position": [
+          9.1,
+          1.6,
+          0.95
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.5
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_part_kit_b2_seg_final",
+        "position": [
+          6.85,
+          1.6,
+          1.7
+        ],
+        "size": [
+          4.5,
+          3.2,
+          0.18
+        ],
+        "materialKey": "cream",
+        "isExterior": false,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_east_seg_0",
+        "position": [
+          9.2,
+          1.6,
+          2.6
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.8
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_east_sill_0",
+        "position": [
+          9.2,
+          0.425,
+          4.6
+        ],
+        "size": [
+          0.22,
+          0.85,
+          2.2
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_east_lintel_0",
+        "position": [
+          9.2,
+          2.725,
+          4.6
+        ],
+        "size": [
+          0.22,
+          0.95,
+          2.2
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_east_seg_final",
+        "position": [
+          9.2,
+          1.6,
+          6.25
+        ],
+        "size": [
+          0.22,
+          3.2,
+          1.1
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_south_seg_0",
+        "position": [
+          5.3,
+          1.6,
+          6.8
+        ],
+        "size": [
+          1.4,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_south_sill_0",
+        "position": [
+          6.9,
+          0.425,
+          6.8
+        ],
+        "size": [
+          1.8,
+          0.85,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_south_lintel_0",
+        "position": [
+          6.9,
+          2.725,
+          6.8
+        ],
+        "size": [
+          1.8,
+          0.95,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      },
+      {
+        "id": "apt_b2_south_seg_final",
+        "position": [
+          8.5,
+          1.6,
+          6.8
+        ],
+        "size": [
+          1.4,
+          3.2,
+          0.22
+        ],
+        "materialKey": "cream2",
+        "isExterior": true,
+        "floorLevel": 0
+      }
+    ],
+    "doors": [
+      {
+        "id": "slider_apt_living_balc_0",
+        "name": "Panoramic Balcony Sliders",
+        "position": [
+          1.8,
+          1.25,
+          3.4
+        ],
+        "size": [
+          5.8,
+          2.5,
+          0.18
+        ],
+        "rotationY": 0.0,
+        "floorLevel": 0,
+        "doorType": "sliding",
+        "panelsCount": 2,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "door_apt_living_west_0",
+        "name": "Bedroom 3 Suite Door",
+        "position": [
+          -4.6,
+          1.075,
+          -2.8
+        ],
+        "size": [
+          0.18,
+          2.15,
+          0.95
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 0,
+        "doorType": "swing",
+        "openAngle": 0.5,
+        "frameMaterial": "dark",
+        "leafMaterial": "wood2"
+      },
+      {
+        "id": "door_apt_living_west_1",
+        "name": "Master Suite Door",
+        "position": [
+          -4.6,
+          1.075,
+          0.5
+        ],
+        "size": [
+          0.18,
+          2.15,
+          0.95
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 0,
+        "doorType": "swing",
+        "openAngle": 0.5,
+        "frameMaterial": "dark",
+        "leafMaterial": "wood2"
+      },
+      {
+        "id": "door_apt_living_east_0",
+        "name": "Kitchen Portal Arch",
+        "position": [
+          4.6,
+          1.2,
+          -0.6
+        ],
+        "size": [
+          0.18,
+          2.4,
+          2.4
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 0,
+        "doorType": "portal",
+        "openAngle": 0.5,
+        "frameMaterial": "dark",
+        "leafMaterial": "wood2"
+      },
+      {
+        "id": "door_apt_living_east_1",
+        "name": "Bedroom 2 Suite Door",
+        "position": [
+          4.6,
+          1.075,
+          2.5
+        ],
+        "size": [
+          0.18,
+          2.15,
+          0.95
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 0,
+        "doorType": "swing",
+        "openAngle": 0.5,
+        "frameMaterial": "dark",
+        "leafMaterial": "wood2"
+      },
+      {
+        "id": "door_apt_living_north_0",
+        "name": "Main Entrance Door (Yale Smart Lock)",
+        "position": [
+          -1.5,
+          1.15,
+          -3.4
+        ],
+        "size": [
+          1.1,
+          2.3,
+          0.18
+        ],
+        "rotationY": 0.0,
+        "floorLevel": 0,
+        "doorType": "pivot",
+        "openAngle": 0.5,
+        "frameMaterial": "dark",
+        "leafMaterial": "wood2"
+      }
+    ],
+    "windows": [
+      {
+        "id": "win_apt_master_west_0",
+        "name": "Master Suite Horizon Window",
+        "position": [
+          -9.7,
+          1.55,
+          0.5
+        ],
+        "size": [
+          2.6,
+          1.4
+        ],
+        "rotationY": 1.5707963267948966,
+        "sillHeight": 0.85,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_apt_master_south_0",
+        "name": "Master Suite Sunset Window",
+        "position": [
+          -6.8,
+          1.55,
+          3.2
+        ],
+        "size": [
+          2.0,
+          1.4
+        ],
+        "rotationY": 0.0,
+        "sillHeight": 0.85,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_apt_b3_west_0",
+        "name": "Bedroom 3 Daylight Window",
+        "position": [
+          -9.2,
+          1.55,
+          -4.8
+        ],
+        "size": [
+          2.0,
+          1.4
+        ],
+        "rotationY": 1.5707963267948966,
+        "sillHeight": 0.85,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_apt_b3_north_0",
+        "name": "Bedroom 3 Study Window",
+        "position": [
+          -6.8,
+          1.55,
+          -7.0
+        ],
+        "size": [
+          1.8,
+          1.4
+        ],
+        "rotationY": 0.0,
+        "sillHeight": 0.85,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_apt_kit_north_0",
+        "name": "Kitchen Counter Window",
+        "position": [
+          6.9,
+          1.65,
+          -2.9
+        ],
+        "size": [
+          2.0,
+          1.1
+        ],
+        "rotationY": 0.0,
+        "sillHeight": 1.1,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_apt_kit_east_0",
+        "name": "Kitchen Side Ventilation",
+        "position": [
+          9.1,
+          1.7,
+          -0.6
+        ],
+        "size": [
+          1.6,
+          1.2
+        ],
+        "rotationY": 1.5707963267948966,
+        "sillHeight": 1.1,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_apt_b2_east_0",
+        "name": "Bedroom 2 Sunrise Window",
+        "position": [
+          9.2,
+          1.55,
+          4.6
+        ],
+        "size": [
+          2.2,
+          1.4
+        ],
+        "rotationY": 1.5707963267948966,
+        "sillHeight": 0.85,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      },
+      {
+        "id": "win_apt_b2_south_0",
+        "name": "Bedroom 2 Garden Window",
+        "position": [
+          6.9,
+          1.55,
+          6.8
+        ],
+        "size": [
+          1.8,
+          1.4
+        ],
+        "rotationY": 0.0,
+        "sillHeight": 0.85,
+        "floorLevel": 0,
+        "hasMullions": true,
+        "frameMaterial": "dark"
+      }
+    ],
+    "balconies": [
+      {
+        "id": "balc_sky_deck_apt",
+        "name": "Covered Sky Balcony & Sunset Deck",
+        "floorLevel": 0,
+        "bounds": {
+          "x": 1.8,
+          "y": 0.0,
+          "z": 5.2,
+          "w": 6.4,
+          "d": 3.4,
+          "h": 0.2
+        },
+        "deckMaterial": "deck",
+        "railings": [
+          {
+            "id": "balc_sky_deck_apt_rail_front",
+            "position": [
+              1.8,
+              0.55,
+              6.9
+            ],
+            "size": [
+              6.4,
+              1.1
+            ],
+            "rotationY": 0.0,
+            "floorLevel": 0,
+            "type": "glass",
+            "handrail": true
+          },
+          {
+            "id": "balc_sky_deck_apt_rail_left",
+            "position": [
+              -1.4,
+              0.55,
+              5.2
+            ],
+            "size": [
+              3.4,
+              1.1
+            ],
+            "rotationY": 1.5707963267948966,
+            "floorLevel": 0,
+            "type": "glass",
+            "handrail": true
+          },
+          {
+            "id": "balc_sky_deck_apt_rail_right",
+            "position": [
+              5.0,
+              0.55,
+              5.2
+            ],
+            "size": [
+              3.4,
+              1.1
+            ],
+            "rotationY": 1.5707963267948966,
+            "floorLevel": 0,
+            "type": "glass",
+            "handrail": true
+          }
+        ]
+      }
+    ],
+    "glassPanels": [
+      {
+        "id": "balc_sky_deck_apt_rail_front",
+        "position": [
+          1.8,
+          0.55,
+          6.9
+        ],
+        "size": [
+          6.4,
+          1.1
+        ],
+        "rotationY": 0.0,
+        "floorLevel": 0,
+        "type": "glass",
+        "handrail": true
+      },
+      {
+        "id": "balc_sky_deck_apt_rail_left",
+        "position": [
+          -1.4,
+          0.55,
+          5.2
+        ],
+        "size": [
+          3.4,
+          1.1
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 0,
+        "type": "glass",
+        "handrail": true
+      },
+      {
+        "id": "balc_sky_deck_apt_rail_right",
+        "position": [
+          5.0,
+          0.55,
+          5.2
+        ],
+        "size": [
+          3.4,
+          1.1
+        ],
+        "rotationY": 1.5707963267948966,
+        "floorLevel": 0,
+        "type": "glass",
+        "handrail": true
+      }
+    ],
+    "focalTargets": {
+      "living": {
+        "target": [
+          -0.8,
+          1.6,
+          0.8
+        ],
+        "theta": 0.45,
+        "phi": 1.05,
+        "radius": 14.0,
+        "walk": [
+          -1.0,
+          1.65,
+          3.2
+        ]
+      },
+      "kitchen": {
+        "target": [
+          6.9,
+          1.5,
+          -0.6
+        ],
+        "theta": 1.95,
+        "phi": 1.05,
+        "radius": 12.5,
+        "walk": [
+          5.8,
+          1.65,
+          1.2
+        ]
+      },
+      "balcony": {
+        "target": [
+          1.8,
+          1.2,
+          5.2
+        ],
+        "theta": 2.35,
+        "phi": 1.05,
+        "radius": 12.0,
+        "walk": [
+          0.8,
+          1.65,
+          4.4
+        ]
+      },
+      "master": {
+        "target": [
+          -6.8,
+          1.5,
+          0.5
+        ],
+        "theta": 0.35,
+        "phi": 1.08,
+        "radius": 13.0,
+        "walk": [
+          -5.4,
+          1.65,
+          2.2
+        ]
+      },
+      "bedroom_2": {
+        "target": [
+          6.9,
+          1.5,
+          4.6
+        ],
+        "theta": 1.85,
+        "phi": 1.08,
+        "radius": 12.0,
+        "walk": [
+          5.5,
+          1.65,
+          3.6
+        ]
+      },
+      "bedroom_3": {
+        "target": [
+          -6.8,
+          1.5,
+          -4.8
+        ],
+        "theta": 0.55,
+        "phi": 1.08,
+        "radius": 12.0,
+        "walk": [
+          -5.4,
+          1.65,
+          -3.6
+        ]
+      },
+      "all": {
+        "target": [
+          0.0,
+          2.8,
+          0.0
+        ],
+        "theta": 0.72,
+        "phi": 1.05,
+        "radius": 34.0,
+        "walk": [
+          0.0,
+          1.65,
+          12.0
+        ]
+      }
+    },
+    "waypoints": [
+      {
+        "p": [
+          4.0,
+          3.5,
+          18.0
+        ],
+        "l": [
+          0.0,
+          2.5,
+          0.0
+        ],
+        "label": "Approach · Architectural Facade"
+      },
+      {
+        "p": [
+          -1.0,
+          1.65,
+          3.2
+        ],
+        "l": [
+          2.0,
+          1.2,
+          0.0
+        ],
+        "label": "Living & Dining Pavilion (30' x 22')"
+      },
+      {
+        "p": [
+          5.8,
+          1.65,
+          1.2
+        ],
+        "l": [
+          7.8,
+          1.1,
+          -1.0
+        ],
+        "label": "Culinary Kitchen Studio (3.1:1 Hall Ratio)"
+      },
+      {
+        "p": [
+          0.8,
+          1.65,
+          4.4
+        ],
+        "l": [
+          2.8,
+          1.4,
+          6.5
+        ],
+        "label": "Covered Sky Deck & Balcony"
+      },
+      {
+        "p": [
+          -5.4,
+          1.65,
+          2.2
+        ],
+        "l": [
+          -7.8,
+          1.1,
+          -0.6
+        ],
+        "label": "Presidential Master Suite (Bedroom 1)"
+      },
+      {
+        "p": [
+          5.5,
+          1.65,
+          3.6
+        ],
+        "l": [
+          7.8,
+          1.1,
+          4.8
+        ],
+        "label": "Guest Suite (Bedroom 2)"
+      },
+      {
+        "p": [
+          -5.4,
+          1.65,
+          -3.6
+        ],
+        "l": [
+          -7.8,
+          1.1,
+          -5.4
+        ],
+        "label": "Children's Suite (Bedroom 3)"
+      },
+      {
+        "p": [
+          18.0,
+          16.0,
+          18.0
+        ],
+        "l": [
+          0.0,
+          3.0,
+          0.0
+        ],
+        "label": "Aerial · Full 3D Spatial Digital Twin"
+      }
+    ],
+    "fixtures": [
+      {
+        "item": "3 Distinct Bedroom Suites",
+        "detail": "Accurately mapped with Master Suite + 2 secondary suites",
+        "included": true
+      },
+      {
+        "item": "Calibrated 3:1 Living Hall to Kitchen Ratio",
+        "detail": "Grand entertainment volume with dedicated ergonomic culinary studio",
+        "included": true
+      },
+      {
+        "item": "Structural BIM Perimeter & Partition Walls",
+        "detail": "Full height architectural walls with proper openings and skirting",
+        "included": true
+      },
+      {
+        "item": "Engineered Teak Doors & Smart Handles",
+        "detail": "8-foot height door portals with brass handles and smooth frames",
+        "included": true
+      },
+      {
+        "item": "Double-Glazed Acoustic Window Casements",
+        "detail": "42dB street noise attenuation with bronze profiles and sills",
+        "included": true
+      },
+      {
+        "item": "Teak Balconies with Safety Glass Balustrades",
+        "detail": "Tempered laminated glass with continuous top handrail",
+        "included": true
+      },
+      {
+        "item": "Turnkey Designer Staging Packages",
+        "detail": "Available as staged turnkey package upon conveyance",
+        "included": false
+      }
+    ]
+  }
+}

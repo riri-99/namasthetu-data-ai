@@ -1,0 +1,2345 @@
+// ============================================================================
+// Namasthetu Property Intelligence Operating System — Master Database Schema
+// Database: PostgreSQL 17 Aurora with PostGIS & pgvector extensions
+// Spec Reference: HYC-SCO-2026-3841 (Docs 01 to 07)
+// ============================================================================
+
+generator client {
+  provider        = "prisma-client"
+  output          = "../generated/prisma"
+  previewFeatures = ["postgresqlExtensions"]
+  engineType      = "client"
+  runtime         = "bun"
+}
+
+datasource db {
+  provider   = "postgresql"
+  // NOTE: pgvector was declared here as `pgvector`, which is not a valid
+  // Postgres extension name (the extension installs as `vector`), and the
+  // postgis/postgis:17-3.5 image in docker-compose.yml does not ship it at all.
+  // `prisma db push` therefore failed with "extension pgvector is not
+  // available", which made the db-migration service — and so the whole
+  // `docker compose up` bring-up — fail. No column in this schema uses a
+  // vector type yet, so the declaration was pure cost.
+  // When the SSE embedding column lands (doc 06), re-add it as `vector` AND
+  // move to a base image that ships both PostGIS and pgvector.
+  extensions = [postgis]
+}
+
+// ============================================================================
+// 1. STATE MACHINE ENUMS (CLOSED GRAPH GOVERNANCE - DOC 05)
+// ============================================================================
+
+/// 13-State Property Lifecycle
+enum PropertyStatus {
+  DRAFT                 // Initial wizard draft
+  SUBMITTED             // Submitted by owner for processing
+  VERIFYING             // KYC and ownership deed OCR underway
+  INSPECTION_SCHEDULED  // Inspector dispatched / scheduled
+  INSPECTED             // 80-point on-ground inspection completed
+  CAPTURED              // 3D scan & spatial mesh uploaded
+  READY                 // PIP fully generated and verified
+  ACTIVE_LISTING        // Published and publicly discoverable
+  PAUSED                // Temporarily paused by owner
+  IN_TRANSACTION        // Offer accepted; escrow hold placed
+  TRANSFERRED           // Sub-registrar deed executed; PIP transferred
+  OFF_MARKET            // Retained non-discoverable historical record
+  ARCHIVED              // Hidden from discovery, preserved for audit
+}
+
+/// 6-State User KYC Lifecycle
+enum UserKycStatus {
+  SIGNED_UP             // Mobile & Email set
+  PHONE_VERIFIED        // OTP successfully validated
+  BASIC_KYC             // DigiLocker Aadhaar & PAN tokenized
+  ENHANCED_OWNER        // Ownership deed cross-matched and verified
+  SUSPENDED             // Flagged for fraud or policy violation
+  DELETED               // DPDPA 2023 purge request executed
+}
+
+/// 8-State Ownership & Identity Verification Flow
+enum VerificationStatus {
+  NOT_STARTED
+  KYC_INITIATED
+  IDENTITY_IN_CHECK
+  IDENTITY_VERIFIED
+  DOCS_IN_REVIEW
+  VERIFIED              // AI confidence > 85% or Ops approved
+  MANUAL_QUEUE          // Low AI confidence routed to Ops triage
+  REJECTED              // Validation failed / fraudulent
+}
+
+/// 6-State Listing Lifecycle
+enum ListingStatus {
+  DRAFT
+  PENDING_APPROVAL      // Awaiting LQA (Listing Quality Auditor) check
+  ACTIVE                // LQA score >= 72; visible to buyers
+  PAUSED
+  EXPIRED               // Inactive for 90 days
+  CLOSED                // Deal completed or owner closed
+}
+
+/// 7-State Field Inspection Lifecycle
+enum InspectionStatus {
+  SCHEDULED             // Field engineer assigned
+  IN_PROGRESS           // Inspector checked in on-site
+  SUBMITTED             // 80-pt checklist completed
+  QA_PENDING            // Photos and scan uploaded for QA
+  QA_PASSED             // AI anti-spoof + Ops QA approved
+  QA_FAILED             // Quality dispute; re-inspection queued
+  CANCELLED
+}
+
+/// 7-State Legal Document Lifecycle (S3 WORM Vault)
+enum DocumentStatus {
+  UPLOADED              // Encrypted upload received
+  EXTRACTING            // OCR and AI parsing running (DEE)
+  EXTRACTED             // Entities (survey #, owner, liens) parsed
+  VALIDATED             // Cross-matched with government records
+  REVIEWING             // Low confidence match; manual queue
+  REJECTED
+  EXPIRED               // Expiration date passed (e.g., NOC, tax)
+}
+
+/// 8-State Transaction & Escrow Lifecycle
+enum TransactionStatus {
+  INITIATED             // Buyer signals structured interest
+  NEGOTIATING           // Offer and counter-offer loop
+  AGREED                // Commercial terms accepted
+  ESCROW_HELD           // Token payment locked in Razorpay Escrow
+  EXECUTING             // Lease/Sale agreement e-Signed
+  COMPLETED             // Registration complete; escrow funds released
+  DISPUTED              // Dispute raised by either party
+  ABORTED               // Transaction cancelled; escrow refunded
+}
+
+/// 5-State Listing Quality Auditor (LQA) Scoring Flow
+enum LqaStatus {
+  QUEUED
+  SCORING
+  SCORED
+  APPROVED              // Score >= 72
+  REJECTED              // Score < 72; returns to draft with notes
+}
+
+// ============================================================================
+// 2. DOMAIN ENUMS & ATTRIBUTES
+// ============================================================================
+
+enum UserRole {
+  OWNER                 // P1 Property Owner
+  BUYER                 // P2 Buyer / Tenant
+  INSPECTOR             // P3 Field Inspector (Civil Engineer)
+  NRI_OWNER             // P5 Non-Resident Indian Owner
+  INVESTOR              // P6 Portfolio Investor
+  LENDER_PARTNER        // P7 Institutional Bank / NBFC
+  GOVT_PARTNER          // P8 Government / RERA Data Partner
+}
+
+enum AdminRole {
+  SUPER_ADMIN          // Full system & staff management
+  OPS_LEAD             // Queue oversight & dispute arbitration
+  LEGAL_VERIFIER       // Deed OCR & encumbrance review
+  DISPATCH_MANAGER     // Inspector scheduling & territory management
+  ARBITRATOR           // Escrow dispute arbitrator
+  SUPPORT_AGENT        // Read-only customer support
+}
+
+enum PropertyType {
+  APARTMENT
+  INDEPENDENT_HOUSE
+  VILLA
+  PLOT_LAND
+  PENTHOUSE
+  BUILDER_FLOOR         // A full floor in a low-rise building ("Independent Floor" on the site)
+}
+
+enum PriceBasis {
+  ALL_INCLUSIVE
+  PLUS_GOVT_CHARGES
+}
+
+enum FacingDirection {
+  NORTH
+  SOUTH
+  EAST
+  WEST
+  NORTH_EAST
+  NORTH_WEST
+  SOUTH_EAST
+  SOUTH_WEST
+}
+
+enum DocumentType {
+  SALE_DEED
+  CONVEYANCE_DEED
+  GIFT_DEED
+  ALLOTMENT_LETTER
+  KHATA_CERTIFICATE
+  ENCUMBRANCE_CERTIFICATE
+  PROPERTY_TAX_RECEIPT
+  RERA_APPROVAL
+  BUILDING_PLAN_APPROVAL
+  OCCUPANCY_CERTIFICATE
+  ELECTRICITY_BILL
+}
+
+enum CaptureMethod {
+  MATTERPORT
+  NERF
+  GAUSSIAN_SPLATTING
+  MOBILE_LIDAR
+}
+
+enum RoomCategory {
+  LIVING_ROOM
+  MASTER_BEDROOM
+  GUEST_BEDROOM
+  KITCHEN
+  BATHROOM
+  BALCONY
+  UTILITY_AREA
+  ENTRANCE_LOBBY
+  PARKING
+  FACADE_EXTERIOR
+}
+
+enum MediaKind {
+  PHOTO
+  VIDEO
+  FLOOR_PLAN
+  MASTER_PLAN
+  BROCHURE
+}
+
+enum DefectSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+// ============================================================================
+// 3. MASTER CORE ENTITIES
+// ============================================================================
+
+/// Back-Office Operations Staff (Internal Control Plane)
+/// Scope of a paid PIP entitlement.
+enum UnlockScope {
+  SINGLE_PROPERTY       // One property, purchased at checkout
+  TRUST_PASS            // Every property nationwide for the pass duration
+}
+
+/// Which external authority answered an identity check.
+enum KycProvider {
+  DIGILOCKER            // Meri Pehchaan OAuth, issued documents
+  UIDAI_AUA             // Aadhaar eKYC OTP via the licensed AUA/KUA
+  NSDL_PAN              // PAN name/status cross-check
+  MANUAL_OPS            // Ops override from the identity review queue
+}
+
+enum KycCheckType {
+  IDENTITY_DOCUMENT
+  AADHAAR_EKYC
+  PAN_CROSS_CHECK
+  DEED_NAME_MATCH
+}
+
+enum KycCheckStatus {
+  PENDING
+  VERIFIED
+  FAILED
+  EXPIRED
+}
+
+enum ReviewTargetType {
+  PROPERTY
+  OWNER
+  INSPECTOR
+  BUYER
+}
+
+enum ReviewStatus {
+  PUBLISHED
+  FLAGGED                // Held by fraud heuristics pending ops review
+  REMOVED
+}
+
+enum ConversationStatus {
+  OPEN
+  ARCHIVED
+  BLOCKED
+}
+
+enum InquiryStatus {
+  OPEN
+  RESPONDED
+  CLOSED
+  SPAM
+}
+
+enum InvoiceKind {
+  TOKEN_FEE             // Escrow token booking fee
+  TRUST_PASS            // PIP subscription
+  PIP_UNLOCK            // Single-property unlock
+  INSPECTION_FEE        // Payable to a field inspector
+  COMMISSION
+}
+
+enum InvoiceStatus {
+  DRAFT
+  ISSUED
+  PAID
+  VOID
+}
+
+enum DocumentAccessAction {
+  VIEW
+  DOWNLOAD
+  SHARE_LINK_CREATED
+  SHARE_LINK_REVOKED
+}
+
+enum NotificationChannel {
+  WHATSAPP
+  SMS
+  EMAIL
+  PUSH
+}
+
+enum NotificationStatus {
+  QUEUED
+  SENT
+  DELIVERED
+  FAILED
+  DEAD_LETTER           // Exhausted retries; parked for manual inspection
+}
+
+enum PayoutStatus {
+  PENDING
+  PROCESSING
+  PAID
+  FAILED
+}
+
+// ============================================================================
+// 2b. CROSS-BORDER (INDIA + UAE) & PIP ENUMS
+// ============================================================================
+
+/// Currency a property's money columns are denominated in. Every `*Minor`
+/// column on a property-scoped row (properties, ai_valuations, listings) holds
+/// the 1/100 minor unit of this currency: paise for INR, fils for AED, cents
+/// for USD/EUR. One set of columns plus a currency, rather than parallel
+/// `*Fils` columns, so there is exactly one asking price per property.
+/// Columns still named `*Paise` (transactions, pip_unlocks, invoices, payouts)
+/// really are rupees: they settle in INR through Razorpay.
+enum CurrencyCode {
+  INR
+  AED
+  USD
+  EUR
+}
+
+/// Jurisdiction the property is registered in. Decides which regulator ids
+/// apply: RERA/ULPIN in India, DLD/Trakheesi/Ejari in the UAE.
+enum CountryCode {
+  IN
+  AE
+}
+
+/// Sale or rent. Decides whether the card, map pin and budget filter read
+/// askingPriceMinor or monthlyRentMinor.
+enum ListingMode {
+  BUY
+  RENT
+}
+
+/// How latitude/longitude were obtained. The list-property form asks the owner
+/// to pin the building; the inspector's route is only as good as this.
+enum LocationSource {
+  GEOCODED              // Address lookup only (street-level at best)
+  MAP_PIN               // Owner placed or dragged the pin on the map
+  DEVICE_GPS            // Owner used "I'm at the property"
+  INSPECTOR_CHECKIN     // Corrected from the inspector's on-site check-in
+}
+
+/// What a nearby place is: the PIP's Locality & Commute pills and the
+/// nearest-metro / airport figures. Mapping from source classes lives in the
+/// importer (plan.md, Appendix A), not here.
+enum PoiCategory {
+  SCHOOL
+  PRESCHOOL
+  COLLEGE               // Colleges and universities (subcategory tells which)
+  HOSPITAL
+  CLINIC                // Clinics, doctors, dentists
+  PHARMACY
+  BANK
+  ATM
+  PARK
+  MALL
+  SUPERMARKET
+  CINEMA
+  HOTEL
+  RESTAURANT
+  GYM
+  METRO_STATION         // Station on a subway / monorail / light-rail line
+  RAIL_STATION
+  BUS_STOP
+  AIRPORT
+  PLACE_OF_WORSHIP      // Religion in subcategory. Display only: never a filter or a score
+}
+
+/// Where a place came from. Only sources whose licence lets us store data.
+/// Mapbox Search results are not one: its terms allow temporary use only.
+enum PoiSource {
+  OSM                   // OpenStreetMap via Geofabrik extracts (ODbL, attribution required)
+  MANUAL                // Added by ops
+}
+
+enum CommuteHubCategory {
+  FINANCE
+  AIRPORT
+  TECH
+  COMMERCIAL
+  TRANSIT
+  EDUCATION
+  HEALTH
+}
+
+/// How a property's commute matrix was produced. The PIP labels ESTIMATE as a
+/// rough estimate and MAPBOX with the departure time it was routed for.
+enum CommuteSource {
+  ESTIMATE              // Straight-line distance x road factor at a fixed speed (seed data)
+  MAPBOX                // Routed by Mapbox Matrix, driving-traffic, at a set departure time
+}
+
+/// The PIP amenity grid's tabs.
+enum AmenityCategory {
+  SPORTS
+  CONVENIENCE
+  SAFETY
+  LEISURE
+  ENVIRONMENT
+  PROPERTY
+}
+
+/// SOCIETY amenities (pool, gym, clubhouse) are shared by every unit in the
+/// building; UNIT amenities (private plunge pool, smart-home kit) belong to one flat.
+/// A home in a known society takes SOCIETY amenities from society_amenities;
+/// a home without one (an independent house) keeps them in property_amenities.
+enum AmenityScope {
+  SOCIETY
+  UNIT
+}
+
+/// How we know a home has an amenity.
+enum AmenityStatus {
+  CLAIMED               // Owner or builder says so; not yet checked
+  VERIFIED              // An engineer saw it during an inspection
+  NOT_FOUND             // An engineer looked and it isn't there
+}
+
+enum FurnishingStatus {
+  UNFURNISHED
+  SEMI_FURNISHED
+  FULLY_FURNISHED
+}
+
+/// Main flooring of the home (PIP key facts).
+enum FlooringType {
+  VITRIFIED_TILES
+  CERAMIC_TILES
+  MARBLE
+  ITALIAN_MARBLE
+  GRANITE
+  WOODEN
+  MOSAIC
+  CONCRETE
+  OTHER
+}
+
+/// What the main windows look onto. The WATERFRONT chip is any of SEA, LAKE or RIVER.
+enum PropertyView {
+  GARDEN
+  POOL
+  CLUBHOUSE
+  COMMUNITY
+  MAIN_ROAD
+  CITY
+  SEA
+  LAKE
+  RIVER
+  GOLF_COURSE
+  HILLS
+  FOREST
+}
+
+/// Where a society / project is in its life. Drives the NEW_PROJECTS mode.
+enum ProjectStatus {
+  NEW_LAUNCH
+  UNDER_CONSTRUCTION
+  READY_TO_MOVE
+}
+
+/// What a locality review can praise or criticise. Neutral aspects, so the
+/// same list serves `liked` and `disliked`.
+enum LocalityAspect {
+  CONNECTIVITY
+  PUBLIC_TRANSPORT
+  GREENERY
+  ROADS
+  SAFETY
+  SCHOOLS
+  HEALTHCARE
+  SHOPPING
+  WATER_SUPPLY
+  POWER_SUPPLY
+  TRAFFIC
+  CLEANLINESS
+  NOISE
+}
+
+/// The area a market figure covers.
+enum MarketScope {
+  CITY
+  LOCALITY
+  SOCIETY
+}
+
+enum MarketMetric {
+  ASKING_RATE_PER_SQFT      // From live listings
+  REGISTERED_RATE_PER_SQFT  // From registered sale deeds
+  MONTHLY_RENT              // From live rental listings, per configuration
+}
+
+enum MarketPeriod {
+  MONTH
+  QUARTER
+}
+
+/// Which area a registered deed's sq ft figure refers to.
+enum AreaBasis {
+  CARPET
+  BUILT_UP
+  SUPER_BUILT_UP
+}
+
+/// Title provenance event on the PIP deed timeline.
+enum DeedEventType {
+  SALE_DEED             // Registered absolute sale deed / conveyance
+  GIFT_DEED
+  KHATA_TRANSFER        // Municipal khata moved to the new owner
+  ENCUMBRANCE_CLEARED   // Charge satisfied / EC shows nil encumbrance
+  MORTGAGE_RELEASE      // Bank NOC / satisfaction of charge
+  ULPIN_SEEDED          // Parcel seeded into the state digital land record
+  DLD_CONVEYANCE        // Dubai Land Department e-title deed issued
+  RERA_REGISTRATION     // Project registered with the state RERA
+  INSPECTION_AUDIT      // Independent civil engineering audit
+}
+
+/// Verification state of a deed timeline event. Defaults to PENDING: an event
+/// is shown as verified only once someone has verified it.
+enum DeedEventStatus {
+  PENDING
+  VERIFIED
+  CLEARED               // Encumbrance-type events: charge confirmed released
+  REJECTED
+}
+
+model AdminUser {
+  id                  String          @id @default(uuid())
+  publicId            String          @unique // e.g., "adm_018f3a2b..."
+  email               String          @unique // e.g., "ops@namasthetu.internal"
+  passwordHash        String          // Argon2id hash
+  fullName            String
+  role                AdminRole       @default(OPS_LEAD)
+  department          String          // "Legal Ops", "Field Engineering", "HQ"
+  isActive            Boolean         @default(true)
+  twoFactorSecret     String?
+  lastLoginAt         DateTime?
+
+  // Relations
+  auditLogs           AdminAuditLog[] @relation("AdminActor")
+  reviewedLqaAudits   LqaAudit[]      @relation("LqaReviewer")
+  suspendedUsers      User[]          @relation("SuspendedUsers")
+  arbitratedDeals     Transaction[]   @relation("ArbitratedTransactions")
+  attestedRegistrations Transaction[] @relation("RegistrationAttestor")
+
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+
+  @@index([role])
+  @@index([isActive])
+  @@map("admin_users")
+}
+
+/// Platform Citizen User Entity (Owners, Buyers, NRIs, Investors)
+model User {
+  id                    String              @id @default(uuid())
+  publicId              String              @unique // e.g., "user_018f3a2b..."
+  phone                 String              @unique
+  phoneVerifiedAt       DateTime?
+  email                 String?             @unique
+  emailVerifiedAt       DateTime?
+  fullName              String
+  role                  UserRole            @default(BUYER)
+  kycStatus             UserKycStatus       @default(SIGNED_UP)
+
+  // National Identity Tokens (Masked for PII Protection)
+  digilockerId          String?             @unique
+  aadhaarMasked         String?             // "XXXX-XXXX-1234"
+  aadhaarTokenHash      String?             // Cryptographic token from Nitro Enclave
+  panMasked             String?             // "ABCDE****F"
+  panTokenHash          String?
+  kycCompletedAt        DateTime?
+
+  // Trust & Safety Suspension (POST /api/admin/users/:id/suspend)
+  // The reason was accepted and dropped; kycStatus was overwritten with
+  // SUSPENDED, destroying the state a lift would have to restore. Auth is
+  // stateless JWT, so sessionsRevokedAt is what actually locks the account:
+  // reject any token issued before it.
+  suspendedAt           DateTime?
+  suspensionReason      String?
+  suspendedByAdminId    String?
+  suspendedByAdmin      AdminUser?          @relation("SuspendedUsers", fields: [suspendedByAdminId], references: [id])
+  priorKycStatus        UserKycStatus?      // State to restore when a suspension is lifted
+  sessionsRevokedAt     DateTime?
+
+  // Public owner card on the PIP & chat presence (M08)
+  avatarUrl             String?
+  /// Durable "last seen", bumped when the user sends a message or signs in.
+  /// Live "online now" is the Valkey key presence:<userId> (60 s TTL); this is
+  /// the fallback once it expires. Heartbeats never write here.
+  lastActiveAt          DateTime?
+  /// 30-day median minutes from a buyer's message to this user's reply,
+  /// recomputed nightly; the PIP renders it as "Responds < 30 minutes". Null
+  /// until the user has replied to someone, so no badge is invented.
+  responseTimeMinutes   Int?
+  responseTimeComputedAt DateTime?
+
+  // Preferences & consent
+  /// Server copy of the header currency picker, so it follows the user across devices.
+  preferredCurrency     CurrencyCode        @default(INR)
+  /// ISO 3166-1 alpha-2 country of residence. Not the CountryCode enum: NRI
+  /// buyers and owners live well outside IN/AE.
+  residenceCountry      String?
+  /// DPDPA 2023 and WhatsApp Business policy require an affirmative opt-in, so
+  /// this starts false and whatsappOptInAt records when consent was given.
+  whatsappOptIn         Boolean             @default(false)
+  whatsappOptInAt       DateTime?
+
+  // 1-to-1 Explicit Sub-Profiles (Non-Nullable Domain Invariants)
+  ownerProfile          OwnerProfile?
+  inspectorProfile      InspectorProfile?
+
+  // Relations
+  ownedProperties       Property[]          @relation("PropertyOwner")
+  buyerTransactions     Transaction[]       @relation("BuyerTransactions")
+  sellerTransactions    Transaction[]       @relation("SellerTransactions")
+  disputesRaised        Transaction[]       @relation("DisputesRaised")
+
+  // Entitlements, provenance and engagement (sections 6-8 below)
+  pipUnlocks            PipUnlock[]
+  kycVerifications      KycVerification[]
+  reviewsAuthored       Review[]            @relation("ReviewAuthor")
+  localityReviews       LocalityReview[]
+  reviewsReceived       Review[]            @relation("ReviewSubject")
+  buyerConversations    Conversation[]      @relation("ConversationBuyer")
+  sellerConversations   Conversation[]      @relation("ConversationSeller")
+  messagesSent          Message[]
+  inquiriesSent         Inquiry[]
+  invoices              Invoice[]
+  savedSearches         SavedSearch[]
+  favorites             Favorite[]
+  notifications         Notification[]
+  shareLinksCreated     DocumentShareLink[]
+  documentAccesses      DocumentAccessLog[]
+
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+
+  @@index([role])
+  @@index([kycStatus])
+  @@map("users")
+}
+
+/// Owner Profile (Strict Escrow Payout Invariants)
+model OwnerProfile {
+  id                    String              @id @default(uuid())
+  userId                String              @unique
+  user                  User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Mandatory Escrow Payout Invariants
+  bankAccountNumber     String              // Encrypted in Vault
+  bankIfsc              String              // Mandatory IFSC
+  beneficiaryName       String              // Mandatory legal name matching PAN
+  razorpayContactId     String              // Mandatory payout beneficiary ID
+
+  // NRI Compliance Flags
+  isNri                 Boolean             @default(false)
+  nriCountry            String?             // ISO-3166-1 alpha-2
+
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+
+  @@map("owner_profiles")
+}
+
+/// Field Civil Engineer Inspector Profile (Strict Licensing & Dispatch Invariants)
+model InspectorProfile {
+  id                    String              @id @default(uuid())
+  userId                String              @unique
+  user                  User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Mandatory Civil Engineering & Dispatch Invariants
+  licenseNumber         String              // Mandatory Council of Architecture / Civil Eng. license
+  agencyName            String?             // Third-party inspection agency if outsourced
+  operatingCity         String              // Mandatory operating hub
+  servicePincodes       String[]            // Mandatory serviced postal codes
+  rating                Float               @default(5.0)
+  totalInspections      Int                 @default(0)
+  isAvailable           Boolean             @default(true)
+  payoutUpiId           String              // Mandatory UPI ID for weekly payout
+  feePerInspectionPaise Int                 @default(150000) // Rs 1,500 per passed audit
+
+  // Relations
+  assignments           Inspection[]        @relation("InspectorAssignments")
+  payouts               InspectorPayout[]
+
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+
+  @@index([operatingCity])
+  @@index([isAvailable])
+  @@map("inspector_profiles")
+}
+
+/// Property Entity (The Persistent Entity - PIP Root)
+model Property {
+  id                    String          @id @default(uuid())
+  publicId              String          @unique // e.g., "prop_018f3a2b..."
+  slug                  String          @unique // e.g., "2bhk-wakad-pune-prop-018f3a2b"
+  ulpin                 String?         @unique // 14-digit Unique Land Parcel ID (when assigned)
+  status                PropertyStatus  @default(DRAFT)
+  verificationScore     Int             @default(0) // 0 to 100 (the card's trust score)
+
+  /// Marketing headline on the card and PIP; also matched by the search box.
+  title                 String?
+  country               CountryCode     @default(IN)
+  listingMode           ListingMode     @default(BUY)
+  /// Denomination of every *Minor column on this property (see CurrencyCode).
+  currency              CurrencyCode    @default(INR)
+
+  // Ownership linkage
+  ownerId               String
+  owner                 User            @relation("PropertyOwner", fields: [ownerId], references: [id], onDelete: Restrict)
+
+  // Physical Attributes
+  propertyType          PropertyType    @default(APARTMENT)
+  configuration         String          // "1BHK", "2BHK", "3BHK", "4BHK+"
+  carpetAreaSqft        Float
+  superBuiltUpAreaSqft  Float?
+  floorNumber           Int?
+  totalFloors           Int?
+  facing                FacingDirection?
+  ageYears              Int?
+  parkingSlots          Int             @default(0)
+  bathrooms             Int?            // Can exceed bedrooms (powder rooms, staff quarters)
+  waterSupply           String?         // Filter chip: "Cauvery Direct", "Borewell + RO", "DEWA"
+  /// Null means ready to move in; a date means occupancy from that day.
+  availableFrom         DateTime?
+  /// Drives the GATED_COMMUNITIES category chip.
+  isGatedCommunity      Boolean         @default(false)
+
+  // Unit details (PIP key facts)
+  towerName             String?         // Tower / block / wing, e.g. "D"
+  balconyCount          Int?
+  furnishing            FurnishingStatus?
+  flooring              FlooringType?
+  /// Empty until recorded. The WATERFRONT chip filters on it, hence the GIN index.
+  views                 PropertyView[]  @default([])
+
+  // Address & Spatial Cadastral Coordinates
+  unitNumber            String?
+  /// Society / project name as the card shows it. When societyId is set the
+  /// society row is the truth and this is its snapshot.
+  buildingName          String?
+  societyId             String?
+  society               Society?        @relation(fields: [societyId], references: [id], onDelete: SetNull)
+  /// `locality` and `city` below stay as the card and search snapshot (every
+  /// results row reads them); the locality row carries the page, ratings and trends.
+  localityId            String?
+  localityRecord        Locality?       @relation(fields: [localityId], references: [id], onDelete: SetNull)
+  streetAddress         String
+  locality              String          // e.g., "Wakad", "Gachibowli", "Whitefield"
+  city                  String          // e.g., "Pune", "Hyderabad", "Bengaluru"
+  state                 String          // e.g., "Karnataka"; the emirate for UAE properties
+  pincode               String?         // India only: the UAE has no postal codes
+  latitude              Float
+  longitude             Float
+  locationSource        LocationSource?
+
+  // PostGIS Spatial Point (SRID 4326 for ST_DWithin geospatial search)
+  geom                  Unsupported("geography(Point, 4326)")?
+
+  // Financial baseline: integer minor units of `currency` (paise for INR, fils for AED)
+  askingPriceMinor    BigInt?         // Sale price; read when listingMode = BUY
+  monthlyRentMinor     BigInt?         // Monthly rent; read when listingMode = RENT
+  maintenanceMonthlyMinor BigInt?
+  /// ALL_INCLUSIVE: the price covers registration and stamp duty; otherwise shown as "+ govt. charges".
+  priceBasis            PriceBasis?
+  /// Owner's description of the home (PIP "About this home"). Not on cards.
+  description           String?
+
+  // Showcase content
+  /// Ordered gallery; images[0] is the card cover. Kept on the row because
+  /// every card reads it and it is always read whole.
+  images                String[]        @default([])
+  mediaAssets           MediaAsset[]
+  /// Legacy free-text amenities. Marketing copy can't be grouped, given an
+  /// icon or filtered reliably, so propertyAmenities replaces it. Drop this
+  /// column and its GIN index once the backfill has run and the site reads
+  /// the catalogue.
+  amenities             String[]        @default([])
+
+  // Regulatory identifiers (by jurisdiction)
+  reraNumber            String?         // India: state RERA registration, shared by every unit in a project
+  dldPermitNumber       String?         // UAE: Trakheesi advertising permit
+  titleDeedNumber       String?         // UAE: DLD electronic title deed
+  ejariNumber           String?         // UAE: Ejari tenancy registration (rentals)
+  dldQrCodeUrl          String?         // UAE: DLD validation QR link
+
+  // Search-card snapshot (denormalised on purpose)
+  // The card, map pin and filters read these for every row on a results page.
+  // Resolving them through the latest inspection and valuation per row would
+  // put two lateral subqueries in every search. The job that writes the
+  // source row also refreshes these; the source row stays the truth.
+  /// Owner is ENHANCED_OWNER and not suspended. Drives "Owner listed only" and
+  /// the DIRECT_OWNER chip. Recompute on every owner KYC change or suspension:
+  /// a stale true is a false trust claim.
+  verifiedOwnerBadge    Boolean         @default(false)
+  /// Curated headline badge, e.g. "Top 1% Trust Score · Villa".
+  topBadge              String?
+  /// From the latest QA-passed inspection (card "Inspected <date>" and seepage warning).
+  lastInspectedAt       DateTime?
+  seepageDetected       Boolean?
+  /// Asking price vs latest AVM estimate in percent (-3.2 = 3.2% below).
+  /// Card badge and TOP_AVM_DEALS chip; refresh when price or valuation changes.
+  avmDifferencePct      Float?
+  /// Latest valuation's gross rental yield. HIGH_RENTAL_YIELD chip.
+  grossYieldPct         Float?
+
+  // Module & Subsystem Relations
+  digitalTwin           DigitalTwin?
+  inspections           Inspection[]
+  documents             LegalDocument[]
+  listings              Listing[]
+  transactions          Transaction[]
+  aiValuations          AiValuation[]
+  lqaAudits             LqaAudit[]
+  pipUnlocks            PipUnlock[]
+  reviews               Review[]
+  conversations         Conversation[]
+  inquiries             Inquiry[]
+  favorites             Favorite[]
+  priceForecasts        PriceForecast[]
+  deedHistory           DeedHistoryEvent[]
+  neighbourhood         NeighbourhoodIntelligence?
+  propertyAmenities     PropertyAmenity[]
+  registeredSales       RegisteredTransaction[]
+  /// Locality reviews this home backs as proof of residence.
+  localityReviews       LocalityReview[]
+
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+
+  @@index([status])
+  @@index([status, listingMode, city])  // Every search: live listings, BUY/RENT tab, city
+  @@index([city, locality])
+  @@index([configuration])
+  @@index([askingPriceMinor])
+  @@index([monthlyRentMinor])          // Rent budget filter
+  @@index([verificationScore])
+  @@index([amenities], type: Gin)
+  @@index([reraNumber])
+  @@index([dldPermitNumber])
+  @@index([societyId])
+  @@index([localityId])
+  @@index([views], type: Gin)
+  @@map("properties")
+}
+
+/// Digital Twin Entity (3D glTF Walkthrough & Spatial Metadata)
+model DigitalTwin {
+  id                    String          @id @default(uuid())
+  publicId              String          @unique // e.g., "twin_018f3a2b..."
+  propertyId            String          @unique
+  property              Property        @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  // 3D Model Assets
+  modelUrl              String          // CDN link to compressed Draco .gltf
+  captureMethod         CaptureMethod   @default(MATTERPORT)
+  qualityScore          Int             @default(0) // 0 to 100
+  meshSizeMb            Float?
+  vertexCount           Int?
+
+  // Spatial metadata & Floor plan
+  floorPlanUrl          String?         // 2D dimensioned floor plan image
+  spatialMetadataJson   Json?           // Tagged objects, room boundaries, camera nodes
+  /// Room picker in the 3D tour, in display order:
+  /// [{ id, name, dimensions, carpetSqft, highlight, wallColor, floorType }].
+  /// Measured by this capture, and shown only when a twin exists, so it lives here.
+  spatialRooms          Json?
+
+  capturedAt            DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+
+  @@map("digital_twins")
+}
+
+/// Field Inspection Entity (80-Point Physical Audit)
+model Inspection {
+  id                    String            @id @default(uuid())
+  publicId              String            @unique // e.g., "insp_018f3a2b..."
+  propertyId            String
+  property              Property          @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  inspectorId           String
+  inspector             InspectorProfile  @relation("InspectorAssignments", fields: [inspectorId], references: [id])
+
+  status                InspectionStatus  @default(SCHEDULED)
+  scheduledDate         DateTime
+  startedAt             DateTime?
+  completedAt           DateTime?
+
+  // Outdoor Cadastral Check-In Anchor (25m gate, doc 05)
+  // checkInInspector accepts a facade photo and computes the geofence distance,
+  // then throws both away. Without these the anti-spoof gate leaves no evidence.
+  facadePhotoUrl        String?
+  checkInLatitude       Float?
+  checkInLongitude      Float?
+  checkInDistanceMeters Float?
+
+  // Scoring Aggregate (0 to 100)
+  scoreOverall          Int?
+  scoreStructural       Int?
+  scoreElectrical       Int?
+  scorePlumbing         Int?
+  scoreFinishes         Int?
+  scoreLocality         Int?
+  scoreCadastral        Int?              // Title chain, EC, ULPIN match: the PIP radar's cadastral axis
+
+  // Complete 80-Point Checklist JSON & Generated Report
+  checklistDataJson     Json?             // Structured responses for the 80 points
+  reportPdfUrl          String?           // S3 link to the 20-page generated PDF
+  reportAiSummary       String?           // Model-written summary
+
+  // PIP inspection panel
+  /// The engineer's own summary; reportAiSummary is the model's.
+  summary               String?
+  /// Headline findings: [{ category, status: PASS|OPTIMAL|ATTENTION, detail }].
+  keyFindings           Json?
+  /// Checklist points actually verified out of 80; 0 until submitted.
+  verifiedPointsCount   Int               @default(0)
+  /// Null until assessed, so a scheduled inspection never reads as "no seepage".
+  seepageDetected       Boolean?
+  /// Encumbrance found against the title during the audit. Null until assessed.
+  activeLiens           Boolean?
+
+  photos                InspectionPhoto[]
+  /// Amenities this inspection confirmed or failed to find.
+  verifiedAmenities     PropertyAmenity[]
+  /// Society amenities confirmed while inspecting a unit in that society.
+  verifiedSocietyAmenities SocietyAmenity[]
+
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+
+  @@index([propertyId])
+  @@index([inspectorId])
+  @@index([status])
+  @@map("inspections")
+}
+
+/// Geotagged Anti-Spoof Inspection Photo (PAM Substrate)
+model InspectionPhoto {
+  id                    String          @id @default(uuid())
+  inspectionId          String
+  inspection            Inspection      @relation(fields: [inspectionId], references: [id], onDelete: Cascade)
+
+  photoUrl              String          // High-resolution original photo in S3
+  thumbnailUrl          String?
+  roomCategory          RoomCategory
+  
+  // Anti-Spoofing & Geotag Verification
+  latitude              Float
+  longitude             Float
+  exifTimestamp         DateTime
+  isGeotagValid         Boolean         @default(false) // Validated against Cadastral polygon
+
+  // AI Defect Detection (PAM Vision Model Output)
+  hasDefect             Boolean         @default(false)
+  defectSeverity        DefectSeverity?
+  defectType            String?         // e.g., "seepage", "wall_crack", "hollow_tile"
+  defectBoundingBoxJson Json?
+
+  createdAt             DateTime        @default(now())
+
+  // The offline PWA re-sends a whole batch when the network returns, so the
+  // upsert key has to exist or ON CONFLICT DO NOTHING is a no-op and every
+  // retry duplicates all 40 photos.
+  @@unique([inspectionId, photoUrl])
+  @@index([inspectionId])
+  @@index([roomCategory])
+  @@map("inspection_photos")
+}
+
+/// Legal Document Entity (S3 WORM Object Lock Legal Vault - 7-Yr Retention)
+model LegalDocument {
+  id                    String          @id @default(uuid())
+  publicId              String          @unique // e.g., "doc_018f3a2b..."
+  propertyId            String
+  property              Property        @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  documentType          DocumentType
+  status                DocumentStatus  @default(UPLOADED)
+
+  // S3 Storage & Immutability Governance
+  s3Key                 String          // KMS AES-256 encrypted object key
+  s3Bucket              String
+  s3WormLockUntil       DateTime?       // 7-year retention timestamp for legal compliance
+
+  // AI OCR & Entity Extraction (DEE Engine)
+  aiExtractedDataJson   Json?           // Parsed survey #, owner names, encumbrances
+  aiConfidenceScore     Float?          // 0.0 to 1.0 (Threshold: 0.85 for auto-approval)
+  aiSummaryPlainEnglish String?         // 3-paragraph plain-language summary
+  requiresManualReview  Boolean         @default(false)
+
+  // Expiration Tracking (for tax receipts, NOCs)
+  validUntil            DateTime?
+
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+
+  shareLinks            DocumentShareLink[]
+  accessLogs            DocumentAccessLog[]
+  deedEvents            DeedHistoryEvent[]
+
+  @@index([propertyId])
+  @@index([documentType])
+  @@index([status])
+  @@map("legal_documents")
+}
+
+/// Listing Activation Entity (Marketplace Artifact of PIP)
+model Listing {
+  id                    String          @id @default(uuid())
+  publicId              String          @unique // e.g., "list_018f3a2b..."
+  propertyId            String
+  property              Property        @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  status                ListingStatus   @default(DRAFT)
+  listingPriceMinor     BigInt          // Asking price in paise
+
+  // Listing Quality Audit (LQA) Score (Gate: >= 72 to go active)
+  lqaScore              Int             @default(0)
+  lqaPassed             Boolean         @default(false)
+
+  // Metrics
+  viewCount             Int             @default(0)
+  inquiryCount          Int             @default(0)
+
+  activatedAt           DateTime?
+  expiresAt             DateTime?
+  closedAt              DateTime?
+
+  transactions          Transaction[]
+  inquiries             Inquiry[]
+
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+
+  @@index([propertyId])
+  @@index([status])
+  @@index([listingPriceMinor])
+  @@map("listings")
+}
+
+/// LQA Audit Record (Audit History)
+model LqaAudit {
+  id                    String          @id @default(uuid())
+  propertyId            String
+  property              Property        @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  status                LqaStatus       @default(QUEUED)
+  overallScore          Int             // 0 to 100
+  breakdownJson         Json            // Flags for suspicious price, photo mismatch, missing deed
+  feedbackNarrative     String?         // Owner-facing, machine-generated. Ops must not overwrite it.
+
+  // Ops Spot-Check Gate (doc 05 §8: >= 90 auto-clears, 72-89 needs a human)
+  // requiresSpotCheck was only ever buried inside breakdownJson, so the queue
+  // had no column to filter on and every audit landed APPROVED or REJECTED.
+  requiresSpotCheck     Boolean         @default(false)
+  reviewedByAdminId     String?
+  reviewedByAdmin       AdminUser?      @relation("LqaReviewer", fields: [reviewedByAdminId], references: [id])
+  reviewedAt            DateTime?
+  reviewNotes           String?         // Internal ops rationale, distinct from feedbackNarrative
+
+  evaluatedAt           DateTime        @default(now())
+  updatedAt             DateTime        @default(now()) @updatedAt
+
+  @@index([propertyId])
+  @@index([status, evaluatedAt])
+  @@map("lqa_audits")
+}
+
+/// Transaction & Razorpay Escrow Entity
+model Transaction {
+  id                    String            @id @default(uuid())
+  publicId              String            @unique // e.g., "txn_018f3a2b..."
+  propertyId            String
+  property              Property          @relation(fields: [propertyId], references: [id], onDelete: Restrict)
+  listingId             String
+  listing               Listing           @relation(fields: [listingId], references: [id], onDelete: Restrict)
+
+  buyerId               String
+  buyer                 User              @relation("BuyerTransactions", fields: [buyerId], references: [id])
+  sellerId              String
+  seller                User              @relation("SellerTransactions", fields: [sellerId], references: [id])
+
+  status                TransactionStatus @default(INITIATED)
+  agreedAmountPaise     BigInt            // Final agreed deal value in paise
+  tokenAmountPaise      BigInt            // Escrow token amount in paise
+
+  // Razorpay Escrow Integration
+  razorpayOrderId       String?           @unique
+  razorpayPaymentId     String?           @unique
+  escrowLockedAt        DateTime?
+  escrowReleasedAt      DateTime?
+  escrowRefundedAt      DateTime?
+
+  // Dispute & Arbitration Record
+  // disputeTransaction and arbitrateDispute both echo their reason/notes back in
+  // the response without storing them, so the escrow ledger has nothing to show.
+  disputeReason         String?
+  disputeRaisedById     String?
+  disputeRaisedBy       User?             @relation("DisputesRaised", fields: [disputeRaisedById], references: [id])
+  disputeRaisedAt       DateTime?
+  arbitrationNotes      String?
+  arbitratedByAdminId   String?
+  arbitratedByAdmin     AdminUser?        @relation("ArbitratedTransactions", fields: [arbitratedByAdminId], references: [id])
+  arbitratedAt          DateTime?
+
+  // Legal Agreement & e-Sign
+  agreementDocUrl       String?           // Digitally signed rental / sale agreement
+  eSignRequestId        String?
+
+  // Sub-Registrar (SRO) Conveyance Attestation
+  // isRegisteredWithGovt asserts to the state that a transfer was registered —
+  // a claim with legal weight. attestRegistration set the boolean and kept the
+  // deed details only as free text inside an audit-log JSON blob, so the
+  // transaction row carried a bare true with no evidence behind it. These
+  // columns are what a registrar, a court, or a buyer's counsel would ask for.
+  isRegisteredWithGovt  Boolean           @default(false)
+  registeredDeedNumber  String?           // Kaveri / SRO deed number
+  registrationVolume    String?
+  registrationDate      DateTime?
+  sroOffice             String?           // Issuing sub-registrar office
+  attestedByAdminId     String?
+  attestedByAdmin       AdminUser?        @relation("RegistrationAttestor", fields: [attestedByAdminId], references: [id])
+  attestedAt            DateTime?
+
+  // Engagement & billing relations
+  reviews               Review[]
+  conversation          Conversation?
+  invoices              Invoice[]
+
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+
+  @@index([propertyId])
+  @@index([buyerId])
+  @@index([sellerId])
+  @@index([status])
+  @@map("transactions")
+}
+
+/// AI Valuation Intelligence Record (AVM / VIE Substrate)
+model AiValuation {
+  id                    String          @id @default(uuid())
+  propertyId            String
+  property              Property        @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  estimateMinor         BigInt          // LightGBM predicted valuation in paise
+  confidenceLowMinor    BigInt          // -15% band
+  confidenceHighMinor   BigInt          // +15% band
+
+  marketPosition        String          // "BELOW_MARKET", "ALIGNED", "ABOVE_MARKET"
+  demandSignal          String          // "COLD", "WARM", "HOT"
+
+  // Composite Risk Breakdown (0 to 100, lower is better)
+  riskScoreOverall      Int             @default(0)
+  riskScoreLegal        Int             @default(0)
+  riskScoreMarket       Int             @default(0)
+  riskScoreClimate      Int             @default(0)
+
+  /// Doc 03 M05: the comparables radar shows the last 5-10 verified
+  /// neighbourhood sales with similarity scores. Stored with the valuation that
+  /// produced it so the figure stays explainable after the market moves.
+  comparablesJson       Json?
+  narrativeSummary      String          // Generated plain-language narrative
+
+  // Ownership Lens (PIP valuation card). Money in minor units of Property.currency.
+  /// Asking price the estimate was compared against, so the gap below stays
+  /// explainable after the owner changes the price.
+  listedPriceMinor      BigInt?
+  differencePercentage  Float?          // (listed - estimate) / estimate; -3.2 = 3.2% below
+  grossYieldPercentage  Float?          // Annual rent / price, e.g. 3.8
+  monthlyRentalEstimateMinor BigInt?
+  projected5YrAppreciationPct Float?    // e.g. 44 for +44%
+  appreciationDriver    String?         // e.g. "Airport corridor expansion"
+  historicalTransactionsCount Int       @default(0) // Registered sales behind the estimate
+
+  generatedAt           DateTime        @default(now())
+
+  @@index([propertyId])
+  @@map("ai_valuations")
+}
+
+/// Immutable Administrative Audit Log (CERT-In & DPDPA Compliance)
+model AdminAuditLog {
+  id                    String          @id @default(uuid())
+  actorAdminId          String
+  actor                 AdminUser       @relation("AdminActor", fields: [actorAdminId], references: [id])
+
+  action                String          // e.g., "UNMASK_AADHAAR", "APPROVE_DEED_MANUAL", "DISPATCH_INSPECTOR"
+  targetEntity          String          // e.g., "Property", "User", "LegalDocument"
+  targetEntityId        String
+  ipAddressHashed       String          // Masked network telemetry
+  userAgent             String?
+  payloadJson           Json?           // State diff / reason captured
+
+  createdAt             DateTime        @default(now())
+
+  @@index([actorAdminId])
+  @@index([targetEntity, targetEntityId])
+  @@index([createdAt])
+  @@map("admin_audit_logs")
+}
+
+// ============================================================================
+// 6. ENTITLEMENTS, PROVENANCE & LEGAL EVIDENCE
+//
+// Records that carry money or legal weight and previously had no durable home.
+// See outstanding-work-spec.md section A for the failure each one closes.
+// ============================================================================
+
+/// Paid PIP Entitlement (Deep Intelligence unlock / nationwide Trust Pass)
+///
+/// Entitlements were written only to Valkey, as `user:<id>:unlocked:<propertyId>`
+/// and `user:<id>:trust_pass`, with a TTL. Those keys represent real money, so a
+/// cache flush, a restart without persistence, or eviction under memory pressure
+/// silently destroyed access a customer had paid for — with no record left to
+/// reconcile against the gateway, refund from, or prove entitlement with in a
+/// dispute. Postgres is the record of sale; Valkey stays the read cache in front
+/// of it and may be rebuilt from here at any time.
+///
+/// Renewals are deliberately separate rows rather than an updated expiry: the
+/// billing history is the audit trail, and collapsing it loses what was sold when.
+model PipUnlock {
+  id                    String          @id @default(uuid())
+  userId                String
+  user                  User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// Null for TRUST_PASS, which grants every property nationwide.
+  propertyId            String?
+  property              Property?       @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  scope                 UnlockScope
+  amountPaise           BigInt
+  /// Reconciliation key against the payment gateway.
+  razorpayPaymentId     String?         @unique
+  invoiceId             String?
+
+  grantedAt             DateTime        @default(now())
+  /// Null means perpetual. A Trust Pass sets this 30 days out.
+  expiresAt             DateTime?
+  /// Set on refund or chargeback; an entitlement is live only while this is null.
+  revokedAt             DateTime?
+  revocationReason      String?
+
+  createdAt             DateTime        @default(now())
+
+  @@index([userId, expiresAt])
+  @@index([propertyId])
+  @@index([razorpayPaymentId])
+  @@map("pip_unlocks")
+}
+
+/// Identity Verification Provenance (one immutable row per external check)
+///
+/// `users.kycStatus` records where a citizen got to; it cannot record why. Under
+/// AML and CERT-In obligations an auditor must trace any promotion back to the
+/// provider response that justified it — which authority, which reference, at
+/// what confidence, when. Masked values plus `kycCompletedAt` on the user row
+/// cannot answer that, and re-verification would overwrite the previous answer.
+///
+/// Rows are append-only. Never store a raw Aadhaar or PAN here: `maskedValue`
+/// holds the same masked form persisted on the user, and nothing else.
+model KycVerification {
+  id                    String          @id @default(uuid())
+  userId                String
+  user                  User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  provider              KycProvider
+  checkType             KycCheckType
+  status                KycCheckStatus  @default(PENDING)
+
+  /// Provider-side transaction or request id, for reconciliation and support.
+  providerRefId         String?
+  /// Provider confidence where one is returned (doc 06 auto-approves above 0.85).
+  confidence            Float?
+  /// Masked or derived value only (e.g. "XXXX-XXXX-1234").
+  maskedValue           String?
+  failureReason         String?
+
+  /// The KYC transition this check justified, if it caused one. Null means the
+  /// check ran but did not move the citizen (e.g. one factor of a required pair).
+  resultingKycStatus    UserKycStatus?
+
+  requestedAt           DateTime        @default(now())
+  completedAt           DateTime?
+
+  @@index([userId, provider])
+  @@index([status])
+  @@index([providerRefId])
+  @@map("kyc_verifications")
+}
+
+// ============================================================================
+// 7. REPUTATION & COMMUNICATION (M10, M08)
+// ============================================================================
+
+/// Verified-Transaction Review (M10)
+///
+/// Doc 03 M10 makes the escrow transaction the gate: only a party to a completed
+/// deal may review it. That single constraint is what separates this from the
+/// open review spam that makes portal ratings worthless, so `transactionId` is
+/// mandatory rather than optional. The unique key allows each participant one
+/// review per target per deal — a buyer may rate the property and the owner, but
+/// not the same target twice.
+model Review {
+  id                    String            @id @default(uuid())
+  transactionId         String
+  transaction           Transaction       @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+
+  authorUserId          String
+  author                User              @relation("ReviewAuthor", fields: [authorUserId], references: [id], onDelete: Cascade)
+
+  targetType            ReviewTargetType
+  /// Exactly one of these is set, matching targetType.
+  targetPropertyId      String?
+  targetProperty        Property?         @relation(fields: [targetPropertyId], references: [id], onDelete: Cascade)
+  targetUserId          String?
+  targetUser            User?             @relation("ReviewSubject", fields: [targetUserId], references: [id], onDelete: Cascade)
+
+  rating                Int               // 1 to 5
+  title                 String?
+  body                  String?
+
+  status                ReviewStatus      @default(PUBLISHED)
+  /// Populated by the fraud heuristics in M10 when a review is held.
+  flaggedReason         String?
+
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+
+  @@unique([transactionId, authorUserId, targetType])
+  @@index([targetPropertyId])
+  @@index([targetUserId])
+  @@index([status])
+  @@map("reviews")
+}
+
+/// Owner-Buyer Conversation (M08)
+///
+/// One thread per (property, buyer) so a buyer cannot fragment negotiation
+/// across parallel threads and an owner sees a single history per counterparty.
+/// Links to a transaction once the thread produces a deal, which is what lets a
+/// review later prove the parties actually transacted.
+model Conversation {
+  id                    String              @id @default(uuid())
+  propertyId            String
+  property              Property            @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  buyerId               String
+  buyer                 User                @relation("ConversationBuyer", fields: [buyerId], references: [id], onDelete: Cascade)
+  sellerId              String
+  seller                User                @relation("ConversationSeller", fields: [sellerId], references: [id], onDelete: Cascade)
+
+  /// Set when the thread results in a deal.
+  transactionId         String?             @unique
+  transaction           Transaction?        @relation(fields: [transactionId], references: [id])
+
+  status                ConversationStatus  @default(OPEN)
+  /// Denormalised for inbox ordering without aggregating messages on every load.
+  lastMessageAt         DateTime?
+
+  messages              Message[]
+
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+
+  @@unique([propertyId, buyerId])
+  @@index([sellerId, lastMessageAt])
+  @@map("conversations")
+}
+
+/// Immutable Chat Message with PII Redaction (M08)
+///
+/// Doc 03 M08 requires an immutable log with automated PII redaction: phone
+/// numbers and email addresses swapped out before storage, so the platform
+/// cannot become a channel for taking deals off-platform and so a leaked
+/// database does not expose contact details. There is deliberately no
+/// `updatedAt` and no delete flag — an editable audit log is not an audit log.
+/// `redactionCount` records how much was stripped, which is the signal the
+/// fraud heuristics watch.
+model Message {
+  id                    String          @id @default(uuid())
+  conversationId        String
+  conversation          Conversation    @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  senderUserId          String
+  sender                User            @relation(fields: [senderUserId], references: [id], onDelete: Cascade)
+
+  /// Post-redaction body. The raw text is never persisted.
+  body                  String
+  redactionCount        Int             @default(0)
+
+  sentAt                DateTime        @default(now())
+  readAt                DateTime?
+
+  @@index([conversationId, sentAt])
+  @@map("messages")
+}
+
+/// Buyer Inquiry / Lead (M01 owner inbox)
+///
+/// The entry point before a conversation exists: an owner sees the buyer's
+/// verification badge and identity score and decides whether to open a thread.
+/// Doc 03 M06 calls this the buyer profile preview, and it is the trust mechanic
+/// that makes an open inbox safe. Kept separate from Conversation so a declined
+/// or spam inquiry never creates a message thread.
+model Inquiry {
+  id                    String          @id @default(uuid())
+  propertyId            String
+  property              Property        @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  listingId             String?
+  listing               Listing?        @relation(fields: [listingId], references: [id])
+
+  buyerId               String
+  buyer                 User            @relation(fields: [buyerId], references: [id], onDelete: Cascade)
+
+  message               String?
+  status                InquiryStatus   @default(OPEN)
+  /// Snapshot of the buyer KYC state at inquiry time, so the owner sees what
+  /// they actually decided on even if the buyer changes later.
+  buyerKycAtInquiry     UserKycStatus
+
+  respondedAt           DateTime?
+  createdAt             DateTime        @default(now())
+
+  @@index([propertyId, status])
+  @@index([buyerId])
+  @@map("inquiries")
+}
+
+// ============================================================================
+// 8. BILLING, ENGAGEMENT, VAULT ACCESS & DELIVERY
+// ============================================================================
+
+/// GST Invoice (M01 earnings ledger)
+///
+/// Indian tax law requires a GST invoice per taxable supply, with the tax
+/// component itemised rather than folded into a gross figure. Amounts stay in
+/// integer paise for the same reason every other money column does: a float
+/// rupee value cannot represent a tax split exactly.
+model Invoice {
+  id                    String          @id @default(uuid())
+  publicId              String          @unique // e.g. "inv_018f3a2b..."
+
+  userId                String
+  user                  User            @relation(fields: [userId], references: [id], onDelete: Restrict)
+  transactionId         String?
+  transaction           Transaction?    @relation(fields: [transactionId], references: [id])
+
+  kind                  InvoiceKind
+  status                InvoiceStatus   @default(DRAFT)
+
+  netAmountPaise        BigInt          // Taxable value
+  taxPaise              BigInt          @default(0)
+  totalAmountPaise      BigInt
+  gstin                 String?         // Recipient GSTIN where B2B
+  placeOfSupply         String?         // State code, drives CGST/SGST vs IGST
+
+  pdfUrl                String?
+  issuedAt              DateTime?
+  paidAt                DateTime?
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+
+  @@index([userId, status])
+  @@index([transactionId])
+  @@map("invoices")
+}
+
+/// Saved Search with Alerting (M06)
+model SavedSearch {
+  id                    String          @id @default(uuid())
+  userId                String
+  user                  User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name                  String
+  /// The 14-filter parameter set, stored verbatim so a saved search keeps
+  /// working when new filters are added.
+  filtersJson           Json
+  alertsEnabled         Boolean         @default(false)
+  lastAlertedAt         DateTime?
+
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+
+  @@index([userId])
+  @@map("saved_searches")
+}
+
+/// Shortlisted Property (M06)
+model Favorite {
+  id                    String          @id @default(uuid())
+  userId                String
+  user                  User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  propertyId            String
+  property              Property        @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  createdAt             DateTime        @default(now())
+
+  @@unique([userId, propertyId])
+  @@index([propertyId])
+  @@map("favorites")
+}
+
+/// Watermarked Document Share Link (M07)
+///
+/// Doc 03 M07 promises session-bound, watermarked links with view limits and
+/// expiry. Only the hash of the token is stored: a leaked database must not
+/// yield working share links, exactly as with session tokens.
+model DocumentShareLink {
+  id                    String              @id @default(uuid())
+  documentId            String
+  document              LegalDocument       @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  createdByUserId       String
+  createdBy             User                @relation(fields: [createdByUserId], references: [id], onDelete: Cascade)
+
+  /// SHA-256 of the share token. The token itself is shown once, at creation.
+  tokenHash             String              @unique
+  watermarkText         String?             // Usually the recipient identity
+  maxViews              Int?
+  viewCount             Int                 @default(0)
+  expiresAt             DateTime?
+  revokedAt             DateTime?
+
+  accessLogs            DocumentAccessLog[]
+  createdAt             DateTime            @default(now())
+
+  @@index([documentId])
+  @@map("document_share_links")
+}
+
+/// Immutable Vault Access Log (M07)
+///
+/// Doc 03 M07: every view and download is logged so an owner can see who opened
+/// their deed and when. That promise is only worth something if the log is
+/// written on the read path itself, not reconstructed later. IP is hashed, in
+/// line with admin_audit_logs and DPDPA data-minimisation.
+model DocumentAccessLog {
+  id                    String                @id @default(uuid())
+  documentId            String
+  document              LegalDocument         @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  shareLinkId           String?
+  shareLink             DocumentShareLink?    @relation(fields: [shareLinkId], references: [id])
+
+  /// Null for an anonymous holder of a share link.
+  actorUserId           String?
+  actor                 User?                 @relation(fields: [actorUserId], references: [id])
+
+  action                DocumentAccessAction
+  ipAddressHashed       String
+  userAgent             String?
+  accessedAt            DateTime              @default(now())
+
+  @@index([documentId, accessedAt])
+  @@index([shareLinkId])
+  @@map("document_access_logs")
+}
+
+/// Outbound Notification with Delivery State (Phase 1C)
+///
+/// The roadmap specifies a Valkey stream consumer with a dead-letter queue. A
+/// stream alone cannot answer "did this owner ever get told their PIP was
+/// ready" once the entry is trimmed, so delivery state is persisted: attempts,
+/// the provider message id for support, and a terminal DEAD_LETTER for anything
+/// that exhausts its retries.
+model Notification {
+  id                    String              @id @default(uuid())
+  userId                String
+  user                  User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  channel               NotificationChannel
+  /// Registered template name (DLT-approved for SMS/WhatsApp in India).
+  template              String
+  payloadJson           Json?
+
+  status                NotificationStatus  @default(QUEUED)
+  attempts              Int                 @default(0)
+  lastError             String?
+  providerMessageId     String?
+
+  scheduledAt           DateTime            @default(now())
+  sentAt                DateTime?
+  deliveredAt           DateTime?
+
+  @@index([userId, status])
+  @@index([status, scheduledAt])
+  @@map("notifications")
+}
+
+/// Field Inspector Payout Run
+///
+/// getInspectorEarnings computes earnings on the fly from completed audits,
+/// which is fine for a dashboard but reconciles against nothing: there is no
+/// record of what was actually paid, when, or against which audits. A payout
+/// ledger is what makes the earnings figure auditable and a missed payment
+/// provable.
+model InspectorPayout {
+  id                    String            @id @default(uuid())
+  inspectorProfileId    String
+  inspector             InspectorProfile  @relation(fields: [inspectorProfileId], references: [id], onDelete: Restrict)
+
+  periodStart           DateTime
+  periodEnd             DateTime
+  inspectionCount       Int
+  grossPaise            BigInt
+  deductionsPaise       BigInt            @default(0)
+  netPaise              BigInt
+
+  status                PayoutStatus      @default(PENDING)
+  /// Snapshot of the UPI id used, since the profile value may change later.
+  payoutUpiId           String
+  providerRef           String?
+  failureReason         String?
+  paidAt                DateTime?
+
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+
+  @@unique([inspectorProfileId, periodStart, periodEnd])
+  @@index([status])
+  @@map("inspector_payouts")
+}
+
+/// 12-Month Price Forecast (M09)
+///
+/// Doc 03 M09 specifies a 12-month trend with 90% confidence bands. Kept apart
+/// from AiValuation because a forecast is a time series regenerated on its own
+/// cadence, and because retaining superseded forecasts is how model drift gets
+/// measured against what actually happened.
+model PriceForecast {
+  id                    String          @id @default(uuid())
+  propertyId            String
+  property              Property        @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  horizonMonths         Int             @default(12)
+  /// Ordered monthly points: { month, estimateMinor, lowMinor, highMinor }.
+  forecastJson          Json
+  modelVersion          String
+  generatedAt           DateTime        @default(now())
+
+  @@index([propertyId, generatedAt])
+  @@map("price_forecasts")
+}
+
+// ============================================================================
+// 9. PIP PROVENANCE & LOCALITY (AMB-SCH-2026-ADD-01)
+// ============================================================================
+
+/// Title Provenance Timeline Event (PIP deed chain)
+///
+/// One row per event so the chain can grow, be verified event by event, and be
+/// ordered deterministically. The supporting deed is linked to legal_documents
+/// rather than stored as a URL: that keeps it inside the WORM vault, where every
+/// open is written to document_access_logs (M07).
+model DeedHistoryEvent {
+  id                    String            @id @default(uuid())
+  propertyId            String
+  property              Property          @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  eventType             DeedEventType
+  status                DeedEventStatus   @default(PENDING)
+  year                  Int               // Always known; the timeline label
+  eventDate             DateTime?         @db.Date // Exact registration date where known
+  title                 String            // e.g. "Absolute Sale Deed (Registered)"
+  parties               String            // e.g. "Prestige Estates → Dr. Ananya Sen"
+  registrationVolume    String?           // Sub-registrar book / volume number
+
+  legalDocumentId       String?
+  legalDocument         LegalDocument?    @relation(fields: [legalDocumentId], references: [id], onDelete: SetNull)
+
+  sequenceOrder         Int               @default(0) // Tie-break within a year
+  verifiedAt            DateTime?
+
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+
+  @@index([propertyId, year, sequenceOrder])
+  @@index([legalDocumentId])
+  @@map("deed_history_events")
+}
+
+/// Locality, Transit & Environmental Radar (PIP "Around <locality>" section)
+///
+/// PIP-only and always read as one block, so it is a 1:1 side table off
+/// properties rather than columns on the search row. Scores have no defaults:
+/// a flood or water-security number is something a buyer relies on, and an
+/// unassessed property must show nothing rather than a plausible 85.
+model NeighbourhoodIntelligence {
+  id                    String    @id @default(uuid())
+  propertyId            String    @unique
+  property              Property  @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  // Civic telemetry row
+  metroDistanceMeters   Int?
+  nearestMetroName      String?
+  airportDistanceMeters Int?
+  /// Legacy seed copies with names only. No longer read: the PIP's nearby
+  /// places come live from pois, with distances. Drop in a later migration.
+  schoolsNearby         String[]  @default([])
+  hospitalNearby        String?
+
+  // Environmental & resilience radar (0-100 unless stated)
+  waterSecurityIndex    Int?
+  waterSecurityNote     String?   // e.g. "Dual source"
+  floodDrainageIndex    Int?
+  floodDrainageNote     String?   // e.g. "Zero inundation in 20-year rain model"
+  greenCanopyPercent    Int?      // Tree cover within 1 km
+  airQualityIndex       Int?      // AQI, lower is better
+
+  /// When metroDistanceMeters / nearestMetroName / airportDistanceMeters were
+  /// last computed from pois, and the date the source data is current to
+  /// (the PIP's "nearby places as of" label). Null while they are seed values.
+  poiComputedAt         DateTime?
+  poiDatasetDate        DateTime? @db.Date
+
+  /// Legacy seed commute matrix:
+  /// [{ hub, category, distanceKm, offPeakMins, peakMins, transitMode, transitOption }]
+  /// No longer read: the PIP computes hub times from commute_hubs on request
+  /// (modules/property/travelTime.ts). Drop with commuteSource and
+  /// commuteComputedAt in a later migration.
+  commuteMatrixJson     Json?
+  /// Provenance of commuteMatrixJson; null on seed rows. Unused, like it.
+  commuteSource         CommuteSource?
+  commuteComputedAt     DateTime?
+
+  computedAt            DateTime?
+  updatedAt             DateTime  @updatedAt
+
+  @@map("neighbourhood_intelligence")
+}
+
+// ============================================================================
+// 10. DISPLAY EXCHANGE RATES
+// ============================================================================
+
+/// Exchange Rate Snapshot (header currency picker)
+///
+/// Display only: nothing that charges or settles money reads this table.
+/// Razorpay bills in rupees and stored amounts stay in their own currency's
+/// minor units. One row per currency pair per publication date, kept rather
+/// than overwritten, so a price shown on a given day can be reproduced.
+/// Decimal(18,8) because a rate is a ratio, not money: it needs fractional
+/// precision that no integer minor unit can hold.
+model ExchangeRate {
+  id                    String          @id @default(uuid())
+  /// Currency being priced, e.g. USD.
+  base                  CurrencyCode
+  /// Currency the rate is expressed in. Always INR today.
+  quote                 CurrencyCode
+  /// Quote units per 1 base unit, e.g. 95.55325224 INR per USD.
+  rate                  Decimal         @db.Decimal(18, 8)
+  source                String
+  /// Provider's publication date. The ECB does not publish on weekends or holidays.
+  asOf                  DateTime        @db.Date
+  /// When the provider last confirmed this publication; drives the refresh.
+  fetchedAt             DateTime        @default(now())
+
+  @@unique([base, quote, asOf])
+  @@map("exchange_rates")
+}
+
+// ============================================================================
+// 11. LOCALITY: NEARBY PLACES, COMMUTE HUBS, AMENITY CATALOGUE (plan.md)
+// ============================================================================
+
+/// A place near homes we list: schools, hospitals, banks, stations and so on.
+///
+/// The PIP's Locality & Commute lists are read live from here, nearest first
+/// over the GIST index, rather than snapshotted per property: they are read
+/// on one PIP at a time, and an ops hide or rename then shows up at once.
+/// Only the figures search reads per row (nearest metro, airport) are copied
+/// onto neighbourhood_intelligence.
+///
+/// Wherever these places are shown, credit "© OpenStreetMap contributors".
+model Poi {
+  id                    String          @id @default(uuid())
+  source                PoiSource
+  /// The object at the source: "node/123" for OSM point layers, "area/123"
+  /// for polygon layers (ways and multipolygons), an ops-chosen key for MANUAL.
+  sourceRef             String
+  /// The source's own class, e.g. Geofabrik fclass "hospital" or "hindu".
+  /// Kept so a mapping change can reclassify without a re-import.
+  sourceClass           String
+  category              PoiCategory
+  /// Finer type within the category. PLACE_OF_WORSHIP: the religion
+  /// ("hindu", "muslim", "christian", "sikh", "buddhist", "jain", "jewish").
+  /// COLLEGE: "college" or "university".
+  subcategory           String?
+  name                  String
+  /// Ops correction that survives re-imports. The PIP shows it when set.
+  nameOverride          String?
+  country               CountryCode
+  /// The operating city the place is near (inside that city's radius in the
+  /// importer), for admin browsing. Null elsewhere: the import covers whole
+  /// Geofabrik zones, and nearby searches only use distance.
+  city                  String?
+  latitude              Float
+  longitude             Float
+  geom                  Unsupported("geography(Point, 4326)")
+  /// Ops override for noise: a house tagged as a temple, a closed branch.
+  isHidden              Boolean         @default(false)
+  lastSeenRunId         String?
+  lastSeenRun           PoiImportRun?   @relation(fields: [lastSeenRunId], references: [id], onDelete: SetNull)
+  /// Set when the place is missing from two finished imports of its region.
+  /// Retired places are kept, not deleted, so a source glitch can't wipe a city.
+  retiredAt             DateTime?
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+
+  /// One OSM object can carry two classes (a hospital that is also a pharmacy),
+  /// so category is part of the key: each category it maps to is its own row.
+  @@unique([source, sourceRef, category])
+  @@index([geom], type: Gist)
+  @@index([city, category])
+  @@index([lastSeenRunId])
+  @@map("pois")
+}
+
+/// One run of the POI importer over one source file. Gives the PIP its
+/// "as of" date, and is what retirement counts: a place is retired only after
+/// two finished runs of the same region have not seen it.
+model PoiImportRun {
+  id                    String          @id @default(uuid())
+  source                PoiSource
+  /// Source extract region, e.g. "western-zone" or "gcc-states".
+  region                String
+  /// File the run read, e.g. "western-zone-260912-free.gpkg".
+  sourceFile            String
+  /// Date the source data is current to (Geofabrik: the extract's OSM timestamp).
+  datasetDate           DateTime        @db.Date
+  startedAt             DateTime        @default(now())
+  /// Null while running or if the run died. Only finished runs count for retirement.
+  finishedAt            DateTime?
+  insertedCount         Int             @default(0)
+  updatedCount          Int             @default(0)
+  retiredCount          Int             @default(0)
+  error                 String?
+  pois                  Poi[]
+
+  @@index([source, region, finishedAt])
+  @@map("poi_import_runs")
+}
+
+/// A destination the PIP's "Commute to major hubs" block measures to, and a
+/// quick pick in the travel-time checker. Managed in admin; replaces the
+/// seed's hard-coded HUBS_BY_CITY.
+model CommuteHub {
+  id                    String              @id @default(uuid())
+  country               CountryCode
+  city                  String
+  name                  String              // "Hinjewadi Rajiv Gandhi Infotech Park"
+  category              CommuteHubCategory
+  latitude              Float
+  longitude             Float
+  /// Shown under the time, e.g. "Pune Metro Line 1".
+  transitHint           String?
+  sortOrder             Int                 @default(0)
+  /// Deactivate rather than delete, so stored commute entries keep resolving by hubId.
+  isActive              Boolean             @default(true)
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+
+  @@unique([city, name])
+  @@index([city, isActive, sortOrder])
+  @@map("commute_hubs")
+}
+
+/// The fixed list the PIP amenity grid (tabs and icons), the list-property
+/// picker and the amenity filters are built from.
+model AmenityDefinition {
+  code                  String            @id // "SWIMMING_POOL"
+  label                 String            // "Swimming Pool"
+  category              AmenityCategory
+  scope                 AmenityScope
+  /// Key into the frontend icon set.
+  icon                  String
+  sortOrder             Int               @default(0)
+  /// Offered in the search filter modal.
+  isFilterable          Boolean           @default(false)
+  /// Retire rather than delete, so existing property rows keep resolving.
+  isActive              Boolean           @default(true)
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+  properties            PropertyAmenity[]
+  societies             SocietyAmenity[]
+
+  @@index([category, sortOrder])
+  @@map("amenity_definitions")
+}
+
+/// An amenity a home has, and how we know. The PIP says "confirmed by our
+/// engineer" only on VERIFIED rows. No copy on properties: cards don't show
+/// amenities, and filters are an EXISTS on (amenityCode, status).
+///
+/// VERIFIED and NOT_FOUND must name the inspection that decided them; the
+/// migration adds a CHECK for it, which Prisma can't express.
+model PropertyAmenity {
+  propertyId            String
+  property              Property          @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  amenityCode           String
+  amenity               AmenityDefinition @relation(fields: [amenityCode], references: [code], onDelete: Restrict, onUpdate: Cascade)
+  status                AmenityStatus     @default(CLAIMED)
+  /// Specifics the catalogue label doesn't carry: "25 m heated lap pool", "7.4 kW charger".
+  detail                String?
+  /// Inspection that set VERIFIED or NOT_FOUND. NoAction, not SetNull: a
+  /// verified row must never quietly lose its evidence.
+  verifiedInspectionId  String?
+  verifiedInspection    Inspection?       @relation(fields: [verifiedInspectionId], references: [id], onDelete: NoAction)
+  verifiedAt            DateTime?
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+
+  @@id([propertyId, amenityCode])
+  @@index([amenityCode, status])
+  @@index([verifiedInspectionId])
+  @@map("property_amenities")
+}
+
+// ============================================================================
+// 12. PROJECTS, DEVELOPERS, LOCALITIES & MARKET DATA (Square Yards parity, plan.md)
+// ============================================================================
+
+/// A builder / developer: the PIP's "About the developer" block and its
+/// other-projects grid.
+model Developer {
+  id                    String          @id @default(uuid())
+  slug                  String          @unique
+  name                  String
+  logoUrl               String?
+  description           String?
+  websiteUrl            String?
+  establishedYear       Int?
+  headquartersCity      String?
+  country               CountryCode     @default(IN)
+  /// As published by the developer or RERA. They cover projects we don't
+  /// list, so they are stored figures, not counts of our societies.
+  totalProjectsCount    Int?
+  deliveredProjectsCount Int?
+  societies             Society[]
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+
+  @@index([name])
+  @@map("developers")
+}
+
+/// A society / project / building. Many listed homes can sit in one, and they
+/// share its amenities, developer, RERA registration and price trend.
+model Society {
+  id                    String          @id @default(uuid())
+  slug                  String          @unique
+  name                  String
+  developerId           String?
+  developer             Developer?      @relation(fields: [developerId], references: [id], onDelete: SetNull)
+  localityId            String?
+  localityRecord        Locality?       @relation(fields: [localityId], references: [id], onDelete: SetNull)
+  country               CountryCode     @default(IN)
+  city                  String
+  /// Snapshot of the locality name, as on properties.
+  locality              String
+  streetAddress         String?
+  pincode               String?
+  latitude              Float
+  longitude             Float
+  geom                  Unsupported("geography(Point, 4326)")?
+  status                ProjectStatus?
+  launchDate            DateTime?       @db.Date
+  /// Expected completion while under construction; actual once delivered.
+  possessionDate        DateTime?       @db.Date
+  /// One state RERA registration per phase.
+  reraNumbers           String[]        @default([])
+  totalUnits            Int?
+  totalTowers           Int?
+  maxFloors             Int?
+  landAreaAcres         Float?
+  /// What the developer builds here, e.g. ["2 BHK", "3 BHK"], including unsold units we don't list.
+  configurations        String[]        @default([])
+  /// Developer's price-list range, in minor units of `currency`. Null when unknown.
+  priceMinMinor         BigInt?
+  priceMaxMinor         BigInt?
+  currency              CurrencyCode    @default(INR)
+  isGatedCommunity      Boolean         @default(false)
+  description           String?
+  images                String[]        @default([])
+  masterPlanUrl         String?
+  properties            Property[]
+  amenities             SocietyAmenity[]
+  unitTypes             SocietyUnitType[]
+  mediaAssets           MediaAsset[]
+  marketRates           MarketRate[]
+  registeredSales       RegisteredTransaction[]
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+
+  @@index([city, locality])
+  @@index([developerId])
+  @@index([localityId])
+  @@index([status])
+  @@index([geom], type: Gist)
+  @@index([reraNumbers], type: Gin)
+  @@map("societies")
+}
+
+/// An amenity a whole society has (pool, gym, clubhouse), shown on every
+/// listed home in it. Same trust rule as property_amenities: VERIFIED and
+/// NOT_FOUND name the inspection that decided them (CHECK in the migration).
+model SocietyAmenity {
+  societyId             String
+  society               Society           @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  amenityCode           String
+  amenity               AmenityDefinition @relation(fields: [amenityCode], references: [code], onDelete: Restrict, onUpdate: Cascade)
+  status                AmenityStatus     @default(CLAIMED)
+  detail                String?
+  /// An inspection of any unit in the society.
+  verifiedInspectionId  String?
+  verifiedInspection    Inspection?       @relation(fields: [verifiedInspectionId], references: [id], onDelete: NoAction)
+  verifiedAt            DateTime?
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+
+  @@id([societyId, amenityCode])
+  @@index([amenityCode, status])
+  @@index([verifiedInspectionId])
+  @@map("society_amenities")
+}
+
+/// A locality / neighbourhood: its page, insight cards, ratings, price trend
+/// and "nearby localities" (computed from geom, not stored).
+model Locality {
+  id                    String          @id @default(uuid())
+  slug                  String          @unique
+  name                  String
+  city                  String
+  state                 String
+  country               CountryCode     @default(IN)
+  /// City sub-market, e.g. "West Zone".
+  microMarket           String?
+  latitude              Float
+  longitude             Float
+  geom                  Unsupported("geography(Point, 4326)")?
+  /// Outline, when known: assigns homes to the locality and draws it on the map.
+  boundary              Unsupported("geography(MultiPolygon, 4326)")?
+  pincodes              String[]        @default([])
+  description           String?
+  /// Locality ranking in city (Square Yards parity: e.g. Rank #76 in City)
+  rankInCity            Int?
+  rankComputedAt        DateTime?
+  /// Copied from published locality_reviews because locality cards and lists
+  /// read them per row. The review writer refreshes both.
+  ratingAverage         Float?
+  ratingCount           Int             @default(0)
+  properties            Property[]
+  societies             Society[]
+  reviews               LocalityReview[]
+  marketRates           MarketRate[]
+  registeredSales       RegisteredTransaction[]
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+
+  @@unique([city, name])
+  @@index([geom], type: Gist)
+  @@index([boundary], type: Gist)
+  @@map("localities")
+}
+
+/// A resident's rating of a locality. Deal reviews (reviews) need a
+/// transaction, which a resident doesn't have, hence a separate table. One per
+/// author per locality; a home the author owns there is the proof of
+/// residence and earns a "verified resident" label.
+model LocalityReview {
+  id                    String          @id @default(uuid())
+  localityId            String
+  locality              Locality        @relation(fields: [localityId], references: [id], onDelete: Cascade)
+  authorUserId          String
+  author                User            @relation(fields: [authorUserId], references: [id], onDelete: Cascade)
+  evidencePropertyId    String?
+  evidenceProperty      Property?       @relation(fields: [evidencePropertyId], references: [id], onDelete: SetNull)
+  rating                Int             // 1 to 5 (CHECK in the migration)
+  liked                 LocalityAspect[] @default([])
+  disliked              LocalityAspect[] @default([])
+  body                  String?
+  status                ReviewStatus    @default(PUBLISHED)
+  flaggedReason         String?
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+
+  @@unique([localityId, authorUserId])
+  @@index([localityId, status])
+  @@index([evidencePropertyId])
+  @@map("locality_reviews")
+}
+
+/// One market figure for one period: the PIP price-trend table (project rate
+/// vs locality rate per quarter), rents by configuration, registry averages.
+/// Written by a job; one row per period so trends can be drawn and reproduced.
+model MarketRate {
+  id                    String          @id @default(uuid())
+  scope                 MarketScope
+  /// "society:<id>", "locality:<id>" or "city:<country>:<city>", set by the
+  /// writer. It stands in for the nullable ids in the unique key, because
+  /// Postgres treats NULLs as distinct there. CHECK ties scope to the ids.
+  scopeKey              String
+  country               CountryCode
+  city                  String
+  localityId            String?
+  locality              Locality?       @relation(fields: [localityId], references: [id], onDelete: Cascade)
+  societyId             String?
+  society               Society?        @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  listingMode           ListingMode
+  metric                MarketMetric
+  /// "2 BHK" for rents by size; "ALL" when the figure covers every configuration.
+  configuration         String          @default("ALL")
+  periodType            MarketPeriod
+  periodStart           DateTime        @db.Date
+  /// Minor units of `currency`: per sq ft for the *_RATE_PER_SQFT metrics,
+  /// per month for MONTHLY_RENT.
+  valueMinor            BigInt
+  /// Range around the headline value ("rent starts from ₹65K")
+  minMinor              BigInt?
+  maxMinor              BigInt?
+  currency              CurrencyCode
+  sampleSize            Int
+  /// e.g. "Namasthetu listings", "IGR Maharashtra", "Dubai Land Department".
+  source                String
+  computedAt            DateTime        @default(now())
+
+  @@unique([scopeKey, listingMode, metric, configuration, periodType, periodStart])
+  @@index([societyId, metric, periodStart])
+  @@index([localityId, metric, periodStart])
+  @@map("market_rates")
+}
+
+/// A sale registered with the state (sub-registrar / IGR / DLD): the PIP's
+/// "Recent registered transactions" table and the registry rate trend.
+/// Party names are never stored. Registry extracts carry them, but a buyer's
+/// or seller's name is personal data this feature doesn't need.
+model RegisteredTransaction {
+  id                    String          @id @default(uuid())
+  /// e.g. "IGR Maharashtra", "Telangana Registration", "Dubai Land Department".
+  source                String
+  /// The registry's own id for the deed (document number or equivalent).
+  sourceRef             String
+  country               CountryCode
+  city                  String
+  localityId            String?
+  locality              Locality?       @relation(fields: [localityId], references: [id], onDelete: SetNull)
+  societyId             String?
+  society               Society?        @relation(fields: [societyId], references: [id], onDelete: SetNull)
+  /// Set when the deed is matched to a home we list.
+  propertyId            String?
+  property              Property?       @relation(fields: [propertyId], references: [id], onDelete: SetNull)
+  registrationDate      DateTime        @db.Date
+  documentType          String?         // e.g. "Sale Deed"
+  sroOffice             String?
+  towerName             String?
+  floorNumber           Int?
+  unitNumber            String?
+  areaSqft              Float?
+  areaBasis             AreaBasis?
+  /// Deed value in minor units of `currency`.
+  considerationMinor    BigInt
+  currency              CurrencyCode
+  /// considerationMinor / areaSqft, stored because the table sorts and averages on it.
+  ratePerSqftMinor      BigInt?
+  fetchedAt             DateTime        @default(now())
+
+  @@unique([source, sourceRef])
+  @@index([societyId, registrationDate])
+  @@index([localityId, registrationDate])
+  @@index([propertyId])
+  @@map("registered_transactions")
+}
+
+/// Gallery item for a home or a project: the PIP's Video / Photos / Floor plan
+/// tabs and the project gallery. `properties.images` stays as the card's
+/// ordered snapshot (images[0] = cover), because every results row reads it.
+model MediaAsset {
+  id            String        @id @default(uuid())
+  /// Exactly one owner (CHECK in the migration).
+  propertyId    String?
+  property      Property?     @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  societyId     String?
+  society       Society?      @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  kind          MediaKind
+  /// Reuses the inspection photo labels: MASTER_BEDROOM, BALCONY, PARKING…
+  roomCategory  RoomCategory?
+  url           String
+  thumbnailUrl  String?
+  caption       String?       // "2 BHK – 1,345 sq ft", "Clubhouse"
+  width         Int?
+  height        Int?
+  durationSec   Int?          // videos
+  sortOrder     Int           @default(0)
+  createdAt     DateTime      @default(now())
+
+  @@index([propertyId, kind, sortOrder])
+  @@index([societyId, kind, sortOrder])
+  @@map("media_assets")
+}
+
+/// One configuration a project offers: "2 BHK, 1,180–1,345 sq ft, ₹92.8 L – 1.25 Cr",
+/// with its floor plan. Replaces reading sizes and prices out of `configurations[]`,
+/// which stays as the project card's snapshot.
+model SocietyUnitType {
+  id                String   @id @default(uuid())
+  societyId         String
+  society           Society  @relation(fields: [societyId], references: [id], onDelete: Cascade)
+  configuration     String   // "2 BHK"
+  carpetAreaMinSqft Float?
+  carpetAreaMaxSqft Float?
+  priceMinMinor     BigInt?  // in the society's currency
+  priceMaxMinor     BigInt?
+  unitCount         Int?
+  floorPlanUrl      String?
+
+  @@unique([societyId, configuration])
+  @@map("society_unit_types")
+}
+
+// ============================================================================
+// 13. GIS REFERENCE LAYERS (docs/gis-postgis-ingestion-handoff.md)
+// ============================================================================
+//
+// Raw Geofabrik layers for all of India, one row per OSM feature, loaded by
+// scripts/ingest-osm-gpkg.ts (`bun run seed:gis`). Modelled here so Prisma
+// owns them: outside the schema, `prisma migrate dev` read them as drift and
+// offered to drop them. The loader's CREATE TABLE IF NOT EXISTS stays harmless.
+//
+// - Column names are the loader's snake_case (osm_id), not the camelCase used
+//   elsewhere, because the loader and its docs already use them.
+// - geom is `geometry` (degrees), not `geography` (metres). Casting the column
+//   (geom::geography) skips the GIST index, so pre-filter on geometry (the <->
+//   operator, or a degree box) before a metre-accurate geography check.
+// - latitude / longitude on the point tables are GENERATED ALWAYS AS
+//   ST_Y(geom) / ST_X(geom) STORED. Prisma can't express that; never write them.
+// - Roles: the PIP's nearby lists read `pois` (cleaned, classified, deduped,
+//   ops overrides). These layers feed batch jobs: localities from osm_places,
+//   waterfront and water security from osm_water_bodies, green canopy from
+//   osm_landuse.
+
+model OsmPoi {
+  id                    String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  zone                  String
+  osm_id                String          @unique(map: "osm_pois_osm_id_unique")
+  code                  Int?
+  fclass                String
+  name                  String?
+  geom                  Unsupported("geometry(Point, 4326)")
+  latitude              Float?          @default(dbgenerated("st_y(geom)")) // GENERATED ALWAYS, see above
+  longitude             Float?          @default(dbgenerated("st_x(geom)")) // GENERATED ALWAYS, see above
+
+  @@index([geom], map: "osm_pois_geom_gist", type: Gist)
+  @@index([fclass], map: "osm_pois_fclass_idx")
+  @@index([zone], map: "osm_pois_zone_idx")
+  @@map("osm_pois")
+}
+
+model OsmTransport {
+  id                    String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  zone                  String
+  osm_id                String          @unique(map: "osm_transport_osm_id_unique")
+  code                  Int?
+  fclass                String
+  name                  String?
+  geom                  Unsupported("geometry(Point, 4326)")
+  latitude              Float?          @default(dbgenerated("st_y(geom)")) // GENERATED ALWAYS, see above
+  longitude             Float?          @default(dbgenerated("st_x(geom)")) // GENERATED ALWAYS, see above
+
+  @@index([geom], map: "osm_transport_geom_gist", type: Gist)
+  @@index([fclass], map: "osm_transport_fclass_idx")
+  @@index([zone], map: "osm_transport_zone_idx")
+  @@map("osm_transport")
+}
+
+/// Cities, towns, suburbs, localities and neighbourhoods: the seed for `localities`.
+model OsmPlace {
+  id                    String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  zone                  String
+  osm_id                String          @unique(map: "osm_places_osm_id_unique")
+  code                  Int?
+  fclass                String
+  name                  String
+  population            Int?
+  geom                  Unsupported("geometry(Point, 4326)")
+  latitude              Float?          @default(dbgenerated("st_y(geom)")) // GENERATED ALWAYS, see above
+  longitude             Float?          @default(dbgenerated("st_x(geom)")) // GENERATED ALWAYS, see above
+
+  @@index([geom], map: "osm_places_geom_gist", type: Gist)
+  @@index([fclass], map: "osm_places_fclass_idx")
+  @@index([name], map: "osm_places_name_idx")
+  @@map("osm_places")
+}
+
+model OsmWaterBody {
+  id                    String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  zone                  String
+  osm_id                String          @unique(map: "osm_water_bodies_osm_id_unique")
+  code                  Int?
+  fclass                String
+  name                  String?
+  geom                  Unsupported("geometry(Geometry, 4326)")
+
+  @@index([geom], map: "osm_water_bodies_geom_gist", type: Gist)
+  @@index([fclass], map: "osm_water_bodies_fclass_idx")
+  @@map("osm_water_bodies")
+}
+
+model OsmLanduse {
+  id                    String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  zone                  String
+  osm_id                String          @unique(map: "osm_landuse_osm_id_unique")
+  code                  Int?
+  fclass                String
+  name                  String?
+  geom                  Unsupported("geometry(Geometry, 4326)")
+
+  @@index([geom], map: "osm_landuse_geom_gist", type: Gist)
+  @@index([fclass], map: "osm_landuse_fclass_idx")
+  @@map("osm_landuse")
+}
