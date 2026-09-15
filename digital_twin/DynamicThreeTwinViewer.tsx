@@ -37,11 +37,22 @@ export interface StagedFurniture {
   materialKey: string;
   color?: string;
   rotationY?: number;
+export interface InspectionDefectPin {
+  id: string;
+  roomId: string;
+  roomName: string;
+  type: string;
+  severity: string;
+  position: [number, number, number];
+  color: string;
+  description: string;
+  floorLevel: number;
 }
 
 export interface DigitalTwinRoom {
   id: string;
   name: string;
+  category?: string;
   dimensions: string;
   carpetSqft: number;
   highlight: string;
@@ -52,6 +63,7 @@ export interface DigitalTwinRoom {
   bounds: SpatialBox;
   furniture: StagedFurniture[];
   lights?: Array<{ position: [number, number, number]; color: string; intensity: number; distance: number }>;
+  defects?: InspectionDefectPin[];
 }
 
 export interface StructuralWall {
@@ -137,6 +149,7 @@ export interface FloorLevelSpec {
 
 export interface DigitalTwinBlueprint {
   propertyId: string;
+  publicId?: string;
   propertyTitle: string;
   locality?: string;
   city: string;
@@ -149,12 +162,21 @@ export interface DigitalTwinBlueprint {
   builtUpSqft: number;
   floor?: string;
   floorHeight: string;
+  flooring?: string;
+  furnishing?: string;
+  facing?: string;
+  views?: string[];
+  balconyCount?: number;
+  bathroomsCount?: number;
   efficiency: number;
   orientation: string;
   archetype?: string;
   levelsCount?: number;
   aboutSummary?: string;
   environmentalTheme: string;
+  sunlightDirection?: [number, number, number];
+  sunlightColor?: string;
+  defects?: InspectionDefectPin[];
   floors?: FloorLevelSpec[];
   rooms: DigitalTwinRoom[];
   structuralWalls: StructuralWall[];
@@ -408,10 +430,15 @@ export const DynamicThreeTwinViewer: React.FC<DynamicThreeTwinViewerProps> = ({
       while (container.firstChild) container.removeChild(container.firstChild);
       container.appendChild(renderer.domElement);
 
-      // Lighting Rig
+      // Lighting Rig with Schema Facing / Sunlight Alignment
       scene.add(new THREE.HemisphereLight(0xfff5e6, 0xa39b8d, 0.72));
-      const sun = new THREE.DirectionalLight(0xffeeD6, 0.98);
-      sun.position.set(30, 48, 22);
+      const sunCol = blueprint?.sunlightColor ? parseInt(blueprint.sunlightColor.replace("#", ""), 16) : 0xffeeD6;
+      const sun = new THREE.DirectionalLight(sunCol, 0.98);
+      if (blueprint?.sunlightDirection) {
+        sun.position.set(blueprint.sunlightDirection[0], blueprint.sunlightDirection[1], blueprint.sunlightDirection[2]);
+      } else {
+        sun.position.set(30, 48, 22);
+      }
       sun.castShadow = true;
       sun.shadow.mapSize.set(1024, 1024);
       Object.assign(sun.shadow.camera, { left: -40, right: 40, top: 40, bottom: -40, far: 140 });
@@ -724,6 +751,27 @@ export const DynamicThreeTwinViewer: React.FC<DynamicThreeTwinViewerProps> = ({
         const topElevation = levels === 3 ? 10.8 : levels === 2 ? 7.2 : 3.6;
         box(totalW - 2, 0.3, totalD - 2, M.slab, centerX, topElevation + 0.15, centerZ, 0, roofGroup);
         box(totalW - 2, 0.45, 0.2, M.cream, centerX, topElevation + 0.45, centerZ + (totalD - 2) / 2, 0, roofGroup);
+
+        // 9. Inspection Defect Markers (Prisma InspectionPhoto / DefectSeverity)
+        blueprint.defects?.forEach((def) => {
+          const [dx, dy, dz] = def.position;
+          const col = parseInt(def.color.replace("#", ""), 16) || 0xf59e0b;
+          const pinMat = new THREE.MeshBasicMaterial({ color: col });
+          const ringMat = new THREE.MeshBasicMaterial({ color: col, wireframe: true, transparent: true, opacity: 0.65 });
+
+          const pinMesh = new THREE.Mesh(new THREE.SphereGeometry(0.14, 16, 16), pinMat);
+          pinMesh.position.set(dx, dy, dz);
+
+          const ringMesh = new THREE.Mesh(new THREE.RingGeometry(0.20, 0.32, 24), ringMat);
+          ringMesh.position.set(dx, dy, dz);
+          ringMesh.rotation.y = Math.PI / 2;
+
+          const pGroup = new THREE.Group();
+          pGroup.add(pinMesh);
+          pGroup.add(ringMesh);
+          pGroup.userData = { floorLevel: def.floorLevel ?? 0, type: "defect", defect: def };
+          structuralGroup.add(pGroup);
+        });
       }
 
       // Initial Camera State

@@ -1,0 +1,1538 @@
+{
+  "propertyId": "test-penthouse-4bhk",
+  "publicId": "prop_test-penthou",
+  "propertyTitle": "Raheja Oceancrest Sky Penthouse",
+  "locality": "Prime Corridor",
+  "city": "Mumbai",
+  "state": "Maharashtra",
+  "propertyType": "PENTHOUSE",
+  "configuration": "4 BHK",
+  "bhkCount": 4,
+  "carpetSqft": 3600,
+  "builtUpSqft": 4608,
+  "floor": "Top Floor Penthouse",
+  "floorHeight": "12.5 ft (Panoramic High Volume)",
+  "flooring": "ITALIAN_MARBLE",
+  "furnishing": "FULLY_FURNISHED",
+  "facing": "WEST",
+  "views": [
+    "SEA",
+    "POOL"
+  ],
+  "balconyCount": 3,
+  "bathroomsCount": 4,
+  "conditionScore": 9.6,
+  "efficiency": 84,
+  "orientation": "West-Facing",
+  "archetype": "penthouse",
+  "levelsCount": 1,
+  "environmentalTheme": "mumbai_coast",
+  "sunlightDirection": [
+    -18.0,
+    11.0,
+    16.0
+  ],
+  "sunlightColor": "#FFD4A0",
+  "aboutSummary": "DB Digital Twin: 'Raheja Oceancrest Sky Penthouse'. Schema: PENTHOUSE (4 BHK), 3,600 sq.ft on Top Floor Penthouse. Flooring: Italian Statuario & Botticino Marble. Furnishing: FULLY_FURNISHED. Facing: WEST. Views: SEA, POOL. BIM layout strictly allocates 4 bedrooms with calibrated 3:1 hall-to-kitchen ratio. Physical Inspection: 1 defect callouts placed in 3D.",
+  "defects": [
+    {
+      "id": "defect_seepage_1",
+      "roomId": "living",
+      "roomName": "Grand Living & Dining Pavilion",
+      "type": "seepage",
+      "severity": "MEDIUM",
+      "position": [
+        -4.45,
+        2.4,
+        0.0
+      ],
+      "color": "#F59E0B",
+      "description": "Seepage moisture mark noted during physical audit.",
+      "floorLevel": 0
+    }
+  ],
+  "floors": [
+    {
+      "id": "floor_0",
+      "name": "Penthouse Level",
+      "elevation": 0.0,
+      "roomIds": [
+        "living",
+        "kitchen",
+        "balcony",
+        "master"
+      ]
+    }
+  ],
+  "rooms": [
+    {
+      "id": "living",
+      "name": "Grand Living & Dining Pavilion",
+      "category": "LIVING_ROOM",
+      "floorLevel": 0,
+      "dimensions": "30' x 22'",
+      "carpetSqft": 1188,
+      "highlight": "Italian Statuario & Botticino Marble floors with floor-to-ceiling panoramic glass facade",
+      "floorType": "Italian Statuario & Botticino Marble",
+      "floorColor": "#F4F1EA",
+      "wallColor": "#FAF8F5",
+      "bounds": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 9.2,
+        "d": 6.8,
+        "h": 3.8
+      },
+      "furniture": [
+        {
+          "id": "sofa_main",
+          "name": "Curved Designer Italian Sofa",
+          "type": "sofa",
+          "position": [
+            -0.8,
+            0.42,
+            1.8
+          ],
+          "size": [
+            4.2,
+            0.75,
+            1.8
+          ],
+          "materialKey": "sofa",
+          "color": "#D9D1C0"
+        },
+        {
+          "id": "coffee_tbl",
+          "name": "Italian Coffee Table",
+          "type": "table",
+          "position": [
+            -0.8,
+            0.25,
+            0.4
+          ],
+          "size": [
+            2.2,
+            0.45,
+            1.1
+          ],
+          "materialKey": "white",
+          "color": "#FAFAF6"
+        },
+        {
+          "id": "living_rug",
+          "name": "Silken Area Rug",
+          "type": "rug",
+          "position": [
+            -0.8,
+            0.02,
+            1.1
+          ],
+          "size": [
+            5.2,
+            0.02,
+            3.6
+          ],
+          "materialKey": "rug",
+          "color": "#CABFA8"
+        },
+        {
+          "id": "dining_tbl",
+          "name": "Dining Table & Chairs",
+          "type": "table",
+          "position": [
+            2.6,
+            0.45,
+            -1.0
+          ],
+          "size": [
+            2.4,
+            0.85,
+            1.2
+          ],
+          "materialKey": "wood2",
+          "color": "#A87042"
+        },
+        {
+          "id": "tv_console",
+          "name": "Floating Media Credenza",
+          "type": "tv_unit",
+          "position": [
+            -0.8,
+            0.3,
+            -3.0
+          ],
+          "size": [
+            3.4,
+            0.6,
+            0.5
+          ],
+          "materialKey": "dark",
+          "color": "#3A3A40"
+        }
+      ],
+      "lights": [
+        {
+          "position": [
+            -0.8,
+            2.8,
+            1.0
+          ],
+          "color": "#FFD9A0",
+          "intensity": 0.9,
+          "distance": 12.0
+        }
+      ],
+      "defects": [
+        {
+          "id": "defect_seepage_1",
+          "roomId": "living",
+          "roomName": "Grand Living & Dining Pavilion",
+          "type": "seepage",
+          "severity": "MEDIUM",
+          "position": [
+            -4.45,
+            2.4,
+            0.0
+          ],
+          "color": "#F59E0B",
+          "description": "Seepage moisture mark noted during physical audit.",
+          "floorLevel": 0
+        }
+      ]
+    },
+    {
+      "id": "kitchen",
+      "name": "Culinary Studio & Island Kitchen",
+      "category": "KITCHEN",
+      "floorLevel": 0,
+      "dimensions": "14' x 15'",
+      "carpetSqft": 396,
+      "highlight": "Quartz central island with integrated gas/induction burners & soft-close Blum joinery",
+      "floorType": "Honed Nero Impala Granite & Quartzite",
+      "floorColor": "#263238",
+      "wallColor": "#FAF8F5",
+      "bounds": {
+        "x": 7.0,
+        "y": 0.0,
+        "z": -0.6,
+        "w": 4.4,
+        "d": 4.6,
+        "h": 3.8
+      },
+      "furniture": [
+        {
+          "id": "k_island",
+          "name": "Quartz Island Prep Counter",
+          "type": "counter",
+          "position": [
+            7.0,
+            0.48,
+            -0.6
+          ],
+          "size": [
+            3.0,
+            0.95,
+            1.3
+          ],
+          "materialKey": "counter",
+          "color": "#8D6F50"
+        },
+        {
+          "id": "k_stools",
+          "name": "Breakfast Bar Stools",
+          "type": "stool",
+          "position": [
+            7.0,
+            0.38,
+            -1.8
+          ],
+          "size": [
+            2.2,
+            0.75,
+            0.45
+          ],
+          "materialKey": "wood2",
+          "color": "#A87042"
+        }
+      ],
+      "lights": [
+        {
+          "position": [
+            7.0,
+            2.8,
+            -0.6
+          ],
+          "color": "#FFFFFF",
+          "intensity": 0.85,
+          "distance": 10.0
+        }
+      ]
+    },
+    {
+      "id": "balcony",
+      "name": "Covered Sky Deck & Balcony",
+      "category": "BALCONY",
+      "floorLevel": 0,
+      "dimensions": "20' x 11'",
+      "carpetSqft": 360,
+      "highlight": "Open vista (SEA, POOL) with frameless tempered glass balustrade & teak deck",
+      "floorType": "Weatherproof Teak Composite Deck",
+      "floorColor": "#A87042",
+      "wallColor": "#FAF8F5",
+      "bounds": {
+        "x": 1.8,
+        "y": 0.0,
+        "z": 5.1,
+        "w": 6.4,
+        "d": 3.4,
+        "h": 1.1
+      },
+      "furniture": [
+        {
+          "id": "b_lounge",
+          "name": "Weatherproof Balcony Loveseat",
+          "type": "chair",
+          "position": [
+            1.8,
+            0.35,
+            4.699999999999999
+          ],
+          "size": [
+            1.8,
+            0.4,
+            0.8
+          ],
+          "materialKey": "sofa",
+          "color": "#D9D1C0"
+        },
+        {
+          "id": "b_table",
+          "name": "Outdoor Teak Coffee Table",
+          "type": "table",
+          "position": [
+            1.8,
+            0.25,
+            5.699999999999999
+          ],
+          "size": [
+            0.9,
+            0.35,
+            0.6
+          ],
+          "materialKey": "wood2",
+          "color": "#A87042"
+        },
+        {
+          "id": "sky_jacuzzi",
+          "name": "Panoramic Sky Jacuzzi / Plunge Pool",
+          "type": "counter",
+          "position": [
+            -1.5,
+            0.4,
+            5.1
+          ],
+          "size": [
+            2.4,
+            0.5,
+            2.0
+          ],
+          "materialKey": "pool",
+          "color": "#0F2B36"
+        }
+      ]
+    },
+    {
+      "id": "master",
+      "name": "Presidential Master Suite (Bedroom 1)",
+      "category": "MASTER_BEDROOM",
+      "floorLevel": 0,
+      "dimensions": "19' x 18'",
+      "carpetSqft": 792,
+      "highlight": "Engineered German Oak Hardwood with walk-in wardrobe and en-suite bath",
+      "floorType": "Engineered German Oak Hardwood",
+      "floorColor": "#C9A275",
+      "wallColor": "#EAE7DF",
+      "bounds": {
+        "x": -7.7,
+        "y": 0.0,
+        "z": 0.5,
+        "w": 5.8,
+        "d": 5.4,
+        "h": 3.8
+      },
+      "furniture": [
+        {
+          "id": "m_bed",
+          "name": "King Bed",
+          "type": "bed",
+          "position": [
+            -7.7,
+            0.35,
+            0.2
+          ],
+          "size": [
+            2.2,
+            0.4,
+            2.1
+          ],
+          "materialKey": "white",
+          "color": "#FAFAF6"
+        },
+        {
+          "id": "m_headboard",
+          "name": "Acoustic Fluted Headboard",
+          "type": "wardrobe",
+          "position": [
+            -7.7,
+            0.95,
+            -1.0
+          ],
+          "size": [
+            2.6,
+            1.0,
+            0.12
+          ],
+          "materialKey": "wood",
+          "color": "#B9824E"
+        },
+        {
+          "id": "m_side_1",
+          "name": "Nightstand",
+          "type": "table",
+          "position": [
+            -9.1,
+            0.3,
+            -0.9
+          ],
+          "size": [
+            0.55,
+            0.35,
+            0.4
+          ],
+          "materialKey": "accent",
+          "color": "#C9A66B"
+        },
+        {
+          "id": "m_side_2",
+          "name": "Nightstand",
+          "type": "table",
+          "position": [
+            -6.300000000000001,
+            0.3,
+            -0.9
+          ],
+          "size": [
+            0.55,
+            0.35,
+            0.4
+          ],
+          "materialKey": "accent",
+          "color": "#C9A66B"
+        }
+      ],
+      "lights": [
+        {
+          "position": [
+            -7.7,
+            2.6,
+            0.5
+          ],
+          "color": "#FFD9A0",
+          "intensity": 0.85,
+          "distance": 11.0
+        }
+      ]
+    },
+    {
+      "id": "bedroom_2",
+      "name": "Guest Suite (Bedroom 2)",
+      "category": "GUEST_BEDROOM",
+      "floorLevel": 0,
+      "dimensions": "15' x 14'",
+      "carpetSqft": 504,
+      "highlight": "Italian Statuario & Botticino Marble, acoustic double-glazed windows, and built-in wardrobes",
+      "floorType": "Italian Statuario & Botticino Marble",
+      "floorColor": "#F4F1EA",
+      "wallColor": "#FAF8F5",
+      "bounds": {
+        "x": 7.1,
+        "y": 0.0,
+        "z": 4.6,
+        "w": 4.6,
+        "d": 4.4,
+        "h": 3.8
+      },
+      "furniture": [
+        {
+          "id": "b2_bed",
+          "name": "Queen Bed",
+          "type": "bed",
+          "position": [
+            7.1,
+            0.35,
+            4.4
+          ],
+          "size": [
+            1.9,
+            0.4,
+            2.0
+          ],
+          "materialKey": "white",
+          "color": "#FAFAF6"
+        },
+        {
+          "id": "b2_side",
+          "name": "Bedside Nightstand",
+          "type": "table",
+          "position": [
+            8.4,
+            0.3,
+            3.4
+          ],
+          "size": [
+            0.5,
+            0.35,
+            0.4
+          ],
+          "materialKey": "accent",
+          "color": "#C9A66B"
+        }
+      ]
+    },
+    {
+      "id": "bedroom_3",
+      "name": "Children's Suite (Bedroom 3)",
+      "category": "GUEST_BEDROOM",
+      "floorLevel": 0,
+      "dimensions": "16' x 14'",
+      "carpetSqft": 432,
+      "highlight": "Natural daylit suite with study alcove and Engineered German Oak Hardwood",
+      "floorType": "Engineered German Oak Hardwood",
+      "floorColor": "#C9A275",
+      "wallColor": "#EAE7DF",
+      "bounds": {
+        "x": -7.2,
+        "y": 0.0,
+        "z": -4.8,
+        "w": 4.8,
+        "d": 4.4,
+        "h": 3.8
+      },
+      "furniture": [
+        {
+          "id": "b3_bed",
+          "name": "Queen Bed",
+          "type": "bed",
+          "position": [
+            -7.2,
+            0.35,
+            -4.8
+          ],
+          "size": [
+            1.9,
+            0.4,
+            2.0
+          ],
+          "materialKey": "white",
+          "color": "#FAFAF6"
+        },
+        {
+          "id": "b3_desk",
+          "name": "Writing Desk",
+          "type": "table",
+          "position": [
+            -8.6,
+            0.35,
+            -3.4
+          ],
+          "size": [
+            1.2,
+            0.75,
+            0.55
+          ],
+          "materialKey": "wood2",
+          "color": "#A87042"
+        }
+      ]
+    },
+    {
+      "id": "bedroom_4",
+      "name": "Garden Suite (Bedroom 4)",
+      "category": "GUEST_BEDROOM",
+      "floorLevel": 0,
+      "dimensions": "16' x 14'",
+      "carpetSqft": 396,
+      "highlight": "Quiet suite with integrated dressing alcove and private garden aspect",
+      "floorType": "Italian Statuario & Botticino Marble",
+      "floorColor": "#F4F1EA",
+      "wallColor": "#FAF8F5",
+      "bounds": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": -5.6,
+        "w": 4.8,
+        "d": 4.2,
+        "h": 3.8
+      },
+      "furniture": [
+        {
+          "id": "b4_bed",
+          "name": "Queen Bed",
+          "type": "bed",
+          "position": [
+            0.0,
+            0.35,
+            -5.6
+          ],
+          "size": [
+            1.9,
+            0.4,
+            2.0
+          ],
+          "materialKey": "white",
+          "color": "#FAFAF6"
+        },
+        {
+          "id": "b4_side",
+          "name": "Bedside Nightstand",
+          "type": "table",
+          "position": [
+            1.3,
+            0.3,
+            -6.6
+          ],
+          "size": [
+            0.5,
+            0.35,
+            0.4
+          ],
+          "materialKey": "accent",
+          "color": "#C9A66B"
+        }
+      ]
+    }
+  ],
+  "structuralWalls": [
+    {
+      "id": "apt_living_balc_seg_0",
+      "position": [
+        -2.85,
+        1.9,
+        3.4
+      ],
+      "size": [
+        3.5,
+        3.8,
+        0.18
+      ],
+      "materialKey": "cream",
+      "isExterior": false,
+      "floorLevel": 0
+    },
+    {
+      "id": "apt_living_balc_lintel_0",
+      "position": [
+        1.8,
+        3.15,
+        3.4
+      ],
+      "size": [
+        5.8,
+        1.3,
+        0.18
+      ],
+      "materialKey": "cream",
+      "isExterior": false,
+      "floorLevel": 0
+    },
+    {
+      "id": "apt_living_west_seg_0",
+      "position": [
+        -4.6,
+        1.9,
+        -3.337
+      ],
+      "size": [
+        0.18,
+        3.8,
+        0.125
+      ],
+      "materialKey": "cream",
+      "isExterior": false,
+      "floorLevel": 0
+    },
+    {
+      "id": "apt_living_west_lintel_0",
+      "position": [
+        -4.6,
+        2.975,
+        -2.8
+      ],
+      "size": [
+        0.18,
+        1.65,
+        0.95
+      ],
+      "materialKey": "cream",
+      "isExterior": false,
+      "floorLevel": 0
+    },
+    {
+      "id": "apt_living_west_seg_1",
+      "position": [
+        -4.6,
+        1.9,
+        -1.15
+      ],
+      "size": [
+        0.18,
+        3.8,
+        2.35
+      ],
+      "materialKey": "cream",
+      "isExterior": false,
+      "floorLevel": 0
+    },
+    {
+      "id": "apt_living_west_lintel_1",
+      "position": [
+        -4.6,
+        2.975,
+        0.5
+      ],
+      "size": [
+        0.18,
+        1.65,
+        0.95
+      ],
+      "materialKey": "cream",
+      "isExterior": false,
+      "floorLevel": 0
+    },
+    {
+      "id": "apt_living_west_seg_final",
+      "position": [
+        -4.6,
+        1.9,
+        2.188
+      ],
+      "size": [
+        0.18,
+        3.8,
+        2.425
+      ],
+      "materialKey": "cream",
+      "isExterior": false,
+      "floorLevel": 0
+    },
+    {
+      "id": "apt_living_east_seg_0",
+      "position": [
+        4.6,
+        1.9,
+        -2.6
+      ],
+      "size": [
+        0.18,
+        3.8,
+        1.6
+      ],
+      "materialKey": "cream",
+      "isExterior": false,
+      "floorLevel": 0
+    },
+    {
+      "id": "apt_living_east_lintel_0",
+      "position": [
+        4.6,
+        3.1,
+        -0.6
+      ],
+      "size": [
+        0.18,
+        1.4,
+        2.4
+      ],
+      "materialKey": "cream",
+      "isExterior": false,
+      "floorLevel": 0
+    },
+    {
+      "id": "apt_living_east_seg_1",
+      "position": [
+        4.6,
+        1.9,
+        1.312
+      ],
+      "size": [
+        0.18,
+        3.8,
+        1.425
+      ],
+      "materialKey": "cream",
+      "isExterior": false,
+      "floorLevel": 0
+    },
+    {
+      "id": "apt_living_east_lintel_1",
+      "position": [
+        4.6,
+        2.975,
+        2.5
+      ],
+      "size": [
+        0.18,
+        1.65,
+        0.95
+      ],
+      "materialKey": "cream",
+      "isExterior": false,
+      "floorLevel": 0
+    },
+    {
+      "id": "apt_living_east_seg_final",
+      "position": [
+        4.6,
+        1.9,
+        3.188
+      ],
+      "size": [
+        0.18,
+        3.8,
+        0.425
+      ],
+      "materialKey": "cream",
+      "isExterior": false,
+      "floorLevel": 0
+    },
+    {
+      "id": "apt_living_north_seg_0",
+      "position": [
+        -2.537,
+        1.9,
+        -3.4
+      ],
+      "size": [
+        4.125,
+        3.8,
+        0.18
+      ],
+      "materialKey": "cream",
+      "isExterior": false,
+      "floorLevel": 0
+    },
+    {
+      "id": "apt_living_north_lintel_0",
+      "position": [
+        0.0,
+        2.975,
+        -3.4
+      ],
+      "size": [
+        0.95,
+        1.65,
+        0.18
+      ],
+      "materialKey": "cream",
+      "isExterior": false,
+      "floorLevel": 0
+    },
+    {
+      "id": "apt_living_north_seg_final",
+      "position": [
+        2.538,
+        1.9,
+        -3.4
+      ],
+      "size": [
+        4.125,
+        3.8,
+        0.18
+      ],
+      "materialKey": "cream",
+      "isExterior": false,
+      "floorLevel": 0
+    },
+    {
+      "id": "apt_master_west_seg_0",
+      "position": [
+        -10.6,
+        1.9,
+        -1.5
+      ],
+      "size": [
+        0.22,
+        3.8,
+        1.4
+      ],
+      "materialKey": "cream2",
+      "isExterior": true,
+      "floorLevel": 0
+    },
+    {
+      "id": "apt_master_west_sill_0",
+      "position": [
+        -10.6,
+        0.425,
+        0.5
+      ],
+      "size": [
+        0.22,
+        0.85,
+        2.6
+      ],
+      "materialKey": "cream2",
+      "isExterior": true,
+      "floorLevel": 0
+    },
+    {
+      "id": "apt_master_west_lintel_0",
+      "position": [
+        -10.6,
+        3.025,
+        0.5
+      ],
+      "size": [
+        0.22,
+        1.55,
+        2.6
+      ],
+      "materialKey": "cream2",
+      "isExterior": true,
+      "floorLevel": 0
+    },
+    {
+      "id": "apt_master_west_seg_final",
+      "position": [
+        -10.6,
+        1.9,
+        2.5
+      ],
+      "size": [
+        0.22,
+        3.8,
+        1.4
+      ],
+      "materialKey": "cream2",
+      "isExterior": true,
+      "floorLevel": 0
+    },
+    {
+      "id": "apt_master_south_seg_0",
+      "position": [
+        -9.65,
+        1.9,
+        3.2
+      ],
+      "size": [
+        1.9,
+        3.8,
+        0.22
+      ],
+      "materialKey": "cream2",
+      "isExterior": true,
+      "floorLevel": 0
+    },
+    {
+      "id": "apt_master_south_sill_0",
+      "position": [
+        -7.7,
+        0.425,
+        3.2
+      ],
+      "size": [
+        2.0,
+        0.85,
+        0.22
+      ],
+      "materialKey": "cream2",
+      "isExterior": true,
+      "floorLevel": 0
+    },
+    {
+      "id": "apt_master_south_lintel_0",
+      "position": [
+        -7.7,
+        3.025,
+        3.2
+      ],
+      "size": [
+        2.0,
+        1.55,
+        0.22
+      ],
+      "materialKey": "cream2",
+      "isExterior": true,
+      "floorLevel": 0
+    },
+    {
+      "id": "apt_master_south_seg_final",
+      "position": [
+        -5.65,
+        1.9,
+        3.2
+      ],
+      "size": [
+        2.1,
+        3.8,
+        0.22
+      ],
+      "materialKey": "cream2",
+      "isExterior": true,
+      "floorLevel": 0
+    }
+  ],
+  "doors": [
+    {
+      "id": "slider_apt_living_balc_0",
+      "name": "Panoramic Balcony Sliders",
+      "position": [
+        1.8,
+        1.25,
+        3.4
+      ],
+      "size": [
+        5.8,
+        2.5,
+        0.18
+      ],
+      "rotationY": 0.0,
+      "floorLevel": 0,
+      "doorType": "sliding",
+      "panelsCount": 2,
+      "frameMaterial": "dark"
+    },
+    {
+      "id": "door_apt_living_west_0",
+      "name": "Bedroom 3 Suite Door",
+      "position": [
+        -4.6,
+        1.075,
+        -2.8
+      ],
+      "size": [
+        0.95,
+        2.15,
+        0.18
+      ],
+      "rotationY": 1.5707963267948966,
+      "floorLevel": 0,
+      "doorType": "swing",
+      "openAngle": 0.5,
+      "frameMaterial": "dark",
+      "leafMaterial": "wood2"
+    },
+    {
+      "id": "door_apt_living_west_1",
+      "name": "Master Suite Door",
+      "position": [
+        -4.6,
+        1.075,
+        0.5
+      ],
+      "size": [
+        0.95,
+        2.15,
+        0.18
+      ],
+      "rotationY": 1.5707963267948966,
+      "floorLevel": 0,
+      "doorType": "swing",
+      "openAngle": 0.5,
+      "frameMaterial": "dark",
+      "leafMaterial": "wood2"
+    },
+    {
+      "id": "door_apt_living_east_0",
+      "name": "Kitchen Portal Arch",
+      "position": [
+        4.6,
+        1.2,
+        -0.6
+      ],
+      "size": [
+        2.4,
+        2.4,
+        0.18
+      ],
+      "rotationY": 1.5707963267948966,
+      "floorLevel": 0,
+      "doorType": "portal",
+      "openAngle": 0.5,
+      "frameMaterial": "dark",
+      "leafMaterial": "wood2"
+    },
+    {
+      "id": "door_apt_living_east_1",
+      "name": "Bedroom 2 Suite Door",
+      "position": [
+        4.6,
+        1.075,
+        2.5
+      ],
+      "size": [
+        0.95,
+        2.15,
+        0.18
+      ],
+      "rotationY": 1.5707963267948966,
+      "floorLevel": 0,
+      "doorType": "swing",
+      "openAngle": 0.5,
+      "frameMaterial": "dark",
+      "leafMaterial": "wood2"
+    },
+    {
+      "id": "door_apt_living_north_0",
+      "name": "Bedroom 4 Suite Door",
+      "position": [
+        0.0,
+        1.075,
+        -3.4
+      ],
+      "size": [
+        0.95,
+        2.15,
+        0.18
+      ],
+      "rotationY": 0.0,
+      "floorLevel": 0,
+      "doorType": "swing",
+      "openAngle": 0.5,
+      "frameMaterial": "dark",
+      "leafMaterial": "wood2"
+    }
+  ],
+  "windows": [
+    {
+      "id": "win_apt_master_west_0",
+      "name": "Master Suite Horizon Window",
+      "position": [
+        -10.6,
+        1.55,
+        0.5
+      ],
+      "size": [
+        2.6,
+        1.4
+      ],
+      "rotationY": 1.5707963267948966,
+      "sillHeight": 0.85,
+      "floorLevel": 0,
+      "hasMullions": true,
+      "frameMaterial": "dark"
+    },
+    {
+      "id": "win_apt_master_south_0",
+      "name": "Master Suite Sunset Window",
+      "position": [
+        -7.7,
+        1.55,
+        3.2
+      ],
+      "size": [
+        2.0,
+        1.4
+      ],
+      "rotationY": 0.0,
+      "sillHeight": 0.85,
+      "floorLevel": 0,
+      "hasMullions": true,
+      "frameMaterial": "dark"
+    }
+  ],
+  "balconies": [
+    {
+      "id": "balc_sky_deck_apt",
+      "name": "Covered Sky Balcony & Deck",
+      "floorLevel": 0,
+      "bounds": {
+        "x": 1.8,
+        "y": 0.0,
+        "z": 5.1,
+        "w": 6.4,
+        "d": 3.4,
+        "h": 0.2
+      },
+      "deckMaterial": "deck",
+      "railings": [
+        {
+          "id": "balc_sky_deck_apt_rail_front",
+          "position": [
+            1.8,
+            0.55,
+            6.8
+          ],
+          "size": [
+            6.4,
+            1.1
+          ],
+          "rotationY": 0.0,
+          "type": "glass_balustrade",
+          "handrail": true
+        },
+        {
+          "id": "balc_sky_deck_apt_rail_left",
+          "position": [
+            -1.4,
+            0.55,
+            5.1
+          ],
+          "size": [
+            3.4,
+            1.1
+          ],
+          "rotationY": 1.5707963267948966,
+          "type": "glass_balustrade",
+          "handrail": true
+        },
+        {
+          "id": "balc_sky_deck_apt_rail_right",
+          "position": [
+            5.0,
+            0.55,
+            5.1
+          ],
+          "size": [
+            3.4,
+            1.1
+          ],
+          "rotationY": 1.5707963267948966,
+          "type": "glass_balustrade",
+          "handrail": true
+        }
+      ]
+    }
+  ],
+  "glassPanels": [
+    {
+      "id": "balc_sky_deck_apt_rail_front",
+      "position": [
+        1.8,
+        0.55,
+        6.8
+      ],
+      "size": [
+        6.4,
+        1.1
+      ],
+      "rotationY": 0.0,
+      "floorLevel": 0,
+      "handrail": true
+    },
+    {
+      "id": "balc_sky_deck_apt_rail_left",
+      "position": [
+        -1.4,
+        0.55,
+        5.1
+      ],
+      "size": [
+        3.4,
+        1.1
+      ],
+      "rotationY": 1.5707963267948966,
+      "floorLevel": 0,
+      "handrail": true
+    },
+    {
+      "id": "balc_sky_deck_apt_rail_right",
+      "position": [
+        5.0,
+        0.55,
+        5.1
+      ],
+      "size": [
+        3.4,
+        1.1
+      ],
+      "rotationY": 1.5707963267948966,
+      "floorLevel": 0,
+      "handrail": true
+    }
+  ],
+  "focalTargets": {
+    "living": {
+      "target": [
+        -0.8,
+        1.6,
+        0.8
+      ],
+      "theta": 0.45,
+      "phi": 1.05,
+      "radius": 14.0,
+      "walk": [
+        -1.0,
+        1.65,
+        3.2
+      ]
+    },
+    "kitchen": {
+      "target": [
+        7.0,
+        1.5,
+        -0.6
+      ],
+      "theta": 1.95,
+      "phi": 1.05,
+      "radius": 12.5,
+      "walk": [
+        5.9,
+        1.65,
+        1.2
+      ]
+    },
+    "balcony": {
+      "target": [
+        1.8,
+        1.2,
+        5.1
+      ],
+      "theta": 2.35,
+      "phi": 1.05,
+      "radius": 12.0,
+      "walk": [
+        0.8,
+        1.65,
+        4.3
+      ]
+    },
+    "master": {
+      "target": [
+        -7.7,
+        1.5,
+        0.5
+      ],
+      "theta": 0.35,
+      "phi": 1.08,
+      "radius": 13.0,
+      "walk": [
+        -6.300000000000001,
+        1.65,
+        2.2
+      ]
+    },
+    "bedroom_2": {
+      "target": [
+        7.1,
+        1.5,
+        4.6
+      ],
+      "theta": 1.85,
+      "phi": 1.08,
+      "radius": 12.0,
+      "walk": [
+        5.699999999999999,
+        1.65,
+        3.6
+      ]
+    },
+    "bedroom_3": {
+      "target": [
+        -7.2,
+        1.5,
+        -4.8
+      ],
+      "theta": 0.55,
+      "phi": 1.08,
+      "radius": 12.0,
+      "walk": [
+        -5.800000000000001,
+        1.65,
+        -3.6
+      ]
+    },
+    "bedroom_4": {
+      "target": [
+        0.0,
+        1.5,
+        -5.6
+      ],
+      "theta": 1.25,
+      "phi": 1.08,
+      "radius": 12.0,
+      "walk": [
+        0.0,
+        1.65,
+        -4.2
+      ]
+    },
+    "all": {
+      "target": [
+        0.0,
+        2.8,
+        0.0
+      ],
+      "theta": 0.72,
+      "phi": 1.05,
+      "radius": 34.0,
+      "walk": [
+        0.0,
+        1.65,
+        12.0
+      ]
+    }
+  },
+  "waypoints": [
+    {
+      "p": [
+        4.0,
+        3.5,
+        18.0
+      ],
+      "l": [
+        0.0,
+        2.5,
+        0.0
+      ],
+      "label": "Approach · Raheja Oceancrest Sky Penthouse"
+    },
+    {
+      "p": [
+        -1.0,
+        1.65,
+        3.2
+      ],
+      "l": [
+        2.0,
+        1.2,
+        0.0
+      ],
+      "label": "Living & Dining Pavilion (30' x 22')"
+    },
+    {
+      "p": [
+        5.9,
+        1.65,
+        1.2
+      ],
+      "l": [
+        8.0,
+        1.1,
+        -1.0
+      ],
+      "label": "Culinary Kitchen Studio (3.09:1 Hall Ratio)"
+    },
+    {
+      "p": [
+        0.8,
+        1.65,
+        4.3
+      ],
+      "l": [
+        2.8,
+        1.4,
+        6.3
+      ],
+      "label": "Covered Sky Deck & Balcony"
+    },
+    {
+      "p": [
+        -6.300000000000001,
+        1.65,
+        2.2
+      ],
+      "l": [
+        -8.7,
+        1.1,
+        -0.6
+      ],
+      "label": "Presidential Master Suite (Bedroom 1)"
+    },
+    {
+      "p": [
+        5.699999999999999,
+        1.65,
+        3.6
+      ],
+      "l": [
+        8.0,
+        1.1,
+        4.8
+      ],
+      "label": "Guest Suite (Bedroom 2)"
+    },
+    {
+      "p": [
+        -5.800000000000001,
+        1.65,
+        -3.6
+      ],
+      "l": [
+        -8.2,
+        1.1,
+        -5.4
+      ],
+      "label": "Children's Suite (Bedroom 3)"
+    },
+    {
+      "p": [
+        0.0,
+        1.65,
+        -4.2
+      ],
+      "l": [
+        0.0,
+        1.1,
+        -6.4
+      ],
+      "label": "Garden Suite (Bedroom 4)"
+    },
+    {
+      "p": [
+        18.0,
+        16.0,
+        18.0
+      ],
+      "l": [
+        0.0,
+        3.0,
+        0.0
+      ],
+      "label": "Aerial · Full 3D Spatial Digital Twin"
+    }
+  ],
+  "fixtures": [
+    {
+      "item": "4 Distinct Bedroom Suites",
+      "detail": "Accurately mapped with Master Suite + 3 secondary suites",
+      "included": true
+    },
+    {
+      "item": "Calibrated 3:1 Living Hall to Kitchen Ratio",
+      "detail": "Grand entertainment volume with dedicated ergonomic culinary studio",
+      "included": true
+    },
+    {
+      "item": "Structural BIM Perimeter & Partition Walls",
+      "detail": "Full height architectural walls with proper openings and skirting",
+      "included": true
+    },
+    {
+      "item": "Italian Statuario & Botticino Marble Flooring",
+      "detail": "Authentic finish matching database schema (ITALIAN_MARBLE)",
+      "included": true
+    },
+    {
+      "item": "Fully Furnished Interior State",
+      "detail": "Interior objects moulded directly to FULLY_FURNISHED status",
+      "included": true
+    },
+    {
+      "item": "West Sunlight Alignment",
+      "detail": "Directional sun and ambient temperature calibrated to WEST",
+      "included": true
+    },
+    {
+      "item": "Teak Balconies with Safety Glass Balustrades",
+      "detail": "3 bounded exterior balcony systems placed",
+      "included": true
+    },
+    {
+      "item": "Inspection Defect Callouts (1 items)",
+      "detail": "3D pinpoint visual markers on walls: seepage",
+      "included": true
+    }
+  ]
+}
