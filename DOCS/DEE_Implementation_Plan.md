@@ -274,3 +274,25 @@ has used it for a few weeks and you see what resolutions recur.
    first? (Timeline note: doc lists "Backend: AI gateway, AVM service scaffold" as a Week-8ish
    item and "DEE (document extraction) implemented" slightly later — suggesting gateway
    should exist before you need it, but confirm sequencing.)
+
+
+
+## 10. SIDE NOTE QUESTIONS (relevant to my work):
+
+ How would you like DEE to handle live LLM extraction versus local testing during development?
+
+ Should DEE directly build and return DeedHistoryEvent timeline payloads to assemble the ownership chain?
+
+ Which primary OCR processing engine would you like to target for production deployments?
+
+
+
+ The Right Engineering Approach Going Forward:
+
+ 
+    1. Keep Pipeline Core Agnostic: The pipeline orchestrator (dee/pipeline.py), OCR normalization (dee/ocr.py), and ownership timeline builder
+    (dee/ownership_chain.py) must operate strictly on universal abstractions: Document Type, Confidence Thresholds, and Database Models.
+    2. Generic Legal Structural Norms: Any pattern matching should rely only on broad legal conventions (e.g., standard conveyance clauses like "Between [Party 1]
+    and [Party 2]", standard statutory registrations like "Document No / SRO"), rather than hyper-specific string shapes.
+    3. Multi-Region Testing: Tests must continue validating varied jurisdictions (e.g., Bengaluru, Hyderabad, Pune/Maharashtra) using realistic variations to
+    verify generality rather than tuning the engine to one synthetic phrase

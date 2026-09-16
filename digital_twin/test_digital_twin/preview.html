@@ -7481,6 +7481,19 @@
       };
     }
 
+    function disposeGroup(group) {
+      if (!group) return;
+      group.traverse((child) => {
+        if (child.isMesh) {
+          if (child.geometry) child.geometry.dispose();
+          if (child.userData && child.userData.isCustomMaterial && child.material) {
+            child.material.dispose();
+          }
+        }
+      });
+      while (group.children.length > 0) group.remove(group.children[0]);
+    }
+
     function createBox(w, h, d, mat, x, y, z, ry = 0, parent = scene) {
       const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
       mesh.position.set(x, y, z);
@@ -8010,9 +8023,9 @@
     function renderBlueprintInScene(bp) {
       currentBlueprint = bp;
 
-      while (stagedGroup.children.length > 0) stagedGroup.remove(stagedGroup.children[0]);
-      while (structuralGroup.children.length > 0) structuralGroup.remove(structuralGroup.children[0]);
-      while (defectGroup.children.length > 0) defectGroup.remove(defectGroup.children[0]);
+      disposeGroup(stagedGroup);
+      disposeGroup(structuralGroup);
+      disposeGroup(defectGroup);
 
       if (!bp || !bp.rooms || bp.rooms.length === 0) return;
 
@@ -8047,7 +8060,7 @@
         const roomFloorMat = new THREE.MeshLambertMaterial({ color: hex });
 
         const floorMesh = createBox(b.w, 0.28, b.d, roomFloorMat, b.x, b.y + 0.14, b.z, 0, structuralGroup);
-        floorMesh.userData = { floorLevel: r.floorLevel ?? 0, type: 'floor', roomId: r.id };
+        floorMesh.userData = { floorLevel: r.floorLevel ?? 0, type: 'floor', roomId: r.id, isCustomMaterial: true };
 
         // Skirting
         const skirtH = 0.08, skirtT = 0.04;
