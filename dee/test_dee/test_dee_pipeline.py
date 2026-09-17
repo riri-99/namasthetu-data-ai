@@ -27,6 +27,8 @@ from dee.models import (
 from dee.pipeline import dee_pipeline
 from dee.gateway import mask_pii
 from dee.learning_loop import dee_learning_collector, DeeLearningEventType
+from dee.dataset_manager import dee_dataset_manager
+
 
 
 
@@ -121,6 +123,42 @@ vendor ... [ink blotched]
 purchaser ... [page fold shadow across signature]
 """
 
+KANNADA_TEST_DEED = """
+ಕರ್ನಾಟಕ ಸರ್ಕಾರ - ನೋಂದಣಿ ಮತ್ತು ಮುದ್ರಾಂಕ ಇಲಾಖೆ
+ಪುಸ್ತಕ 1 - ನೋಂದಾಯಿತ ಕ್ರಯಪತ್ರ (ಖರೀದಿ ಪತ್ರ)
+ದಸ್ತಾವೇಜು ಸಂಖ್ಯೆ: MYS-S-04821/2022-23
+
+ಮಾರಾಟಗಾರರಾದ:
+ಶ್ರೀ ಬಸವರಾಜಪ್ಪ ಎಸ್. ಬಿ., ವಾಸ: ಜಯನಗರ, ಮೈಸೂರು (PAN: BSBPA1234K).
+
+ಖರೀದಿದಾರರಾದ:
+ಶ್ರೀ ಮಂಜುನಾಥ ಕೆ. ಗೌಡ, ವಾಸ: ಕುವೆಂಪುನಗರ, ಮೈಸೂರು (PAN: MKGPA5678L, Aadhaar: 4123 7890 1234).
+
+ಸ್ವತ್ತು ವಿವರ:
+ವಿಜಯನಗರ ಗ್ರಾಮದ ಸರ್ವೆ ನಂ 84/3, ನಿವೇಶನ ಸಂಖ್ಯೆ 24, ಖಾತಾ ನಂ 1842.
+ವಿಸ್ತೀರ್ಣ: 1200 ಚದರ ಅಡಿ.
+ಕ್ರಯದ ಮೊತ್ತ: ರೂ. 4800000/-.
+ಮುದ್ರಾಂಕ ಶುಲ್ಕ: ರೂ. 264000/-.
+"""
+
+HINDI_TEST_DEED = """
+मध्य प्रदेश शासन - पंजीयन एवं मुद्रांक विभाग
+पुस्तक 1 - पंजीकृत विक्रय विलेख (बैनामा)
+दस्तावेज़ क्रमांक: IND-08412/2021-22
+
+विक्रेता:
+महेश कुमार शर्मा, निवासी: इंदौर (PAN: MKSPA4321F).
+
+क्रेता:
+अमित कुमार वर्मा, निवासी: इंदौर (PAN: AKVPA8765M).
+
+संपत्ति का विवरण:
+ग्राम खजराना स्थित खसरा नंबर 114/2, भूखंड क्रमांक 15.
+क्षेत्रफल: 1500 वर्ग फुट.
+प्रतिफल राशि: रुपये 5500000/-.
+स्टाम्प शुल्क: रुपये 522500/-.
+"""
+
 
 class TestDeePipeline(unittest.TestCase):
 
@@ -128,6 +166,7 @@ class TestDeePipeline(unittest.TestCase):
         """Test clean sale deed extraction, confidence score, and schema fields."""
         result = dee_pipeline.process_document(
             file_input=SALE_DEED_CLEAN_TEXT,
+
             document_type=DocumentType.SALE_DEED,
             document_id="doc-test-001",
             property_id="prop-test-blr-01",
@@ -435,7 +474,64 @@ class TestDeePipeline(unittest.TestCase):
             "142/2A-Amended",
         )
 
+    def test_12_multilingual_kannada_and_hindi_extraction(self):
+        """Verify multilingual extraction on Kannada and Hindi legal deeds."""
+        # 1. Kannada Extraction
+        res_kan = dee_pipeline.process_document(
+            file_input=KANNADA_TEST_DEED,
+            document_type=DocumentType.SALE_DEED,
+            document_id="doc-test-kannada",
+            property_id="prop-test-mys-01",
+        )
+        self.assertTrue(res_kan.aiExtractedDataJson.is_regional_script)
+        self.assertEqual(res_kan.aiExtractedDataJson.regional_language, "Kannada")
+        self.assertEqual(res_kan.aiExtractedDataJson.survey_number.survey_no, "84/3")
+        self.assertEqual(res_kan.aiExtractedDataJson.area.carpet_area_sqft, 1200.0)
+        self.assertEqual(res_kan.aiExtractedDataJson.sale_consideration_inr, 4800000.0)
+        kan_buyers = [o for o in res_kan.aiExtractedDataJson.owners if o.party_type.value == "GRANTEE_BUYER"]
+        self.assertGreaterEqual(len(kan_buyers), 1)
+        self.assertIn("ಮಂಜುನಾಥ", kan_buyers[0].name)
+
+        # 2. Hindi Extraction
+        res_hin = dee_pipeline.process_document(
+            file_input=HINDI_TEST_DEED,
+            document_type=DocumentType.SALE_DEED,
+            document_id="doc-test-hindi",
+            property_id="prop-test-indore-01",
+        )
+        self.assertTrue(res_hin.aiExtractedDataJson.is_regional_script)
+        self.assertIn(res_hin.aiExtractedDataJson.regional_language, ("Hindi", "Devanagari (Marathi/Hindi)"))
+        self.assertEqual(res_hin.aiExtractedDataJson.survey_number.survey_no, "114/2")
+        self.assertEqual(res_hin.aiExtractedDataJson.area.carpet_area_sqft, 1500.0)
+        self.assertEqual(res_hin.aiExtractedDataJson.sale_consideration_inr, 5500000.0)
+        hin_buyers = [o for o in res_hin.aiExtractedDataJson.owners if o.party_type.value == "GRANTEE_BUYER"]
+        self.assertGreaterEqual(len(hin_buyers), 1)
+        self.assertIn("अमित कुमार वर्मा", hin_buyers[0].name)
+
+    def test_13_dataset_manager_lifecycle_and_cleanup(self):
+        """Verify dataset discovery, train/test split, and fine-tuning export with complete cleanup."""
+        import tempfile
+        import json
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            # Create a mock file and annotation inside temporary directory
+            mock_doc = os.path.join(tmp_dir, "deed_01.txt")
+            with open(mock_doc, "w", encoding="utf-8") as f:
+                f.write(SALE_DEED_CLEAN_TEXT)
+
+            mock_ann = os.path.join(tmp_dir, "ground_truth.json")
+            with open(mock_ann, "w", encoding="utf-8") as f:
+                json.dump([{"file_name": "deed_01.txt", "document_type": "SALE_DEED"}], f)
+
+            items = dee_dataset_manager.load_dataset(tmp_dir)
+            self.assertEqual(len(items), 1)
+            self.assertEqual(items[0].file_name, "deed_01.txt")
+
+            train, val, test = dee_dataset_manager.split_dataset(items, 1.0, 0.0, 0.0)
+            self.assertEqual(len(train), 1)
+
 
 if __name__ == "__main__":
     unittest.main()
+
 

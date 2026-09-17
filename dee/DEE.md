@@ -3,7 +3,7 @@
 **Namasthetu · Embedded AI Service #1 · Owner: AI/ML Track**  
 **Spec Reference:** Namasthetu Scope v1.0 FINAL (§12.1–§12.4, §03.M02, §07.5, §16.2)  
 **Implementation Plan:** [`DOCS/DEE_Implementation_Plan.md`](../DOCS/DEE_Implementation_Plan.md)  
-**Database Schema Adherence:** 100% compliant with [`src/db/schema.prisma`](../src/db/schema.prisma) without modifying the schema.
+**Database Schema Adherence:** Compliant with [`src/db/schema.prisma`](../src/db/schema.prisma).
 
 ---
 
@@ -103,14 +103,36 @@ Uploaded Document (PDF / Image)
 
 ## 5. Quick Start & Execution
 
-### Run Unit Tests (11 Automated Tests Covering All Phases)
+### Run Unit Tests (13 Automated Tests Covering All Phases, Multilingual & In-Memory Cleanup)
 ```bash
-python -m unittest dee/test_dee/test_dee_pipeline.py
+python -m unittest dee.test_dee.test_dee_pipeline
 ```
 
 ### Run Interactive CLI Demo
 ```bash
 python dee/run_dee_demo.py
+```
+
+### Drop-In Dataset Evaluation & Training CLI (`dee/train_and_eval.py`)
+
+The pipeline includes a dedicated, dataset-agnostic CLI tool (`dee/train_and_eval.py`) and dataset manager (`dee/dataset_manager.py`). **No mock data is kept in the repository**; whenever you have your real image dataset ready, you can point directly to any local directory:
+
+#### 1. Evaluate Pipeline Accuracy on Real Image Dataset
+Recursively scans your image directory (`.png`, `.jpg`, `.jpeg`, `.tiff`, `.tif`, `.bmp`, `.webp`, `.pdf`), runs OCR + extraction, and outputs accuracy metrics (auto-approval rate, field match rate, mean confidence score):
+```bash
+python dee/train_and_eval.py --mode eval --data-dir "path/to/your/image_dataset"
+```
+
+#### 2. Bootstrap Pseudo-Labels for Unannotated Images
+If your dropped dataset does not have pre-existing annotations, this command runs high-confidence extraction and saves ground-truth candidate JSONs alongside each document for review:
+```bash
+python dee/train_and_eval.py --mode bootstrap --data-dir "path/to/your/image_dataset" --confidence-threshold 0.85
+```
+
+#### 3. Export Fine-Tuning JSONL (Chat / Vision Format)
+Formats high-confidence documents into standard fine-tuning pairs ready for Claude / LLM retraining:
+```bash
+python dee/train_and_eval.py --mode export-finetune --data-dir "path/to/your/image_dataset" --out-dir "path/to/finetuning_export"
 ```
 
 ### Python API Usage
@@ -178,8 +200,10 @@ dataset = dee_learning_collector.export_dataset()
    Raw Aadhaar (12-digit) and PAN numbers are tokenized *before* prompt ingestion (`mask_pii()`), preventing any PII leaks into logs or external LLM providers.
 2. **Confidence-Driven Ops Routing (§03.M02):**  
    Documents below the $0.85$ threshold are automatically flagged (`requiresManualReview = True`) and supplied with an actionable `suggested_resolution` string for human reviewers.
-3. **Regional Script Awareness (O-07):**  
-   `dee/ocr.py` detects regional scripts (Kannada, Marathi, Telugu, Tamil, Devanagari) to guide language-specific extraction templates without breaking the schema.
+3. **Regional Script Awareness & Native Multilingual Support (O-07):**  
+   `dee/ocr.py` dynamically identifies regional scripts (Kannada, Marathi, Hindi/Devanagari, Telugu, Tamil, Gujarati, Bengali) and configures Tesseract multi-language models (`eng+kan+hin+mar+tel+tam`). Prompts (`dee/prompts.py` v1.1.0) and gateways normalize vernacular legal conventions (e.g., ಕ್ರಯಪತ್ರ, विकसन करार, बैनामा, పట్టాదారు, விற்பனையாளர்) into canonical JSON schema keys while faithfully preserving native party names and schedule descriptions.
 4. **Zero-Drift Database Contract:**  
    Outputs cleanly populate `model LegalDocument` and `model DeedHistoryEvent` in `src/db/schema.prisma`.
+5. **Drop-In Dataset & Retraining Architecture:**  
+   The pipeline core is completely decoupled from sample data. Zero mock datasets are persisted in the repository. As soon as real image batches are available, they can be directly dropped and processed via `dee/train_and_eval.py` for evaluation, pseudo-labeling, and fine-tune dataset generation.
 

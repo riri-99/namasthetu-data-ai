@@ -129,9 +129,11 @@ class DeePipeline:
         document_id: str,
         property_id: str,
         mime_type: str = "application/pdf",
+        lang: Optional[str] = None,
     ) -> DeeExtractionResult:
         """
         Synchronous / blocking execution of the DEE pipeline.
+        Multilingual support: handles English, Kannada, Marathi, Hindi, Telugu, Tamil.
         """
         start_time = time.perf_counter()
 
@@ -153,7 +155,7 @@ class DeePipeline:
         )
 
         # Step 2: OCR Extraction
-        ocr_result = self.ocr.process_document(file_input, mime_type=mime_type)
+        ocr_result = self.ocr.process_document(file_input, mime_type=mime_type, lang=lang)
         ocr_text = ocr_result["text"]
         ocr_conf = ocr_result["ocr_confidence"]
 
@@ -162,7 +164,7 @@ class DeePipeline:
             document_id,
             property_id,
             50,
-            f"OCR completed ({ocr_result['page_count']} pages, conf: {ocr_conf * 100:.1f}%)",
+            f"OCR completed ({ocr_result['page_count']} pages, conf: {ocr_conf * 100:.1f}%, script: {ocr_result.get('detected_script') or 'Latin/English'})",
             confidence=ocr_conf,
         )
 
@@ -193,6 +195,13 @@ class DeePipeline:
         if "field_confidence" not in extracted_raw:
             extracted_raw["field_confidence"] = {}
         extracted_raw["field_confidence"]["ocr_quality"] = ocr_conf
+
+        # Sync regional script detection from OCR layer if present
+        if ocr_result.get("is_regional_script"):
+            extracted_raw["is_regional_script"] = True
+            if not extracted_raw.get("regional_language"):
+                extracted_raw["regional_language"] = ocr_result.get("detected_script")
+
 
         # Calculate composite confidence score dynamically based on document type
         field_confs = extracted_raw.get("field_confidence", {})

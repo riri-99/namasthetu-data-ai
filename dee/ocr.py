@@ -19,25 +19,44 @@ from PIL import Image, ImageEnhance, ImageFilter, ImageOps
 class DeeOcrProcessor:
     """
     Ingests and normalizes legal documents for accurate entity extraction.
+    Multilingual support for English and major Indian scripts:
+    Kannada, Devanagari (Marathi/Hindi), Telugu, Tamil, Gujarati, Bengali.
     """
 
-    def __init__(self, tesseract_cmd: Optional[str] = None):
+    def __init__(self, tesseract_cmd: Optional[str] = None, default_langs: str = "eng+kan+hin+mar+tel+tam"):
         self.tesseract_cmd = tesseract_cmd or os.environ.get("TESSERACT_CMD")
+        self.default_langs = default_langs
         self.pytesseract_available = False
+        self.available_langs = ["eng"]
         try:
             import pytesseract
             if self.tesseract_cmd:
                 pytesseract.pytesseract.tesseract_cmd = self.tesseract_cmd
             self.pytesseract = pytesseract
             self.pytesseract_available = True
+            try:
+                self.available_langs = pytesseract.get_languages()
+            except Exception:
+                self.available_langs = ["eng"]
         except ImportError:
             self.pytesseract = None
+
+    def _get_tesseract_lang_string(self, requested_lang: Optional[str] = None) -> str:
+        """Determines best supported language combination based on installed Tesseract models."""
+        if requested_lang:
+            return requested_lang
+        if not self.available_langs:
+            return "eng"
+        # Match configured default languages with actually installed tesseract langpacks
+        wanted = self.default_langs.split("+")
+        supported = [l for l in wanted if l in self.available_langs]
+        return "+".join(supported) if supported else "eng"
 
     @property
     def engine_name(self) -> str:
         """Dynamically returns the active OCR engine name."""
         if self.pytesseract_available:
-            return "Tesseract OCR (Preprocessed & Normalized)"
+            return "Tesseract OCR (Multilingual Normalized)"
         return "PyPDF / Native Ingestion Engine"
 
     def _compute_text_quality_confidence(self, text: str) -> float:
@@ -45,6 +64,7 @@ class DeeOcrProcessor:
         clean_text = re.sub(r"\s+", " ", text).strip()
         if not clean_text:
             return 0.0
+        # Python isalnum() correctly handles Unicode Indic scripts
         alnum_chars = sum(1 for c in clean_text if c.isalnum() or c.isspace())
         ratio = alnum_chars / max(1, len(clean_text))
         length_factor = min(1.0, len(clean_text) / 120.0)
@@ -55,7 +75,9 @@ class DeeOcrProcessor:
         file_input: str | bytes,
         mime_type: str = "application/pdf",
         enhance_contrast: bool = True,
+        lang: Optional[str] = None,
     ) -> Dict[str, Any]:
+
         """
         Main OCR entry point. Accepts file path or raw bytes.
         Returns:
@@ -79,9 +101,9 @@ class DeeOcrProcessor:
         all_word_confs: List[float] = []
 
         if is_pdf:
-            pages_text, confidences, all_word_confs = self._process_pdf(raw_bytes, enhance_contrast)
+            pages_text, confidences, all_word_confs = self._process_pdf(raw_bytes, enhance_contrast, lang=lang)
         else:
-            txt, conf, word_confs = self._process_image(raw_bytes, enhance_contrast)
+            txt, conf, word_confs = self._process_image(raw_bytes, enhance_contrast, lang=lang)
             pages_text = [txt]
             confidences = [conf]
             all_word_confs = word_confs
@@ -119,7 +141,7 @@ class DeeOcrProcessor:
                 return file_input.encode("utf-8")
         raise ValueError(f"Unsupported file_input type: {type(file_input)}")
 
-    def _process_image(self, image_bytes: bytes, enhance: bool) -> Tuple[str, float, List[float]]:
+    def _process_image(self, image_bytes: bytes, enhance: bool, lang: Optional[str] = None) -> Tuple[str, float, List[float]]:
         """Processes a single image file through normalization and OCR, returning per-word confidence."""
         try:
             img = Image.open(io.BytesIO(image_bytes))
@@ -133,8 +155,9 @@ class DeeOcrProcessor:
 
         if self.pytesseract_available:
             try:
+                lang_str = self._get_tesseract_lang_string(lang)
                 data = self.pytesseract.image_to_data(
-                    normalized_img, output_type=self.pytesseract.Output.DICT
+                    normalized_img, lang=lang_str, output_type=self.pytesseract.Output.DICT
                 )
                 text = " ".join([w for w in data["text"] if w.strip()])
                 confs = [float(c) / 100.0 for c in data["conf"] if float(c) > 0]
@@ -147,7 +170,8 @@ class DeeOcrProcessor:
         txt, conf = self._extract_fallback_text(image_bytes)
         return txt, conf, [conf]
 
-    def _process_pdf(self, pdf_bytes: bytes, enhance: bool) -> Tuple[List[str], List[float], List[float]]:
+
+    def _process_pdf(self, pdf_bytes: bytes, enhance: bool, lang: Optional[str] = None) -> Tuple[List[str], List[float], List[float]]:
         """Extracts text from born-digital or scanned PDF."""
         # 1. Try fast native text extraction for born-digital PDFs
         try:
@@ -184,7 +208,7 @@ class DeeOcrProcessor:
                 else:
                     pix = page.get_pixmap(dpi=200)
                     img_bytes = pix.tobytes("png")
-                    txt, conf, word_confs = self._process_image(img_bytes, enhance)
+                    txt, conf, word_confs = self._process_image(img_bytes, enhance, lang=lang)
                     texts.append(txt)
                     confs.append(conf)
                     all_word_confs.extend(word_confs)
@@ -197,7 +221,6 @@ class DeeOcrProcessor:
         # 3. Fallback extraction from raw bytes
         txt, conf = self._extract_fallback_text(pdf_bytes)
         return [txt], [conf], [conf]
-
 
     def ingest_from_s3(self, s3_bucket: str, s3_key: str, s3_client: Optional[Any] = None) -> bytes:
         """
@@ -260,24 +283,22 @@ class DeeOcrProcessor:
 
     def _detect_regional_script(self, text: str) -> Tuple[bool, Optional[str]]:
         """
-        Detects Indian regional scripts (Kannada, Marathi/Devanagari, Telugu, Tamil).
+        Detects Indian regional scripts (Kannada, Marathi/Devanagari, Telugu, Tamil, Gujarati, Bengali).
         Mitigates named exception O-07.
         """
-        # Unicode Ranges
-        kannada = re.search(r"[\u0C80-\u0CFF]", text)
-        devanagari = re.search(r"[\u0900-\u097F]", text)
-        telugu = re.search(r"[\u0C00-\u0C7F]", text)
-        tamil = re.search(r"[\u0B80-\u0BFF]", text)
-
-        if kannada:
-            return True, "Kannada"
-        elif devanagari:
-            return True, "Devanagari (Marathi/Hindi)"
-        elif telugu:
-            return True, "Telugu"
-        elif tamil:
-            return True, "Tamil"
+        counts = {
+            "Kannada": len(re.findall(r"[\u0C80-\u0CFF]", text)),
+            "Devanagari (Marathi/Hindi)": len(re.findall(r"[\u0900-\u097F]", text)),
+            "Telugu": len(re.findall(r"[\u0C00-\u0C7F]", text)),
+            "Tamil": len(re.findall(r"[\u0B80-\u0BFF]", text)),
+            "Gujarati": len(re.findall(r"[\u0A80-\u0AFF]", text)),
+            "Bengali": len(re.findall(r"[\u0980-\u09FF]", text)),
+        }
+        best_script = max(counts, key=counts.get)
+        if counts[best_script] > 0:
+            return True, best_script
         return False, None
+
 
     def _extract_fallback_text(self, data: bytes) -> Tuple[str, float]:
         """Heuristic string extractor from raw byte streams with dynamic confidence scoring."""

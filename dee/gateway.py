@@ -152,21 +152,25 @@ class AiGatewayClient:
         text = ocr_text
         lower = text.lower()
 
-        # 1. Resolve Document Type dynamically
+        # 1. Resolve Document Type dynamically (English + Regional Indian Languages)
         resolved_doc_type = document_type
         if not resolved_doc_type:
-            if "encumbrance certificate" in lower or "form no. 15" in lower or "form 15" in lower or "form 16" in lower:
+            if any(k in lower for k in (
+                "encumbrance certificate", "form no. 15", "form 15", "form 16",
+                "ಋಣಭಾರ ಪ್ರಮಾಣ ಪತ್ರ", "भारमुक्त प्रमाणपत्र", "भारमुक्त प्रमाण पत्र",
+                "భార రహిత ధృవీకరణ పత్రం", "வில்லங்க சான்றிதழ்"
+            )):
                 resolved_doc_type = "ENCUMBRANCE_CERTIFICATE"
-            elif "allotment letter" in lower or "allotment agreement" in lower:
+            elif any(k in lower for k in ("allotment letter", "allotment agreement", "ಹಂಚಿಕೆ ಪತ್ರ", "वाटप पत्र", "आवंटन पत्र")):
                 resolved_doc_type = "ALLOTMENT_LETTER"
-            elif "gift deed" in lower or "settlement deed" in lower:
+            elif any(k in lower for k in ("gift deed", "settlement deed", "ದಾನ ಪತ್ರ", "बक्षीसपत्र")):
                 resolved_doc_type = "GIFT_DEED"
-            elif "khata" in lower or "katha certificate" in lower:
+            elif any(k in lower for k in ("khata", "katha certificate", "ಖಾತಾ", "खाते प्रमाणपत्र", "ನಮೂನೆ 9", "ನಮೂನೆ 11")):
                 resolved_doc_type = "KHATA_CERTIFICATE"
             else:
                 resolved_doc_type = "SALE_DEED"
 
-        # 2. Extract Transacting Parties (Owners) dynamically
+        # 2. Extract Transacting Parties (Owners) dynamically (Multilingual)
         owners: List[Dict[str, Any]] = []
 
         grantor_name = None
@@ -174,7 +178,7 @@ class AiGatewayClient:
 
         if resolved_doc_type == "ENCUMBRANCE_CERTIFICATE":
             ec_owner_m = re.search(
-                r"(?:Registered Owner|Owner Name|Executant|Mortgagor|In favour of)\s*[:\-\s,]+([A-Za-z0-9\s\.\,\(\)&]+?)(?:,|\n|\(|\bresiding\b|$)",
+                r"(?:Registered Owner|Owner Name|Executant|Mortgagor|In favour of|ಸ್ವತ್ತುದಾರರು|भोगवटादार|खातेदार|పట్టాదారు)\s*[:\-\s,]+([^\n,:;]+?)(?:,|\n|\(|\bresiding\b|ವಾಸ|राहणार|$)",
                 text,
                 re.IGNORECASE,
             )
@@ -182,29 +186,48 @@ class AiGatewayClient:
                 grantee_name = ec_owner_m.group(1).strip().rstrip(",. ")
         else:
             grantor_patterns = [
-                r"(?:vendor|seller|grantor|transferor|lessor|first\s*party)\s*[:\-\s,]+([A-Za-z0-9\s\.\,\(\)&]+?)(?:,|\n|\(|\bresiding\b|\bhereinafter\b|\bS/o\b|\bD/o\b|\bW/o\b|PAN|Aadhaar|$)",
-                r"(?:\bBETWEEN\b\s*[:\n\s]*)([A-Za-z0-9\s\.\,\(\)&]+?)(?:,|\n|\(|\bresiding\b|\bhereinafter\b|\bAND\b|PAN|Aadhaar|$)",
+                r"(?:\bBETWEEN\b\s*[:\n\s]*)([^\n,:;]+?)(?:,|\n|\(|\bresiding\b|\bhereinafter\b|\bAND\b|PAN|Aadhaar|$)",
+                r"(?:ಮಾರಾಟಗಾರ(?:ರು)?|ಬರೆದುಕೊಟ್ಟವರು|ಮೊದಲನೇ\s*ಪಾರ್ಟಿ|ಮಾರಾಟಗಾರರಾದ)\s*[:\-\s,]+([^\n,:;]+?)(?:,|\n|\(|\bವಾಸ\b|PAN|Aadhaar|ಇವರು|$)",
+                r"(?:देणार|विक्री\s*करणारे|पहिले\s*पक्षकार|लिहून\s*देणार)\s*[:\-\s,]+([^\n,:;]+?)(?:,|\n|\(|\bराहणार\b|PAN|Aadhaar|यांसी|यांनी|$)",
+                r"(?:विक्रेता|प्रथम\s*पक्ष)\s*[:\-\s,]+([^\n,:;]+?)(?:,|\n|\(|\bनिवासी\b|PAN|Aadhaar|आत्मज|$)",
+                r"(?:అమ్మకందారు|మొదటి\s*పక్షం)\s*[:\-\s,]+([^\n,:;]+?)(?:,|\n|\(|\bనివాసి\b|PAN|Aadhaar|$)",
+                r"(?:விற்பனையாளர்|முதல்\s*தரப்பினர்)\s*[:\-\s,]+([^\n,:;]+?)(?:,|\n|\(|\bவசிப்பவர்\b|PAN|Aadhaar|$)",
+                r"(?<!called the\s)(?:vendor|seller|grantor|transferor|lessor|first\s*party)\s*[:\-\s,]+([^\n,:;]+?)(?:,|\n|\(|\bresiding\b|\bhereinafter\b|\bS/o\b|\bD/o\b|\bW/o\b|PAN|Aadhaar|$)",
             ]
             for pat in grantor_patterns:
                 m = re.search(pat, text, re.IGNORECASE)
                 if m and len(m.group(1).strip()) > 2:
-                    candidate = m.group(1).strip().rstrip(",. ")
-                    if candidate.lower() not in ("the vendor", "the seller", "between"):
+                    candidate = m.group(1).strip().strip("/,. ")
+                    if candidate.lower() not in (
+                        "the vendor", "the seller", "the grantor", "between",
+                        "grantor", "vendor", "seller", "first party",
+                    ):
                         grantor_name = candidate
                         break
 
             grantee_patterns = [
-                r"(?:purchaser|buyer|grantee|transferee|lessee|allottee|second\s*party)\s*[:\-\s,]+([A-Za-z0-9\s\.\,\(\)&]+?)(?:,|\n|\(|\bresiding\b|\bhereinafter\b|\bS/o\b|\bD/o\b|\bW/o\b|PAN|Aadhaar|$)",
-                r"(?:\bAND\b\s*[:\n\s]*)([A-Za-z0-9\s\.\,\(\)&]+?)(?:,|\n|\(|\bresiding\b|\bhereinafter\b|PAN|Aadhaar|$)",
-                r"(?:Registered Owner|Owner Name|In favour of)\s*[:\-\s,]+([A-Za-z0-9\s\.\,\(\)&]+?)(?:,|\n|\(|\bresiding\b|$)",
+                r"(?:\bAND\b\s*[:\n\s]*)([^\n,:;]+?)(?:,|\n|\(|\bresiding\b|\bhereinafter\b|PAN|Aadhaar|$)",
+                r"(?:ಖರೀದಿದಾರ(?:ರು)?|ಕೊಳ್ಳುವವರು|ಬರೆಸಿಕೊಂಡವರು|ಎರಡನೇ\s*ಪಾರ್ಟಿ|ಖರೀದಿದಾರರಾದ)\s*[:\-\s,]+([^\n,:;]+?)(?:,|\n|\(|\bವಾಸ\b|PAN|Aadhaar|ಇವರಿಗೆ|$)",
+                r"(?:घेणार|खरेदीदार|दुसरे\s*पक्षकार|लिहून\s*घेणार)\s*[:\-\s,]+([^\n,:;]+?)(?:,|\n|\(|\bराहणार\b|PAN|Aadhaar|यांस|यांना|$)",
+                r"(?:(?<![\u0900-\u097F])क्रेता|द्वितीय\s*पक्ष)\s*[:\-\s,]+([^\n,:;]+?)(?:,|\n|\(|\bनिवासी\b|PAN|Aadhaar|आत्मज|$)",
+                r"(?:కొనుగోలుదారు|రెండవ\s*పక్షం)\s*[:\-\s,]+([^\n,:;]+?)(?:,|\n|\(|\bనివాసి\b|PAN|Aadhaar|$)",
+                r"(?:வாங்குபவர்|இரண்டாம்\s*தரப்பினர்)\s*[:\-\s,]+([^\n,:;]+?)(?:,|\n|\(|\bவசிப்பவர்\b|PAN|Aadhaar|$)",
+                r"(?:Registered Owner|Owner Name|In favour of)\s*[:\-\s,]+([^\n,:;]+?)(?:,|\n|\(|\bresiding\b|$)",
+                r"(?<!called the\s)(?:purchaser|buyer|grantee|transferee|lessee|allottee|second\s*party)\s*[:\-\s,]+([^\n,:;]+?)(?:,|\n|\(|\bresiding\b|\bhereinafter\b|\bS/o\b|\bD/o\b|\bW/o\b|PAN|Aadhaar|$)",
             ]
             for pat in grantee_patterns:
                 m = re.search(pat, text, re.IGNORECASE)
                 if m and len(m.group(1).strip()) > 2:
-                    candidate = m.group(1).strip().rstrip(",. ")
-                    if candidate.lower() not in ("the purchaser", "the vendor", "the company", "the buyer", "stamps department"):
+                    candidate = m.group(1).strip().strip("/,. ")
+                    if candidate.lower() not in (
+                        "the purchaser", "the vendor", "the company", "the buyer",
+                        "the grantee", "stamps department", "grantee", "purchaser",
+                        "buyer", "second party",
+                    ):
                         grantee_name = candidate
                         break
+
+
 
         # Relationship parsing scoped specifically to each party
         def find_relation_for_party(name: Optional[str]) -> Tuple[Optional[str], Optional[str]]:
@@ -266,45 +289,49 @@ class AiGatewayClient:
                 "share_percentage": 100.0,
             })
 
-        # 3. Extract Survey & Schedule Identifiers dynamically
-        survey_m = re.search(r"(?:survey|sy\.?|s\.?no\.?)\s*(?:no\.?|number|#)?\s*[:\-\s]*([0-9]+[A-Za-z0-9/\-]*)", text, re.IGNORECASE)
+        # 3. Extract Survey & Schedule Identifiers dynamically (Multilingual)
+        survey_m = re.search(
+            r"(?:survey|sy\.?|s\.?no\.?|ಸರ್ವೆ\s*(?:ನಂಬರ್|ನಂ)|ಸರ್ವೇ\s*ನಂ|सर्व्हे\s*(?:नंबर|क्र\.)|गट\s*(?:नंबर|क्र\.)|सी\.टी\.एस\.\s*क्र\.|खसरा\s*(?:नंबर|क्र\.)|सर्वे\s*क्रमांक|సర్వే\s*(?:నంబరు|నెం)|சர்வே\s*எண்)\s*(?:no\.?|number|#|cr\.?)?\s*[:\-\s#]*([0-9]+[\w/\-]*)",
+            text,
+            re.IGNORECASE,
+        )
         survey_no = survey_m.group(1).strip() if survey_m else None
 
-        hissa_m = re.search(r"(?:hissa|sub[\-\s]*div(?:ision)?)\s*(?:no\.?|#)?\s*[:\-\s]*([0-9]+[A-Za-z0-9/\-]*)", text, re.IGNORECASE)
+        hissa_m = re.search(r"(?:hissa|sub[\-\s]*div(?:ision)?|ಹಿಸ್ಸಾ|हिस्सा)\s*(?:no\.?|#)?\s*[:\-\s]*([0-9]+[A-Za-z0-9/\-]*)", text, re.IGNORECASE)
         hissa_no = hissa_m.group(1).strip() if hissa_m else None
 
-        katha_m = re.search(r"(?:katha|khata|pid|property\s*id|e[\-\s]*khata)\s*(?:no\.?|#)?\s*[:\-\s]*([A-Za-z0-9/\-]+)", text, re.IGNORECASE)
+        katha_m = re.search(r"(?:katha|khata|pid|property\s*id|e[\-\s]*khata|ಖಾತಾ\s*(?:ನಂ|ಸಂಖ್ಯೆ)?|ಕಥಾ|खाते\s*क्र\.|पट्टा\s*నం)\s*(?:no\.?|#)?\s*[:\-\s]*([A-Za-z0-9/\-]+)", text, re.IGNORECASE)
         katha_no = katha_m.group(1).strip() if katha_m else None
 
-        plot_m = re.search(r"(?:plot|site)\s*(?:no\.?|#)?\s*[:\-\s]*([A-Za-z0-9/\-]+)", text, re.IGNORECASE)
+        plot_m = re.search(r"(?:plot|site|ನಿವೇಶನ|भूखंड|प्लॉट)\s*(?:no\.?|#)?\s*[:\-\s]*([A-Za-z0-9/\-]+)", text, re.IGNORECASE)
         plot_no = plot_m.group(1).strip() if plot_m else None
 
-        flat_m = re.search(r"(?:flat|unit|apartment)\s*(?:no\.?|#|bearing)?\s*(?:unit|flat|no\.?)?\s*[:\-\s]*([0-9]+[A-Za-z0-9\-]*)", text, re.IGNORECASE)
+        flat_m = re.search(r"(?:flat|unit|apartment|ಫ್ಲ್ಯಾಟ್|सदनिका|फ्लैट)\s*(?:no\.?|#|bearing)?\s*(?:unit|flat|no\.?)?\s*[:\-\s]*([0-9]+[A-Za-z0-9\-]*)", text, re.IGNORECASE)
         flat_no = flat_m.group(1).strip() if flat_m else None
 
-        village_m = re.search(r"([A-Za-z\s]+?)\s+(?:village|grama|mouza)", text, re.IGNORECASE) or re.search(r"village\s*[:\-\s]*([A-Za-z\s]+?)(?:,|\n|hobli|taluk|$)", text, re.IGNORECASE)
+        village_m = re.search(r"([A-Za-z\s]+?)\s+(?:village|grama|mouza|ಗ್ರಾಮ|गाव|ग्राम)", text, re.IGNORECASE) or re.search(r"(?:village|ಗ್ರಾಮ|गाव)\s*[:\-\s]*([A-Za-z\s]+?)(?:,|\n|hobli|taluk|$)", text, re.IGNORECASE)
         village = village_m.group(1).strip().rstrip(",. ") if village_m else None
 
         hobli_m = re.search(r"([A-Za-z\s]+?)\s+hobli", text, re.IGNORECASE) or re.search(r"hobli\s*[:\-\s]*([A-Za-z\s]+?)(?:,|\n|taluk|district|$)", text, re.IGNORECASE)
         hobli = hobli_m.group(1).strip().rstrip(",. ") if hobli_m else None
 
-        taluk_m = re.search(r"([A-Za-z\s]+?)\s+taluk", text, re.IGNORECASE) or re.search(r"taluk\s*[:\-\s]*([A-Za-z\s]+?)(?:,|\n|district|$)", text, re.IGNORECASE)
+        taluk_m = re.search(r"([A-Za-z\s]+?)\s+taluk", text, re.IGNORECASE) or re.search(r"(?:taluk|ತಾಲೂಕು|तालुका)\s*[:\-\s]*([A-Za-z\s]+?)(?:,|\n|district|$)", text, re.IGNORECASE)
         taluk = taluk_m.group(1).strip().rstrip(",. ") if taluk_m else None
 
-        district_m = re.search(r"([A-Za-z\s]+?)\s+district", text, re.IGNORECASE) or re.search(r"district\s*[:\-\s]*([A-Za-z\s]+?)(?:,|\n|state|$)", text, re.IGNORECASE)
+        district_m = re.search(r"([A-Za-z\s]+?)\s+district", text, re.IGNORECASE) or re.search(r"(?:district|ಜಿಲ್ಲೆ|जिल्हा|ज़िला)\s*[:\-\s]*([A-Za-z\s]+?)(?:,|\n|state|$)", text, re.IGNORECASE)
         district = district_m.group(1).strip().rstrip(",. ") if district_m else None
 
         state = None
-        for s in ("Karnataka", "Telangana", "Maharashtra", "Tamil Nadu", "Delhi", "Haryana", "Uttar Pradesh", "Gujarat", "Andhra Pradesh", "Kerala"):
-            if s.lower() in lower:
+        for s in ("Karnataka", "Telangana", "Maharashtra", "Tamil Nadu", "Delhi", "Haryana", "Uttar Pradesh", "Gujarat", "Andhra Pradesh", "Kerala", "Madhya Pradesh"):
+            if s.lower() in lower or (s == "Karnataka" and "ಕರ್ನಾಟಕ" in text) or (s == "Maharashtra" and "महाराष्ट्र" in text) or (s == "Telangana" and "తెలంగాణ" in text):
                 state = s
                 break
 
-        # Schedule Boundaries
-        north_m = re.search(r"North\s*(?:by|:)[:\s]*([^\n;\.]+)", text, re.IGNORECASE)
-        south_m = re.search(r"South\s*(?:by|:)[:\s]*([^\n;\.]+)", text, re.IGNORECASE)
-        east_m = re.search(r"East\s*(?:by|:)[:\s]*([^\n;\.]+)", text, re.IGNORECASE)
-        west_m = re.search(r"West\s*(?:by|:)[:\s]*([^\n;\.]+)", text, re.IGNORECASE)
+        # Schedule Boundaries (Multilingual: North, South, East, West in English/Kannada/Marathi/Hindi/Telugu/Tamil)
+        north_m = re.search(r"(?:North|ಉತ್ತರ(?:ಕ್ಕೆ)?|उत्तरेस|उत्तर|ఉత్తరం|வடக்கு)\s*(?:by|:)?[:\s]*([^\n;\.]+)", text, re.IGNORECASE)
+        south_m = re.search(r"(?:South|ದಕ್ಷಿಣ(?:ಕ್ಕೆ)?|दक्षिणेस|दक्षिण|దక్షిణం|தெற்கு)\s*(?:by|:)?[:\s]*([^\n;\.]+)", text, re.IGNORECASE)
+        east_m = re.search(r"(?:East|ಪೂರ್ವ(?:ಕ್ಕೆ)?|पूर्वेस|पूरब|पूर्व|తూర్పు|கிழக்கு)\s*(?:by|:)?[:\s]*([^\n;\.]+)", text, re.IGNORECASE)
+        west_m = re.search(r"(?:West|ಪಶ್ಚಿಮ(?:ಕ್ಕೆ)?|पश्चिमेस|पश्चिम|పడమర|மேற்கு)\s*(?:by|:)?[:\s]*([^\n;\.]+)", text, re.IGNORECASE)
 
         boundaries = None
         if north_m or south_m or east_m or west_m:
@@ -314,11 +341,15 @@ class AiGatewayClient:
             if east_m: boundaries["East"] = east_m.group(1).strip().rstrip(";,. ")
             if west_m: boundaries["West"] = west_m.group(1).strip().rstrip(";,. ")
 
-        # 4. Extract Area Measurements dynamically
-        carpet_m = re.search(r"carpet\s*area\s*(?:of|is|:)?\s*([0-9,]+(?:\.[0-9]+)?)\s*(sq(?:uare)?\.?\s*(?:ft|feet|meters?|m|yards?)|guntas?|cents?)?", text, re.IGNORECASE)
+        # 4. Extract Area Measurements dynamically (Multilingual)
+        carpet_m = re.search(
+            r"(?:carpet\s*area|ವಿಸ್ತೀರ್ಣ|क्षेत्रफळ|क्षेत्रफल|విస్తీರ್ణం|பரப்பளவு)\s*(?:of|is|:)?\s*([0-9,]+(?:\.[0-9]+)?)\s*(sq(?:uare)?\.?\s*(?:ft|feet|meters?|m|yards?)|ಚದರ\s*ಅಡಿ|चौ\.?\s*फूट|चौरस\s*फूट|वर्ग\s*फुट|చదరపు\s*అడుగులు|guntas?|ಗುಂಟೆ|गुंठे|cents?)?",
+            text,
+            re.IGNORECASE,
+        )
         super_m = re.search(r"(?:super\s*built[\-\s]*up|built[\-\s]*up|sba)\s*area\s*(?:of|is|:)?\s*([0-9,]+(?:\.[0-9]+)?)\s*(sq(?:uare)?\.?\s*(?:ft|feet|meters?|m|yards?)|guntas?|cents?)?", text, re.IGNORECASE)
         plot_m = re.search(r"(?:plot|site|land)\s*area\s*(?:of|is|:)?\s*([0-9,]+(?:\.[0-9]+)?)\s*(sq(?:uare)?\.?\s*(?:ft|feet|meters?|m|yards?)|guntas?|cents?)?", text, re.IGNORECASE)
-        generic_area_m = re.search(r"([0-9,]+(?:\.[0-9]+)?)\s*(sq(?:uare)?\.?\s*(?:ft|feet|meters?|yards?)|guntas?|cents?)", text, re.IGNORECASE)
+        generic_area_m = re.search(r"([0-9,]+(?:\.[0-9]+)?)\s*(sq(?:uare)?\.?\s*(?:ft|feet|meters?|yards?)|ಚದರ\s*ಅಡಿ|चौ\.?\s*फूट|वर्ग\s*फुट|guntas?|cents?)", text, re.IGNORECASE)
 
         carpet_sqft = float(carpet_m.group(1).replace(",", "")) if carpet_m else None
         super_sqft = float(super_m.group(1).replace(",", "")) if super_m else None
@@ -326,15 +357,20 @@ class AiGatewayClient:
         raw_area_text = carpet_m or super_m or plot_m or generic_area_m
         raw_area_str = raw_area_text.group(0).strip() if raw_area_text else None
 
-        # 5. Extract Financial Consideration dynamically
-        consideration_m = re.search(r"(?:consideration|sale\s*price|value\s*of\s*property|sum\s*of)\s*(?:of|is|:)?\s*(?:inr|rs\.?|rupees)?\s*([0-9,]+(?:\.[0-9]+)?)", text, re.IGNORECASE)
+        # 5. Extract Financial Consideration dynamically (Multilingual)
+        consideration_m = re.search(
+            r"(?:consideration|sale\s*price|value\s*of\s*property|sum\s*of|ಕ್ರಯದ\s*ಮೊತ್ತ|ಮೊತ್ತ\s*ರೂ\.?|मोबदला|रक्कम\s*रु\.?|प्रतिफल\s*(?:राशि)?|विక్రయ\s*ప్రతిఫలం)\s*(?:of|is|:)?\s*(?:inr|rs\.?|rupees|ರೂ\.?|रु\.?|रुपये|రూ\.?)?\s*([0-9,]+(?:\.[0-9]+)?)",
+            text,
+            re.IGNORECASE,
+        )
         sale_consideration = float(consideration_m.group(1).replace(",", "")) if consideration_m else None
 
-        stamp_m = re.search(r"stamp\s*duty\s*(?:paid|amount)?\s*[:\s]*(?:inr|rs\.?|rupees)?\s*([0-9,]+(?:\.[0-9]+)?)", text, re.IGNORECASE)
+        stamp_m = re.search(r"(?:stamp\s*duty|ಮುದ್ರಾಂಕ\s*ಶುಲ್ಕ|मुद्रांक\s*शुल्क|स्टाम्प\s*शुल्क)\s*(?:paid|amount)?\s*[:\s]*(?:inr|rs\.?|rupees|ರೂ\.?|रु\.?|रुपये|రూ\.?)?\s*([0-9,]+(?:\.[0-9]+)?)", text, re.IGNORECASE)
         stamp_duty = float(stamp_m.group(1).replace(",", "")) if stamp_m else None
 
-        reg_fee_m = re.search(r"registration\s*(?:fee|charges)\s*(?:paid)?\s*[:\s]*(?:inr|rs\.?|rupees)?\s*([0-9,]+(?:\.[0-9]+)?)", text, re.IGNORECASE)
+        reg_fee_m = re.search(r"(?:registration\s*(?:fee|charges)|ನೋಂದಣಿ\s*ಶುಲ್ಕ|नोंदणी\s*फी|पंजीयन\s*शुल्क)\s*(?:paid)?\s*[:\s]*(?:inr|rs\.?|rupees|ರೂ\.?|रु\.?|रुपये|రూ\.?)?\s*([0-9,]+(?:\.[0-9]+)?)", text, re.IGNORECASE)
         reg_fee = float(reg_fee_m.group(1).replace(",", "")) if reg_fee_m else None
+
 
         # 6. Extract Dates & SRO Registration dynamically
         date_iso = None
@@ -569,6 +605,28 @@ class AiGatewayClient:
 
         ai_summary = f"{p1}\n\n{p2}\n\n{p3}"
 
+        # Detect regional Indic script & language
+        kannada_count = len(re.findall(r"[\u0C80-\u0CFF]", text))
+        devanagari_count = len(re.findall(r"[\u0900-\u097F]", text))
+        telugu_count = len(re.findall(r"[\u0C00-\u0C7F]", text))
+        tamil_count = len(re.findall(r"[\u0B80-\u0BFF]", text))
+
+        is_reg = False
+        reg_lang = None
+        if kannada_count > 5:
+            is_reg = True
+            reg_lang = "Kannada"
+        elif devanagari_count > 5:
+            is_reg = True
+            reg_lang = "Marathi" if ("खरेदीखत" in text or "दस्तऐवज" in text or "गट नंबर" in text or "गट क्र" in text or "महाराष्ट्र" in text or "पुणे" in text or "हवेली" in text) else "Hindi"
+
+        elif telugu_count > 5:
+            is_reg = True
+            reg_lang = "Telugu"
+        elif tamil_count > 5:
+            is_reg = True
+            reg_lang = "Tamil"
+
         return {
             "document_type": resolved_doc_type,
             "owners": owners,
@@ -608,10 +666,11 @@ class AiGatewayClient:
                 "ocr_quality": round(ocr_confidence, 2) if ocr_confidence is not None else (0.55 if is_degraded else 0.95),
             },
             "suggested_resolution": suggested_resolution,
-            "is_regional_script": False,
-            "regional_language": None,
+            "is_regional_script": is_reg,
+            "regional_language": reg_lang,
             "ai_summary_plain_english": ai_summary,
         }
 
 
 dee_gateway = AiGatewayClient()
+
