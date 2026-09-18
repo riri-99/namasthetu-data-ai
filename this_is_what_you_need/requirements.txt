@@ -1,0 +1,29 @@
+# ============================================================================
+# Namasthetu Embedded AI Platform — Python Dependencies
+# Location: this_is_what_you_need/requirements.txt
+# Spec Reference: HYC-SCO-2026-3841 (§12 Embedded ML / AI)
+# ============================================================================
+
+# Core Data Modeling & Schema Contracts (1:1 schema.prisma adherence)
+pydantic>=2.7.0
+pydantic-settings>=2.0.0
+python-dotenv>=1.0.0
+
+# PAM (Photo Analysis Module) — Image & EXIF Ingestion
+pillow>=10.0.0
+
+# DEE (Document Extraction Engine) — PDF & Document Ingestion
+pypdf>=4.0.0
+
+# AI Gateway & LLM / Embedding Providers (§12.4)
+anthropic>=0.30.0
+openai>=1.0.0
+
+# Cloud Storage & Queue Workers (AWS S3 & SQS KEDA Scaling)
+boto3>=1.34.0
+botocore>=1.34.0
+
+# Optional ML Frameworks for Retraining & Compiled Treelite Edge Runtimes
+# (The platform includes pure-Python sub-millisecond fallbacks if uninstalled)
+numpy>=1.24.0
+lightgbm>=4.0.0
