@@ -589,9 +589,14 @@ class ViePipeline:
         pam_seepage_detected: Optional[bool] = None,
         dee_legal_encumbrance_flag: Optional[bool] = None,
         dee_title_confidence: Optional[float] = None,
+        # MIE cross-pipeline market signals
+        mie_inquiry_density: Optional[float] = None,
+        mie_transaction_velocity: Optional[float] = None,
+        mie_neighbourhood_growth: Optional[float] = None,
+        locality_base_rate_inr: Optional[float] = None,
     ) -> VieValuationResult:
         start_time = time.perf_counter()
-        base_rate = self.market_registry.get_base_rate(locality)
+        base_rate = locality_base_rate_inr or self.market_registry.get_base_rate(locality)
 
         furn_status = 1
         if isinstance(furnishing, PrismaFurnishingStatus):
@@ -608,6 +613,9 @@ class ViePipeline:
             condition_score_overall=pam_condition_score if pam_condition_score is not None else 85.0,
             seepage_detected=1 if pam_seepage_detected is True else 0,
             locality_price_per_sqft_base=base_rate,
+            inquiry_density_score=mie_inquiry_density if mie_inquiry_density is not None else 50.0,
+            transaction_velocity_score=mie_transaction_velocity if mie_transaction_velocity is not None else 50.0,
+            neighbourhood_growth_score=mie_neighbourhood_growth if mie_neighbourhood_growth is not None else 60.0,
         )
 
         pred = AvmCoreEngine.predict(vec)

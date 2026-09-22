@@ -23,6 +23,7 @@ from this_is_what_you_need.pam.test_pam import TestPamPipeline
 from this_is_what_you_need.dee.test_dee import TestDeePipeline
 from this_is_what_you_need.vie.test_vie import TestViePipeline
 from this_is_what_you_need.sse.test_sse import TestSsePipeline
+from this_is_what_you_need.mie.test_mie import TestMiePipeline
 
 
 def suite():
@@ -31,6 +32,7 @@ def suite():
     s.addTests(unittest.defaultTestLoader.loadTestsFromTestCase(TestDeePipeline))
     s.addTests(unittest.defaultTestLoader.loadTestsFromTestCase(TestViePipeline))
     s.addTests(unittest.defaultTestLoader.loadTestsFromTestCase(TestSsePipeline))
+    s.addTests(unittest.defaultTestLoader.loadTestsFromTestCase(TestMiePipeline))
     return s
 
 

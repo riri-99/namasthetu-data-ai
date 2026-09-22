@@ -1,11 +1,12 @@
 """
 Namasthetu Unified Embedded AI Platform.
 
-Exposes all four embedded AI pipelines as singletons:
+Exposes all five embedded AI pipelines as singletons:
 1. pam_pipeline (Photo Analysis Module)
 2. dee_pipeline (Document Extraction Engine)
 3. vie_pipeline (Valuation Intelligence Engine)
 4. sse_pipeline (Semantic Search Engine)
+5. mie_pipeline (Market Intelligence Engine)
 """
 
 from this_is_what_you_need.common import (
@@ -25,6 +26,14 @@ from this_is_what_you_need.pam.pipeline import PamPipeline, pam_pipeline
 from this_is_what_you_need.dee.pipeline import DeePipeline, dee_pipeline
 from this_is_what_you_need.vie.pipeline import ViePipeline, vie_pipeline
 from this_is_what_you_need.sse.pipeline import SsePipeline, sse_pipeline
+from this_is_what_you_need.mie.pipeline import (
+    MiePipeline,
+    mie_pipeline,
+    MarketScope,
+    MarketMetric,
+    MarketPeriod,
+    DemandSignal,
+)
 
 __all__ = [
     # Pipelines
@@ -36,6 +45,13 @@ __all__ = [
     "ViePipeline",
     "sse_pipeline",
     "SsePipeline",
+    "mie_pipeline",
+    "MiePipeline",
+    # MIE Domain Enums
+    "MarketScope",
+    "MarketMetric",
+    "MarketPeriod",
+    "DemandSignal",
     # Common Infrastructure
     "ai_gateway",
     "AiGatewayClient",

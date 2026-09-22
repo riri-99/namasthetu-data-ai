@@ -37,17 +37,23 @@ this_is_what_you_need/
 │   ├── test_vie.py          <-- Automated unit test suite
 │   ├── VIE.md               <-- Dedicated deep technical specification for VIE
 │   └── __init__.py
-└── sse/                     <-- Embedded AI Service #4: Semantic Search Engine
-    ├── pipeline.py          <-- Consolidated pipeline (Hybrid 14-filter + 1536-d pgvector + ONNX edge reranker)
-    ├── train_and_eval.py    <-- Dataset manager, evaluation CLI, and bootstrapping routines
-    ├── test_sse.py          <-- Automated unit test suite
-    ├── SSE.md               <-- Dedicated deep technical specification for SSE
+├── sse/                     <-- Embedded AI Service #4: Semantic Search Engine
+│   ├── pipeline.py          <-- Consolidated pipeline (Hybrid 14-filter + 1536-d pgvector + ONNX edge reranker)
+│   ├── train_and_eval.py    <-- Dataset manager, evaluation CLI, and bootstrapping routines
+│   ├── test_sse.py          <-- Automated unit test suite
+│   ├── SSE.md               <-- Dedicated deep technical specification for SSE
+│   └── __init__.py
+└── mie/                     <-- Embedded AI Service #5: Market Intelligence Engine
+    ├── pipeline.py          <-- Consolidated pipeline (Inquiry density, deal velocity, growth score, market risk)
+    ├── train_and_eval.py    <-- Dataset manager, calibration CLI, and evaluation benchmarks
+    ├── test_mie.py          <-- Automated unit test suite
+    ├── MIE.md               <-- Dedicated deep technical specification for MIE
     └── __init__.py
 ```
 
 ---
 
-## 2. The Four Embedded AI Pipelines Matrix
+## 2. The Five Embedded AI Pipelines Matrix
 
 | Pipeline | Dedicated Docs | Primary Function | Core Models & Runtimes | Required APIs | Latency SLA | DB Schema Target |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -55,6 +61,7 @@ this_is_what_you_need/
 | **PAM** (Photo Analysis Module) | [`this_is_what_you_need/pam/PAM.md`](file:///C:/Users/Srishika/namasthetu-data-ai/this_is_what_you_need/pam/PAM.md) | 80-point physical inspection audit, room categorization, defect localization (seepage/cracks), 25m cadastral anti-spoof gate | CLIP ViT-B/32 + ResNet-50 + YOLOv8-Defect localized head + Colorimetric heuristics | AWS S3, AWS SQS, PostGIS Cadastral Geofence API | 200–800 ms (Batch inspection) | `model InspectionPhoto` (lines 964–994), `model Inspection` (lines 900–960) |
 | **VIE / AVM** (Valuation Intelligence Engine) | [`this_is_what_you_need/vie/VIE.md`](file:///C:/Users/Srishika/namasthetu-data-ai/this_is_what_you_need/vie/VIE.md) | Instant fair market valuation (paise), $\pm 15\%$ Tier-1 confidence bands, comparables radar, rental yields, 12m forward forecasts | 13-Feature LightGBM compiled via Treelite C-API + Claude narrative layer | Claude API (via AI Gateway), TimescaleDB price history, PostGIS kNN | **<60 ms P95** (Edge query path) | `model AiValuation` (lines 1166–1205), `model PriceForecast` (lines 1655–1668) |
 | **SSE** (Semantic Search Engine) | [`this_is_what_you_need/sse/SSE.md`](file:///C:/Users/Srishika/namasthetu-data-ai/this_is_what_you_need/sse/SSE.md) | Hybrid discovery (Postgres GIN full-text + 1536-d pgvector), 14-filter structured screening, ONNX edge reranking, autocomplete | OpenAI `text-embedding-3-small` + Postgres GIN + ONNX Edge Cross-Encoder | OpenAI API (via AI Gateway), Postgres 17 + pgvector, Valkey cache, HTTP SSE streaming | **<80 ms P95** (Interactive query path) | `model SavedSearch` (lines 1495–1512), `model Listing`, `model Property` |
+| **MIE** (Market Intelligence Engine) | [`this_is_what_you_need/mie/MIE.md`](file:///C:/Users/Srishika/namasthetu-data-ai/this_is_what_you_need/mie/MIE.md) | Micro-market velocity, inquiry density, growth score, market risk index, asking vs registered trends, locality city rankings | Dynamic Sigmoidal Normalizers + Inventory Overhang & Volatility Analyzer | State IGR Registry, Municipal Telemetry, PostGIS transit buffers | **<30 ms P95** (Telemetry refresh) | `model MarketRate` (lines 2121–2156), `model Locality` (lines 2054–2089) |
 
 ---
 
