@@ -15,7 +15,7 @@ import math
 import time
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-from vie.models import AvmValuationPrediction, VieFeatureVector
+from pipelines.vie.models import AvmValuationPrediction, VieFeatureVector
 
 
 class AvmCoreEngine:

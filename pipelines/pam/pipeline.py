@@ -21,7 +21,7 @@ from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple, Union
 from PIL import Image
 
-from pam.models import (
+from pipelines.pam.models import (
     RoomCategory,
     DefectSeverity,
     InspectionStatus,
@@ -30,9 +30,9 @@ from pam.models import (
     PamSqsMessagePayload,
     DetectedDefect,
 )
-from pam.exif import ExifProcessor
-from pam.vision_engine import PamVisionEngine
-from pam.condition_scorer import ConditionScorer
+from pipelines.pam.exif import ExifProcessor
+from pipelines.pam.vision_engine import PamVisionEngine
+from pipelines.pam.condition_scorer import ConditionScorer
 
 
 class PamPipeline:

@@ -17,10 +17,10 @@ import time
 from pathlib import Path
 from typing import Any, Dict, List
 
-from vie.avm_engine import AvmCoreEngine
-from vie.dataset_manager import VieDatasetManager
-from vie.feedback_loop import VieLearningLoop
-from vie.models import VieFeatureVector
+from pipelines.vie.avm_engine import AvmCoreEngine
+from pipelines.vie.dataset_manager import VieDatasetManager
+from pipelines.vie.feedback_loop import VieLearningLoop
+from pipelines.vie.models import VieFeatureVector
 
 
 def run_evaluation(samples_count: int = 200, seed: int = 42) -> Dict[str, Any]:

@@ -12,7 +12,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
-from sse.models import SearchFeedbackSample, SsePerformanceMetrics
+from pipelines.sse.models import SearchFeedbackSample, SsePerformanceMetrics
 
 
 class SseLearningLoop:

@@ -14,9 +14,9 @@ import json
 from pathlib import Path
 from typing import Any, Dict, List
 
-from sse.dataset_manager import SseDatasetManager
-from sse.pipeline import SsePipeline
-from sse.models import SseSearchQuery
+from pipelines.sse.dataset_manager import SseDatasetManager
+from pipelines.sse.pipeline import SsePipeline
+from pipelines.sse.models import SseSearchQuery
 
 
 def run_evaluation(corpus_size: int = 50, seed: int = 42) -> Dict[str, Any]:

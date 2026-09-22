@@ -8,7 +8,7 @@ to populate the property timeline in `src/db/schema.prisma`.
 from __future__ import annotations
 from typing import List, Optional
 from datetime import datetime, date
-from dee.models import (
+from pipelines.dee.models import (
     ExtractedEntitiesJson,
     DeedHistoryEventPayload,
     DeedEventType,

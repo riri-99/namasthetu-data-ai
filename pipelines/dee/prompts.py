@@ -7,7 +7,7 @@ Prompts are versioned as code to support regional adaptations, A/B testing, and 
 
 from __future__ import annotations
 from typing import Dict, Tuple
-from dee.models import DocumentType
+from pipelines.dee.models import DocumentType
 
 
 PROMPT_VERSION = "1.1.0"

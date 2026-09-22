@@ -14,8 +14,8 @@ import random
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-from vie.models import VieFeatureVector
-from vie.avm_engine import AvmCoreEngine
+from pipelines.vie.models import VieFeatureVector
+from pipelines.vie.avm_engine import AvmCoreEngine
 
 
 class VieDatasetManager:

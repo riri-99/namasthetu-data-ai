@@ -17,7 +17,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from PIL import Image, ImageStat, ImageFilter
 from pydantic import BaseModel
 
-from pam.models import (
+from pipelines.pam.models import (
     RoomCategory,
     DefectCategory,
     DefectSeverity,

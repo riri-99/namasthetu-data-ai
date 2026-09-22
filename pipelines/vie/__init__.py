@@ -4,7 +4,7 @@ VIE (Valuation Intelligence Engine) / AVM (Automated Valuation Model) Package.
 Namasthetu · Embedded AI Service #3
 """
 
-from vie.models import (
+from pipelines.vie.models import (
     AvmValuationPrediction,
     ComparableSale,
     DemandSignal,
@@ -21,13 +21,13 @@ from vie.models import (
     VieTriggerType,
     VieValuationResult,
 )
-from vie.avm_engine import AvmCoreEngine, avm_core_engine
-from vie.comparables_engine import ComparablesEngine, comparables_engine
-from vie.narrative_engine import NarrativeEngine, narrative_engine
-from vie.risk_and_yield_calculator import RiskAndYieldCalculator
-from vie.feedback_loop import VieLearningLoop, vie_learning_loop
-from vie.dataset_manager import VieDatasetManager, vie_dataset_manager
-from vie.pipeline import ViePipeline, vie_pipeline
+from pipelines.vie.avm_engine import AvmCoreEngine, avm_core_engine
+from pipelines.vie.comparables_engine import ComparablesEngine, comparables_engine
+from pipelines.vie.narrative_engine import NarrativeEngine, narrative_engine
+from pipelines.vie.risk_and_yield_calculator import RiskAndYieldCalculator
+from pipelines.vie.feedback_loop import VieLearningLoop, vie_learning_loop
+from pipelines.vie.dataset_manager import VieDatasetManager, vie_dataset_manager
+from pipelines.vie.pipeline import ViePipeline, vie_pipeline
 
 __all__ = [
     # Pipeline & Singletons

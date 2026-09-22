@@ -14,7 +14,7 @@ import json
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
-from vie.models import ValuationFeedback, VieFeedbackMetrics
+from pipelines.vie.models import ValuationFeedback, VieFeedbackMetrics
 
 
 class VieLearningLoop:

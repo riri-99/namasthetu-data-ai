@@ -9,10 +9,12 @@ Database Alignment: Strictly compliant with src/db/schema.prisma (models Inspect
 from __future__ import annotations
 
 import io
+import json
 import math
 import time
 from datetime import datetime, timezone
 from enum import Enum
+from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Union
 from PIL import Image
 from pydantic import BaseModel, Field, ConfigDict
@@ -280,6 +282,20 @@ class ExifProcessor:
                     should_close = True
 
                 exif_data = img.getexif() if hasattr(img, "getexif") else None
+                if exif_data:
+                    # Parse GPS IFD (tag 0x8825 = 34853)
+                    gps_ifd = exif_data.get_ifd(0x8825) if hasattr(exif_data, "get_ifd") else None
+                    if gps_ifd:
+                        lat_ref = gps_ifd.get(1, "N")
+                        lat_dms = gps_ifd.get(2)
+                        lon_ref = gps_ifd.get(3, "E")
+                        lon_dms = gps_ifd.get(4)
+                        if lat_dms and lon_dms and len(lat_dms) >= 3 and len(lon_dms) >= 3:
+                            parsed_lat = float(lat_dms[0]) + float(lat_dms[1]) / 60.0 + float(lat_dms[2]) / 3600.0
+                            parsed_lon = float(lon_dms[0]) + float(lon_dms[1]) / 60.0 + float(lon_dms[2]) / 3600.0
+                            lat = -parsed_lat if str(lat_ref).upper() in ["S"] else parsed_lat
+                            lon = -parsed_lon if str(lon_ref).upper() in ["W"] else parsed_lon
+
                 if should_close:
                     img.close()
             except Exception:
@@ -305,28 +321,128 @@ class ExifProcessor:
 # ============================================================================
 
 class PamVisionEngine:
-    """Core computer vision analyzer with multi-label classification and defect isolation."""
+    """Core dynamic computer vision analyzer with multi-label classification and defect isolation."""
 
     INSPECTOR_HINT_MAP: Dict[str, RoomCategory] = {
         "living": RoomCategory.LIVING_ROOM,
         "living_room": RoomCategory.LIVING_ROOM,
         "hall": RoomCategory.LIVING_ROOM,
+        "drawing": RoomCategory.LIVING_ROOM,
+        "master": RoomCategory.MASTER_BEDROOM,
         "master_bedroom": RoomCategory.MASTER_BEDROOM,
         "bedroom": RoomCategory.GUEST_BEDROOM,
+        "guest_bedroom": RoomCategory.GUEST_BEDROOM,
         "kitchen": RoomCategory.KITCHEN,
         "bathroom": RoomCategory.BATHROOM,
         "washroom": RoomCategory.BATHROOM,
         "toilet": RoomCategory.BATHROOM,
         "balcony": RoomCategory.BALCONY,
         "utility": RoomCategory.UTILITY_AREA,
+        "utility_area": RoomCategory.UTILITY_AREA,
         "lobby": RoomCategory.ENTRANCE_LOBBY,
+        "entrance": RoomCategory.ENTRANCE_LOBBY,
         "parking": RoomCategory.PARKING,
+        "garage": RoomCategory.PARKING,
         "exterior": RoomCategory.FACADE_EXTERIOR,
         "facade": RoomCategory.FACADE_EXTERIOR,
     }
 
-    def __init__(self, use_torch: bool = True):
+    def __init__(self, use_torch: bool = True, model_path: Optional[str] = None):
         self.use_torch = use_torch
+        self._class_centroids: Dict[str, Dict[str, Any]] = {}
+        self.defect_luminance_threshold: float = 50.0
+
+        # Auto-load model if exists in default path or specified path
+        default_model = Path(__file__).parent / "pam_model.json"
+        target_path = Path(model_path) if model_path else default_model
+        if target_path.exists():
+            self.load_model(str(target_path))
+
+    @staticmethod
+    def extract_pixel_features(rgb_img: Image.Image) -> Dict[str, float]:
+        """Extracts numerical pixel distribution features for dynamic training/inference."""
+        from PIL import ImageStat, ImageFilter
+        stat = ImageStat.Stat(rgb_img)
+        mean_r, mean_g, mean_b = stat.mean[:3] if len(stat.mean) >= 3 else (128.0, 128.0, 128.0)
+        std_r, std_g, std_b = stat.stddev[:3] if len(stat.stddev) >= 3 else (20.0, 20.0, 20.0)
+
+        gray = rgb_img.convert("L")
+        edges = gray.filter(ImageFilter.FIND_EDGES)
+        edge_stat = ImageStat.Stat(edges)
+        edge_energy = float(edge_stat.mean[0]) if edge_stat.mean else 10.0
+        luminance = float(stat.mean[0]) if stat.mean else 128.0
+
+        return {
+            "mean_r": float(mean_r),
+            "mean_g": float(mean_g),
+            "mean_b": float(mean_b),
+            "std_r": float(std_r),
+            "std_g": float(std_g),
+            "std_b": float(std_b),
+            "edge_energy": edge_energy,
+            "luminance": luminance,
+        }
+
+    def fit(self, labeled_samples: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """
+        Trains room category centroids and defect luminance threshold dynamically on dataset.
+        Each sample is a dict with 'features' (or 'image_path') and 'category' (and optional 'has_defect', 'defect_drop').
+        """
+        category_features: Dict[str, List[Dict[str, float]]] = {}
+        defect_drops: List[float] = []
+
+        for sample in labeled_samples:
+            feats = sample.get("features")
+            if feats is None and "image_path" in sample:
+                with Image.open(sample["image_path"]) as img:
+                    feats = self.extract_pixel_features(img.convert("RGB"))
+
+            cat = str(sample.get("category", "")).upper()
+            if cat and feats:
+                if cat not in category_features:
+                    category_features[cat] = []
+                category_features[cat].append(feats)
+
+            if sample.get("defect_drop") is not None:
+                defect_drops.append(float(sample["defect_drop"]))
+
+        # Compute centroid means and variances
+        self._class_centroids = {}
+        feature_keys = ["mean_r", "mean_g", "mean_b", "std_r", "std_g", "std_b", "edge_energy", "luminance"]
+        for cat, feat_list in category_features.items():
+            n = len(feat_list)
+            means = {k: sum(f[k] for f in feat_list) / n for k in feature_keys}
+            stds = {
+                k: math.sqrt(sum((f[k] - means[k]) ** 2 for f in feat_list) / max(1, n - 1)) + 1.0
+                for k in feature_keys
+            }
+            self._class_centroids[cat] = {"means": means, "stds": stds, "count": n}
+
+        if defect_drops:
+            self.defect_luminance_threshold = max(25.0, sum(defect_drops) / len(defect_drops))
+
+        return {
+            "classes_trained": list(self._class_centroids.keys()),
+            "total_samples": len(labeled_samples),
+            "defect_threshold": self.defect_luminance_threshold,
+        }
+
+    def save_model(self, filepath: str):
+        """Serializes trained centroid model and defect thresholds to JSON."""
+        data = {
+            "class_centroids": self._class_centroids,
+            "defect_luminance_threshold": self.defect_luminance_threshold,
+            "trained_at": datetime.now(timezone.utc).isoformat(),
+        }
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2)
+
+    def load_model(self, filepath: str):
+        """Loads trained centroid model from JSON."""
+        with open(filepath, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            self._class_centroids = data.get("class_centroids", {})
+            self.defect_luminance_threshold = float(data.get("defect_luminance_threshold", 50.0))
 
     def analyze_image(
         self,
@@ -334,7 +450,9 @@ class PamVisionEngine:
         room_hint: Optional[str] = None,
         defect_hint: Optional[str] = None,
     ) -> Tuple[RoomCategory, float, List[DetectedDefect], List[DetectedFixture]]:
-        """Analyzes image for room category, defects, and fixtures."""
+        """Dynamically analyzes image pixels for room category, localized defects, and fixtures."""
+        from PIL import ImageStat, ImageFilter
+
         img: Image.Image
         should_close = False
         if isinstance(image_input, Image.Image):
@@ -349,39 +467,115 @@ class PamVisionEngine:
             raise ValueError(f"Unsupported image input type: {type(image_input)}")
 
         try:
-            if img.mode != "RGB":
-                rgb_img = img.convert("RGB")
-            else:
-                rgb_img = img
-
-            # Resolve Category
-            category = RoomCategory.LIVING_ROOM
-            conf = 0.85
-            if room_hint:
-                norm_hint = room_hint.strip().lower().replace(" ", "_")
-                if norm_hint in self.INSPECTOR_HINT_MAP:
-                    category = self.INSPECTOR_HINT_MAP[norm_hint]
-                    conf = 0.95
-
-            # Defect candidate detection (e.g. seepage or crack)
-            defects: List[DetectedDefect] = []
+            rgb_img = img if img.mode == "RGB" else img.convert("RGB")
             width, height = rgb_img.size
 
-            # Check defect hint or analyze pixels
-            if defect_hint and "seepage" in defect_hint.lower():
+            # 1. Feature Extraction on Image Pixels
+            feats = self.extract_pixel_features(rgb_img)
+            mean_r, mean_g, mean_b = feats["mean_r"], feats["mean_g"], feats["mean_b"]
+            edge_energy = feats["edge_energy"]
+
+            # 2. Dynamic Room Classification Scoring (Trained Model or Statistical Estimator)
+            scores: Dict[str, float] = {cat.value: 0.05 for cat in RoomCategory}
+
+            if self._class_centroids:
+                # Dynamic Mahalanobis/Centroid Gaussian likelihood
+                for cat_str, model_data in self._class_centroids.items():
+                    if cat_str in scores:
+                        c_means = model_data["means"]
+                        c_stds = model_data["stds"]
+                        dist_sq = sum(
+                            ((feats[k] - c_means[k]) / c_stds[k]) ** 2
+                            for k in c_means
+                            if k in feats
+                        )
+                        scores[cat_str] = math.exp(-0.5 * min(dist_sq, 50.0))
+            else:
+                # Dynamic statistical rules based on RGB and edge distribution
+                if mean_b > 140 and mean_r > 130 and mean_g > 130:
+                    scores[RoomCategory.FACADE_EXTERIOR.value] += 0.50
+                    scores[RoomCategory.BALCONY.value] += 0.25
+
+                if mean_r > 160 and mean_g > 160 and mean_b > 170:
+                    scores[RoomCategory.BATHROOM.value] += 0.60
+
+                if 80 < mean_r < 185 and 80 < mean_g < 175 and edge_energy > 15:
+                    scores[RoomCategory.KITCHEN.value] += 0.55
+
+                if 105 < mean_r < 195 and 100 < mean_g < 185 and mean_b < 165:
+                    scores[RoomCategory.LIVING_ROOM.value] += 0.45
+
+                if mean_r > mean_b + 12:
+                    scores[RoomCategory.MASTER_BEDROOM.value] += 0.35
+                    scores[RoomCategory.GUEST_BEDROOM.value] += 0.25
+
+                if abs(mean_r - mean_g) < 12 and abs(mean_g - mean_b) < 12 and mean_r < 115:
+                    scores[RoomCategory.PARKING.value] += 0.65
+
+            # Apply inspector hint as Bayesian prior
+            if room_hint:
+                norm_hint = room_hint.strip().lower().replace(" ", "_")
+                hint_cat = self.INSPECTOR_HINT_MAP.get(norm_hint)
+                if hint_cat:
+                    scores[hint_cat.value] += 1.50
+
+            total_score = sum(scores.values())
+            best_cat_str = max(scores, key=scores.get)
+            category = RoomCategory(best_cat_str)
+            conf = round(scores[best_cat_str] / total_score, 3)
+
+            # 3. Dynamic Pixel Defect Detection & Localization (3x3 Grid Analysis)
+            defects: List[DetectedDefect] = []
+            gray = rgb_img.convert("L")
+            w_step = max(1, width // 3)
+            h_step = max(1, height // 3)
+            overall_lum = feats["luminance"]
+
+            darkest_patch_lum = 255.0
+            darkest_patch_box: Optional[Tuple[int, int, int, int]] = None
+
+            for gy in range(3):
+                for gx in range(3):
+                    box = (gx * w_step, gy * h_step, min(width, (gx + 1) * w_step), min(height, (gy + 1) * h_step))
+                    patch = gray.crop(box)
+                    p_stat = ImageStat.Stat(patch)
+                    lum = p_stat.mean[0] if p_stat.mean else 128.0
+                    if lum < darkest_patch_lum:
+                        darkest_patch_lum = lum
+                        darkest_patch_box = box
+
+            # Check if localized patch has severe dampness/seepage discoloration
+            threshold = getattr(self, "defect_luminance_threshold", 50.0)
+            is_damp_discoloration = (overall_lum - darkest_patch_lum) > threshold and darkest_patch_box is not None
+            has_defect_hint = bool(defect_hint and ("seepage" in defect_hint.lower() or "damp" in defect_hint.lower()))
+
+            if is_damp_discoloration or has_defect_hint:
+                box_to_use = darkest_patch_box if darkest_patch_box else (width // 4, height // 4, 3 * width // 4, 3 * height // 4)
+                ymin = max(0.0, round(box_to_use[1] / float(height), 3))
+                xmin = max(0.0, round(box_to_use[0] / float(width), 3))
+                ymax = min(1.0, round(box_to_use[3] / float(height), 3))
+                xmax = min(1.0, round(box_to_use[2] / float(width), 3))
+
+                severity = DefectSeverity.HIGH if darkest_patch_lum < 40 else DefectSeverity.MEDIUM
                 defects.append(
                     DetectedDefect(
-                        defect_id=f"def_seepage_{int(time.time()*1000)%100000}",
+                        defect_id=f"def_seepage_{int(time.time() * 1000) % 100000}",
                         category=DefectCategory.PLUMBING,
-                        severity=DefectSeverity.MEDIUM,
+                        severity=severity,
                         defect_type="seepage",
-                        confidence=0.88,
-                        bounding_box=BoundingBox(ymin=0.45, xmin=0.40, ymax=0.85, xmax=0.90, label="seepage"),
+                        confidence=round(0.82 + (0.12 if is_damp_discoloration else 0.05), 2),
+                        bounding_box=BoundingBox(ymin=ymin, xmin=xmin, ymax=ymax, xmax=xmax, label="seepage"),
                         notes="Discoloration and moisture seepage patch observed along junction.",
                     )
                 )
 
-            fixtures = [DetectedFixture(fixture_type="lighting", confidence=0.92)]
+            # 4. Dynamic Fixture Detection
+            fixtures: List[DetectedFixture] = []
+            if mean_r > 120 and mean_g > 120 and mean_b > 120:
+                fixtures.append(DetectedFixture(fixture_type="lighting", confidence=round(0.85 + conf * 0.1, 2)))
+            if edge_energy > 22:
+                fixtures.append(DetectedFixture(fixture_type="joinery_cabinet", confidence=0.88))
+
             return category, conf, defects, fixtures
         finally:
             if should_close:

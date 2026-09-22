@@ -22,11 +22,11 @@ import uuid
 from datetime import datetime, timezone
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
-from vie.avm_engine import AvmCoreEngine, avm_core_engine
-from vie.comparables_engine import ComparablesEngine, comparables_engine
-from vie.narrative_engine import NarrativeEngine, narrative_engine
-from vie.risk_and_yield_calculator import RiskAndYieldCalculator
-from vie.models import (
+from pipelines.vie.avm_engine import AvmCoreEngine, avm_core_engine
+from pipelines.vie.comparables_engine import ComparablesEngine, comparables_engine
+from pipelines.vie.narrative_engine import NarrativeEngine, narrative_engine
+from pipelines.vie.risk_and_yield_calculator import RiskAndYieldCalculator
+from pipelines.vie.models import (
     ComparableSale,
     DemandSignal,
     InvestmentRiskScores,

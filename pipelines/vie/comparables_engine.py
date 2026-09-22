@@ -14,7 +14,7 @@ import math
 from datetime import datetime, timezone, timedelta
 from typing import Any, Dict, List, Optional, Tuple
 
-from vie.models import ComparableSale, VieFeatureVector
+from pipelines.vie.models import ComparableSale, VieFeatureVector
 
 
 def haversine_distance_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:

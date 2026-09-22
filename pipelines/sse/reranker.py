@@ -19,7 +19,7 @@ import re
 import time
 from typing import Any, Dict, List, Optional, Tuple
 
-from sse.models import (
+from pipelines.sse.models import (
     PipSearchDocument,
     QueryIntent,
     RerankStrategy,

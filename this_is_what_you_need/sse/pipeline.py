@@ -15,6 +15,7 @@ import time
 import uuid
 from datetime import datetime, timezone
 from enum import Enum
+from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 from pydantic import BaseModel, Field, ConfigDict
 
@@ -91,16 +92,16 @@ class PipSearchDocument(BaseModel):
     society_name: Optional[str] = None
     builder_name: Optional[str] = None
     property_type: PrismaPropertyType = PrismaPropertyType.APARTMENT
-    configuration: str = "3BHK"
-    bhk_count: int = 3
+    configuration: Optional[str] = None
+    bhk_count: int = 2
     carpet_area_sqft: float
     super_built_up_area_sqft: float
-    floor_number: int = 4
-    total_floors: int = 14
-    age_years: float = 2.0
+    floor_number: int = 1
+    total_floors: int = 1
+    age_years: float = 0.0
     furnishing: PrismaFurnishingStatus = PrismaFurnishingStatus.SEMI_FURNISHED
-    parking_count: int = 1
-    has_lift: bool = True
+    parking_count: int = 0
+    has_lift: bool = False
     amenities: List[str] = Field(default_factory=list)
     listing_price_minor: int
     status: PrismaListingStatus = PrismaListingStatus.ACTIVE
@@ -108,7 +109,7 @@ class PipSearchDocument(BaseModel):
     # Cross-pipeline PAM / DEE / VIE signals
     inspection_score_overall: Optional[int] = None
     seepage_detected: bool = False
-    deed_verified: bool = True
+    deed_verified: bool = False
     active_liens: bool = False
     avm_estimate_minor: Optional[int] = None
     market_position: Optional[str] = None
@@ -116,6 +117,10 @@ class PipSearchDocument(BaseModel):
     gross_rental_yield_pct: Optional[float] = None
 
     embedding: Optional[List[float]] = None
+
+    def model_post_init(self, __context: Any) -> None:
+        if self.configuration is None:
+            self.configuration = f"{self.bhk_count}BHK"
 
     def build_embeddable_corpus(self) -> str:
         parts = [
@@ -171,24 +176,134 @@ class SseSearchResult(BaseModel):
 
 
 # ============================================================================
-# 3. Core SSE Pipeline Orchestrator
+# 3. Dynamic BM25 Inverted Index & Intent Classifier
+# ============================================================================
+
+class Bm25Index:
+    """Dynamic pure-Python Okapi BM25 inverted index for real-time lexical scoring."""
+
+    def __init__(self, k1: float = 1.5, b: float = 0.75):
+        self.k1 = k1
+        self.b = b
+        self.doc_lens: Dict[str, int] = {}
+        self.term_freqs: Dict[str, Dict[str, int]] = {}
+        self.doc_count: int = 0
+        self.avg_doc_len: float = 0.0
+
+    def index_document(self, doc_id: str, text: str):
+        tokens = [w for w in re.findall(r"\b\w+\b", text.lower()) if len(w) > 1]
+        self.doc_lens[doc_id] = len(tokens)
+        self.doc_count = len(self.doc_lens)
+        self.avg_doc_len = sum(self.doc_lens.values()) / max(1, self.doc_count)
+
+        for token in tokens:
+            if token not in self.term_freqs:
+                self.term_freqs[token] = {}
+            self.term_freqs[token][doc_id] = self.term_freqs[token].get(doc_id, 0) + 1
+
+    def score(self, doc_id: str, query_tokens: List[str]) -> float:
+        if doc_id not in self.doc_lens or not query_tokens:
+            return 0.0
+        doc_len = self.doc_lens[doc_id]
+        score = 0.0
+        for token in query_tokens:
+            if token not in self.term_freqs:
+                continue
+            posting = self.term_freqs[token]
+            tf = posting.get(doc_id, 0)
+            if tf == 0:
+                continue
+            df = len(posting)
+            idf = math.log(1.0 + (self.doc_count - df + 0.5) / (df + 0.5))
+            denom = tf + self.k1 * (1.0 - self.b + self.b * (doc_len / max(1.0, self.avg_doc_len)))
+            score += max(0.0, idf) * (tf * (self.k1 + 1.0) / max(0.001, denom))
+        return score
+
+
+class DynamicIntentClassifier:
+    """Classifies search query intent into domain categories using token affinity scoring."""
+
+    INTENT_KEYWORDS: Dict[QueryIntent, List[str]] = {
+        QueryIntent.INVESTOR_YIELD: ["yield", "undervalued", "investment", "roi", "bargain", "rental", "cashflow", "investor"],
+        QueryIntent.CONDITION_FOCUSED: ["well-maintained", "seepage", "cracks", "condition", "pristine", "renovated", "fresh", "quality", "dampness"],
+        QueryIntent.LEGAL_VERIFIED: ["clear title", "rera", "verified", "encumbrance", "deed", "khata", "registered", "legal"],
+        QueryIntent.LEXICAL_HEAVY: ["phase", "block", "tower", "floor", "plot", "flat", "society", "layout", "villa"],
+    }
+
+    @classmethod
+    def classify(cls, query: str) -> QueryIntent:
+        q = query.lower()
+        scores: Dict[QueryIntent, float] = {
+            QueryIntent.HYBRID: 0.20,
+            QueryIntent.INVESTOR_YIELD: 0.0,
+            QueryIntent.CONDITION_FOCUSED: 0.0,
+            QueryIntent.LEGAL_VERIFIED: 0.0,
+            QueryIntent.LEXICAL_HEAVY: 0.0,
+            QueryIntent.SEMANTIC_HEAVY: 0.10,
+        }
+
+        for intent, kws in cls.INTENT_KEYWORDS.items():
+            for kw in kws:
+                if kw in q:
+                    scores[intent] += 1.0
+
+        best_intent = max(scores, key=scores.get)
+        if scores[best_intent] == 0.0:
+            words = q.split()
+            return QueryIntent.SEMANTIC_HEAVY if len(words) > 6 else QueryIntent.HYBRID
+        return best_intent if scores[best_intent] > 0.3 else QueryIntent.HYBRID
+
+
+class SearchRankingWeights(BaseModel):
+    """Dynamic ranking weights trainable on click/relevance benchmark data."""
+    w_lexical: float = 0.45
+    w_semantic: float = 0.55
+    w_below_market: float = 0.05
+    w_yield_bonus: float = 0.08
+    w_condition_bonus: float = 0.08
+    w_legal_bonus: float = 0.08
+    seepage_penalty: float = 0.08
+
+
+# ============================================================================
+# 4. Core SSE Pipeline Orchestrator
 # ============================================================================
 
 class SsePipeline:
     """Hybrid Semantic Search Engine with <80ms P95 latency target."""
 
-    def __init__(self):
+    def __init__(self, weights_path: Optional[str] = None):
         self._doc_corpus: Dict[str, PipSearchDocument] = {}
         self._saved_searches: Dict[str, Dict[str, Any]] = {}
         self._autocomplete_entries: Dict[str, Tuple[str, AutocompleteCategory]] = {}
+        self._bm25 = Bm25Index()
+        self.ranking_weights = SearchRankingWeights()
+
+        default_weights = Path(__file__).parent / "sse_weights.json"
+        target_path = Path(weights_path) if weights_path else default_weights
+        if target_path.exists():
+            self.load_weights(str(target_path))
+
+    def save_weights(self, filepath: str):
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(self.ranking_weights.model_dump(), f, indent=2)
+
+    def load_weights(self, filepath: str):
+        with open(filepath, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            self.ranking_weights = SearchRankingWeights(**data)
 
     def index_pip_document(self, doc: PipSearchDocument):
-        # 1. Compute Embedding
+        # 1. Compute Dense Embedding
         if doc.embedding is None:
             doc.embedding = ai_gateway.get_embedding(doc.build_embeddable_corpus())
         self._doc_corpus[doc.property_id] = doc
 
-        # 2. Autocomplete register
+        # 2. Index in BM25 Inverted Index
+        indexable_text = f"{doc.title} {doc.description} {doc.locality} {doc.city} {doc.society_name or ''} {doc.builder_name or ''}"
+        self._bm25.index_document(doc.property_id, indexable_text)
+
+        # 3. Autocomplete registry
         self._autocomplete_entries[doc.locality.lower()] = (f"{doc.locality}, {doc.city}", AutocompleteCategory.LOCALITY)
         if doc.society_name:
             self._autocomplete_entries[doc.society_name.lower()] = (f"{doc.society_name} ({doc.locality})", AutocompleteCategory.SOCIETY)
@@ -234,58 +349,53 @@ class SsePipeline:
 
     def search(self, raw_query: str, filters: Optional[FourteenFilterCriteria] = None, top_k: int = 10) -> SseSearchResult:
         start_time = time.perf_counter()
-        q_lower = raw_query.lower()
+        q_tokens = [w for w in re.findall(r"\b\w+\b", raw_query.lower()) if len(w) > 1]
 
-        # Classify intent
-        intent = QueryIntent.HYBRID
-        if any(w in q_lower for w in ["yield", "undervalued", "investment", "roi", "bargain"]):
-            intent = QueryIntent.INVESTOR_YIELD
-        elif any(w in q_lower for w in ["well-maintained", "seepage", "cracks", "condition", "pristine"]):
-            intent = QueryIntent.CONDITION_FOCUSED
-        elif any(w in q_lower for w in ["clear title", "rera", "verified", "encumbrance"]):
-            intent = QueryIntent.LEGAL_VERIFIED
+        # Dynamic intent classification
+        intent = DynamicIntentClassifier.classify(raw_query)
 
         q_vec = ai_gateway.get_embedding(raw_query) if raw_query else None
         scored_items: List[SearchResultItem] = []
+
+        w = self.ranking_weights
 
         for doc in self._doc_corpus.values():
             if not self.evaluate_14_filters(doc, filters):
                 continue
 
-            # Lexical score
-            words = [w for w in re.findall(r"\b\w+\b", q_lower) if len(w) > 2]
-            text = f"{doc.title} {doc.description} {doc.locality} {doc.city} {doc.society_name or ''}".lower()
-            lex_score = sum(1.0 for w in words if w in text) / float(max(1, len(words))) if words else 0.5
+            # Dynamic BM25 Lexical Score
+            raw_bm25 = self._bm25.score(doc.property_id, q_tokens)
+            lex_score = raw_bm25 / (raw_bm25 + 1.0) if raw_bm25 > 0 else 0.40
 
-            # Semantic score
-            sem_score = 0.5
+            # Semantic Vector Score
+            sem_score = 0.50
             if q_vec and doc.embedding:
                 sem_score = max(0.0, sum(a * b for a, b in zip(q_vec, doc.embedding)))
 
-            # Fusion & signal amplification
-            final_score = (lex_score * 0.45) + (sem_score * 0.55)
+            # Fusion with dynamic ranking weights
+            final_score = (lex_score * w.w_lexical) + (sem_score * w.w_semantic)
             match_reasons = []
             badges = []
 
-            # Cross-pipeline modifiers
+            # Cross-pipeline dynamic modifiers
             if doc.market_position == "BELOW_MARKET":
-                final_score += 0.05
+                final_score += w.w_below_market
                 match_reasons.append("Below fair market valuation (VIE)")
             if doc.gross_rental_yield_pct and doc.gross_rental_yield_pct >= 4.5:
                 if intent == QueryIntent.INVESTOR_YIELD:
-                    final_score += 0.08
+                    final_score += w.w_yield_bonus
                 match_reasons.append(f"High rental yield: {doc.gross_rental_yield_pct:.1f}% (VIE)")
             if doc.inspection_score_overall and doc.inspection_score_overall >= 90:
                 badges.append(f"PAM Inspected: {doc.inspection_score_overall}/100")
             if doc.seepage_detected:
-                final_score -= 0.08
+                final_score -= w.seepage_penalty
             else:
                 if intent == QueryIntent.CONDITION_FOCUSED:
-                    final_score += 0.08
+                    final_score += w.w_condition_bonus
             if doc.deed_verified and not doc.active_liens:
                 badges.append("Clear Title (DEE)")
                 if intent == QueryIntent.LEGAL_VERIFIED:
-                    final_score += 0.08
+                    final_score += w.w_legal_bonus
 
             item = SearchResultItem(
                 property_id=doc.property_id,

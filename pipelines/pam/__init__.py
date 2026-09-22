@@ -11,7 +11,7 @@ Implements:
 - Export to Digital Twin (InspectionDefectPin) and PIP payload
 """
 
-from pam.models import (
+from pipelines.pam.models import (
     RoomCategory,
     DefectSeverity,
     InspectionStatus,
@@ -25,12 +25,12 @@ from pam.models import (
     PamSqsMessagePayload,
     PredictionFeedback,
 )
-from pam.pipeline import PamPipeline, pam_pipeline
-from pam.exif import ExifProcessor, ExifMetadata, haversine_distance_meters
-from pam.vision_engine import PamVisionEngine, VisionPrediction
-from pam.condition_scorer import ConditionScorer
-from pam.feedback_loop import PamLearningLoop, pam_learning_loop
-from pam.dataset_manager import PamDatasetManager
+from pipelines.pam.pipeline import PamPipeline, pam_pipeline
+from pipelines.pam.exif import ExifProcessor, ExifMetadata, haversine_distance_meters
+from pipelines.pam.vision_engine import PamVisionEngine, VisionPrediction
+from pipelines.pam.condition_scorer import ConditionScorer
+from pipelines.pam.feedback_loop import PamLearningLoop, pam_learning_loop
+from pipelines.pam.dataset_manager import PamDatasetManager
 
 __all__ = [
     "RoomCategory",

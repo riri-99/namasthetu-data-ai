@@ -13,7 +13,7 @@ Implements:
 from __future__ import annotations
 
 from typing import Any, Dict, List, Optional, Tuple
-from pam.models import (
+from pipelines.pam.models import (
     DefectCategory,
     DefectSeverity,
     DetectedDefect,

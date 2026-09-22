@@ -16,8 +16,8 @@ import random
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-from pam.models import RoomCategory, DefectSeverity
-from pam.pipeline import PamPipeline
+from pipelines.pam.models import RoomCategory, DefectSeverity
+from pipelines.pam.pipeline import PamPipeline
 
 
 class PamDatasetManager:

@@ -13,12 +13,12 @@ import uuid
 from datetime import datetime, timezone
 from typing import Any, Callable, Dict, List, Optional
 
-from sse.models import (
+from pipelines.sse.models import (
     FourteenFilterCriteria,
     PipSearchDocument,
     SavedSearchAlertFiredEvent,
 )
-from sse.lexical_engine import lexical_engine
+from pipelines.sse.lexical_engine import lexical_engine
 
 
 class SavedSearchManager:

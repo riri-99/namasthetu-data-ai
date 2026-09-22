@@ -14,7 +14,7 @@ import math
 import re
 from typing import Any, Dict, List, Optional, Set, Tuple
 
-from sse.models import FourteenFilterCriteria, PipSearchDocument
+from pipelines.sse.models import FourteenFilterCriteria, PipSearchDocument
 
 
 class LexicalEngine:

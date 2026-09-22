@@ -23,9 +23,9 @@ if sys.stdout.encoding != "utf-8":
     except AttributeError:
         pass
 
-from pam.dataset_manager import PamDatasetManager
-from pam.models import RoomCategory
-from pam.pipeline import PamPipeline
+from pipelines.pam.dataset_manager import PamDatasetManager
+from pipelines.pam.models import RoomCategory
+from pipelines.pam.pipeline import PamPipeline
 
 
 def run_evaluation(data_dir: str, limit: int = 100):

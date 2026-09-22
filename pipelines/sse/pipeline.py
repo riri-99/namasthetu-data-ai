@@ -25,7 +25,7 @@ import uuid
 from datetime import datetime, timezone
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
-from sse.models import (
+from pipelines.sse.models import (
     AutocompleteResult,
     FourteenFilterCriteria,
     PipSearchDocument,
@@ -38,11 +38,11 @@ from sse.models import (
     SseSearchQuery,
     SseSearchResult,
 )
-from sse.embedding_engine import EmbeddingEngine, embedding_engine
-from sse.lexical_engine import LexicalEngine, lexical_engine
-from sse.reranker import EdgeReranker, edge_reranker
-from sse.autocomplete import AutocompleteEngine, autocomplete_engine
-from sse.saved_searches import SavedSearchManager, saved_search_manager
+from pipelines.sse.embedding_engine import EmbeddingEngine, embedding_engine
+from pipelines.sse.lexical_engine import LexicalEngine, lexical_engine
+from pipelines.sse.reranker import EdgeReranker, edge_reranker
+from pipelines.sse.autocomplete import AutocompleteEngine, autocomplete_engine
+from pipelines.sse.saved_searches import SavedSearchManager, saved_search_manager
 
 
 class SsePipeline:

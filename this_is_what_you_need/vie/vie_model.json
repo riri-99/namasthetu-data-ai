@@ -1,0 +1,35 @@
+{
+  "model_version": "lightgbm-avm-v1.4-treelite",
+  "intercept": -290644712.9042206,
+  "weights": [
+    1058059.9809359177,
+    -835597.6437665522,
+    -12554421.812271975,
+    6220307.230504587,
+    -72679681.26080537,
+    40738573.51233244,
+    46907725.14939988,
+    -6990226.436066389,
+    -168229138.84542942,
+    146033.5559426439,
+    -36602479.051679134,
+    6013744.610803276,
+    21206157.023939565
+  ],
+  "feature_importances": {
+    "area_sqft": 0.0025,
+    "age_years": 0.002,
+    "floor_number": 0.0299,
+    "total_floors": 0.0148,
+    "bhk_count": 0.173,
+    "bathrooms_count": 0.097,
+    "furnishing_status": 0.1116,
+    "condition_score_overall": 0.0166,
+    "seepage_detected": 0.4004,
+    "locality_price_per_sqft_base": 0.0003,
+    "inquiry_density_score": 0.0871,
+    "transaction_velocity_score": 0.0143,
+    "neighbourhood_growth_score": 0.0505
+  },
+  "saved_at": "2026-09-21T09:40:54.297485+00:00"
+}

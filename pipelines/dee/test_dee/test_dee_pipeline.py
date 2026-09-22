@@ -16,7 +16,7 @@ from datetime import datetime
 # Set up path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 
-from dee.models import (
+from pipelines.dee.models import (
     DocumentType,
     DocumentStatus,
     DeedEventType,
@@ -24,10 +24,10 @@ from dee.models import (
     DeePipelineStage,
     DeeSqsMessagePayload,
 )
-from dee.pipeline import dee_pipeline
-from dee.gateway import mask_pii
-from dee.learning_loop import dee_learning_collector, DeeLearningEventType
-from dee.dataset_manager import dee_dataset_manager
+from pipelines.dee.pipeline import dee_pipeline
+from pipelines.dee.gateway import mask_pii
+from pipelines.dee.learning_loop import dee_learning_collector, DeeLearningEventType
+from pipelines.dee.dataset_manager import dee_dataset_manager
 
 
 
@@ -328,7 +328,7 @@ class TestDeePipeline(unittest.TestCase):
 
     def test_07_configurable_threshold(self):
         """Verify confidence threshold is dynamically configurable."""
-        from dee.pipeline import DeePipeline
+        from pipelines.dee.pipeline import DeePipeline
         # Set strict threshold to 0.99
         strict_pipeline = DeePipeline(confidence_threshold=0.99)
         result = strict_pipeline.process_document(

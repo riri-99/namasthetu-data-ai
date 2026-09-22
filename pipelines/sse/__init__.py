@@ -4,7 +4,7 @@ SSE (Semantic Search Engine) Package.
 Namasthetu · Embedded AI Service #4 · Discovery Bounded Context
 """
 
-from sse.models import (
+from pipelines.sse.models import (
     AutocompleteCategory,
     AutocompleteItem,
     AutocompleteResult,
@@ -24,14 +24,14 @@ from sse.models import (
     SseSearchQuery,
     SseSearchResult,
 )
-from sse.embedding_engine import EmbeddingEngine, embedding_engine
-from sse.lexical_engine import LexicalEngine, lexical_engine
-from sse.reranker import EdgeReranker, edge_reranker
-from sse.autocomplete import AutocompleteEngine, autocomplete_engine
-from sse.saved_searches import SavedSearchManager, saved_search_manager
-from sse.feedback_loop import SseLearningLoop, sse_learning_loop
-from sse.dataset_manager import SseDatasetManager, sse_dataset_manager
-from sse.pipeline import SsePipeline, sse_pipeline
+from pipelines.sse.embedding_engine import EmbeddingEngine, embedding_engine
+from pipelines.sse.lexical_engine import LexicalEngine, lexical_engine
+from pipelines.sse.reranker import EdgeReranker, edge_reranker
+from pipelines.sse.autocomplete import AutocompleteEngine, autocomplete_engine
+from pipelines.sse.saved_searches import SavedSearchManager, saved_search_manager
+from pipelines.sse.feedback_loop import SseLearningLoop, sse_learning_loop
+from pipelines.sse.dataset_manager import SseDatasetManager, sse_dataset_manager
+from pipelines.sse.pipeline import SsePipeline, sse_pipeline
 
 __all__ = [
     # Pipeline & Engines

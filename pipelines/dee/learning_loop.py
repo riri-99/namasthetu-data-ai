@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 from typing import Dict, Any, Optional, List, Callable
 from pydantic import BaseModel, Field
 
-from dee.models import (
+from pipelines.dee.models import (
     DocumentType,
     ExtractedEntitiesJson,
     DeeExtractionResult,

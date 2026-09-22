@@ -15,9 +15,9 @@ import time
 # Ensure package path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from dee.models import DocumentType, DocumentStatus
-from dee.pipeline import dee_pipeline
-from dee.test_dee.test_dee_pipeline import (
+from pipelines.dee.models import DocumentType, DocumentStatus
+from pipelines.dee.pipeline import dee_pipeline
+from pipelines.dee.test_dee.test_dee_pipeline import (
     SALE_DEED_CLEAN_TEXT,
     ENCUMBRANCE_CERTIFICATE_MORTGAGE_TEXT,
     DEGRADED_SCAN_TEXT,

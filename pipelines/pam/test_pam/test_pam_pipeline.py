@@ -24,7 +24,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from PIL import Image, ImageDraw
 
-from pam.models import (
+from pipelines.pam.models import (
     RoomCategory,
     DefectSeverity,
     InspectionStatus,
@@ -38,12 +38,12 @@ from pam.models import (
     PamSqsMessagePayload,
     PredictionFeedback,
 )
-from pam.exif import ExifProcessor, haversine_distance_meters
-from pam.vision_engine import PamVisionEngine
-from pam.condition_scorer import ConditionScorer
-from pam.pipeline import PamPipeline
-from pam.feedback_loop import PamLearningLoop
-from pam.dataset_manager import PamDatasetManager
+from pipelines.pam.exif import ExifProcessor, haversine_distance_meters
+from pipelines.pam.vision_engine import PamVisionEngine
+from pipelines.pam.condition_scorer import ConditionScorer
+from pipelines.pam.pipeline import PamPipeline
+from pipelines.pam.feedback_loop import PamLearningLoop
+from pipelines.pam.dataset_manager import PamDatasetManager
 
 
 def _create_synthetic_test_image(

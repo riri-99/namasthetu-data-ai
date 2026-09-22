@@ -33,10 +33,10 @@ if sys.platform == "win32" and hasattr(sys.stdout, "reconfigure"):
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
-from dee.models import DocumentType, ExtractedEntitiesJson
-from dee.pipeline import dee_pipeline
-from dee.dataset_manager import dee_dataset_manager, DeeDatasetItem
-from dee.learning_loop import dee_learning_collector
+from pipelines.dee.models import DocumentType, ExtractedEntitiesJson
+from pipelines.dee.pipeline import dee_pipeline
+from pipelines.dee.dataset_manager import dee_dataset_manager, DeeDatasetItem
+from pipelines.dee.learning_loop import dee_learning_collector
 
 
 def compute_field_match_score(pred_val: Any, gt_val: Any) -> float:

@@ -4,7 +4,7 @@ Spec Reference: HYC-SCO-2026-3841 (§12.1–§12.4, §03.M02, §07.5)
 Adheres strictly to `src/db/schema.prisma` without modifying the database schema.
 """
 
-from dee.models import (
+from pipelines.dee.models import (
     DocumentType,
     DocumentStatus,
     DeedEventType,
@@ -21,9 +21,9 @@ from dee.models import (
     DeePipelineEvent,
     DeePipelineStage,
 )
-from dee.pipeline import DeePipeline, dee_pipeline
-from dee.ocr import DeeOcrProcessor, dee_ocr
-from dee.gateway import AiGatewayClient, dee_gateway
+from pipelines.dee.pipeline import DeePipeline, dee_pipeline
+from pipelines.dee.ocr import DeeOcrProcessor, dee_ocr
+from pipelines.dee.gateway import AiGatewayClient, dee_gateway
 
 __version__ = "1.0.0"
 __all__ = [

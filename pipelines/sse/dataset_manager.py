@@ -13,7 +13,7 @@ import random
 from datetime import datetime, timezone, timedelta
 from typing import Any, Dict, List, Optional
 
-from sse.models import (
+from pipelines.sse.models import (
     PipSearchDocument,
     PrismaFurnishingStatus,
     PrismaListingStatus,

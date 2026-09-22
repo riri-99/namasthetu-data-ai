@@ -21,13 +21,13 @@ from pathlib import Path
 from typing import Dict, Any, Optional, List, Tuple
 from pydantic import BaseModel, Field
 
-from dee.models import (
+from pipelines.dee.models import (
     DocumentType,
     ExtractedEntitiesJson,
     DeeExtractionResult,
 )
-from dee.ocr import dee_ocr
-from dee.prompts import get_prompt_for_document_type
+from pipelines.dee.ocr import dee_ocr
+from pipelines.dee.prompts import get_prompt_for_document_type
 
 
 SUPPORTED_IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".tiff", ".tif", ".bmp", ".webp"}
@@ -234,7 +234,7 @@ class DeeDatasetManager:
         Runs DEE on unannotated dumped raw images, generating structured pseudo-labels
         with confidence flags (auto-approved vs manual ops review needed).
         """
-        from dee.pipeline import dee_pipeline
+        from pipelines.dee.pipeline import dee_pipeline
         active_pipeline = pipeline or dee_pipeline
 
         items = self.load_dataset(data_dir)

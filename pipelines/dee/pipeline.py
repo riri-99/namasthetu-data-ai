@@ -14,7 +14,7 @@ import os
 import time
 import uuid
 from typing import Dict, Any, Optional, List, Callable
-from dee.models import (
+from pipelines.dee.models import (
     DocumentType,
     DocumentStatus,
     ExtractedEntitiesJson,
@@ -24,11 +24,11 @@ from dee.models import (
     FieldConfidenceBreakdown,
     DeeSqsMessagePayload,
 )
-from dee.ocr import DeeOcrProcessor, dee_ocr
-from dee.gateway import AiGatewayClient, dee_gateway
-from dee.prompts import get_prompt_for_document_type
-from dee.ownership_chain import OwnershipChainBuilder, ownership_chain_builder
-from dee.learning_loop import dee_learning_collector
+from pipelines.dee.ocr import DeeOcrProcessor, dee_ocr
+from pipelines.dee.gateway import AiGatewayClient, dee_gateway
+from pipelines.dee.prompts import get_prompt_for_document_type
+from pipelines.dee.ownership_chain import OwnershipChainBuilder, ownership_chain_builder
+from pipelines.dee.learning_loop import dee_learning_collector
 
 
 DEFAULT_CONFIDENCE_THRESHOLD = float(os.environ.get("DEE_CONFIDENCE_THRESHOLD", "0.85"))
