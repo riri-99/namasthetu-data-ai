@@ -47,13 +47,25 @@ class PrismaFurnishingStatus(str, Enum):
 
 
 class PrismaListingStatus(str, Enum):
-    """Listing lifecycle states matching schema.prisma lines 104-110."""
+    """Listing lifecycle states matching schema.prisma lines 72-80 & 104-110."""
     DRAFT = "DRAFT"
+    PENDING_APPROVAL = "PENDING_APPROVAL"
     ACTIVE = "ACTIVE"
+    PAUSED = "PAUSED"
+    EXPIRED = "EXPIRED"
+    CLOSED = "CLOSED"
     UNDER_OFFER = "UNDER_OFFER"
     SOLD = "SOLD"
-    EXPIRED = "EXPIRED"
     ARCHIVED = "ARCHIVED"
+
+
+class PrismaLqaStatus(str, Enum):
+    """5-State Listing Quality Auditor (LQA) Scoring Flow matching schema.prisma lines 116-123."""
+    QUEUED = "QUEUED"
+    SCORING = "SCORING"
+    SCORED = "SCORED"
+    APPROVED = "APPROVED"
+    REJECTED = "REJECTED"
 
 
 # ============================================================================

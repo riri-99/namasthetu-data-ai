@@ -9,7 +9,8 @@
 
 ## 1. Executive Summary & Shippable Package Structure
 
-The [`this_is_what_you_need/`](file:///C:/Users/Srishika/namasthetu-data-ai/this_is_what_you_need) folder is a production-ready, self-contained, optimized package containing all four embedded AI and ML engines of the Namasthetu Real Estate Operating System. It is architected for drop-in integration into NestJS microservices, FastAPI inference workers, and EKS/KEDA background job queues.
+The [`this_is_what_you_need/`](file:///C:/Users/JSC/namasthetu-ai-workers/this_is_what_you_need) folder is a production-ready, self-contained, optimized package containing all five embedded AI and ML engines of the Namasthetu Real Estate Operating System. It is architected for drop-in integration into NestJS microservices, FastAPI inference workers, and EKS/KEDA background job queues.
+The [`this_is_what_you_need/`](file:///C:/Users/JSC/namasthetu-ai-workers/this_is_what_you_need) folder is a production-ready, self-contained, optimized package containing all five embedded AI and ML engines of the Namasthetu Real Estate Operating System. It is architected for drop-in integration into NestJS microservices, FastAPI inference workers, and EKS/KEDA background job queues.
 
 ```
 this_is_what_you_need/
@@ -17,7 +18,8 @@ this_is_what_you_need/
 ├── AI_PLATFORM.md           <-- Master compiled platform documentation (this file)
 ├── .env.example             <-- Production & local environment configuration template
 ├── requirements.txt         <-- Minimal production & development dependency definitions
-├── __init__.py              <-- Package root exporting all 4 pipelines and common primitives
+├── __init__.py              <-- Package root exporting all 5 pipelines and common primitives
+├── __init__.py              <-- Package root exporting all 5 pipelines and common primitives
 ├── test_all.py              <-- Master test runner executing end-to-end verification
 ├── dee/                     <-- Embedded AI Service #1: Document Extraction Engine
 │   ├── pipeline.py          <-- Consolidated pipeline (Bilingual OCR + Claude LLM + Legal Extractor)
@@ -43,6 +45,11 @@ this_is_what_you_need/
 │   ├── test_sse.py          <-- Automated unit test suite
 │   ├── SSE.md               <-- Dedicated deep technical specification for SSE
 │   └── __init__.py
+└── lqa/                     <-- Embedded AI Service #5: Listing Quality Auditor
+    ├── pipeline.py          <-- Consolidated pipeline (Deterministic Rule Engine + Claude Transparency LLM + Gates)
+    ├── train_and_eval.py    <-- Dataset manager, evaluation CLI, and benchmarking routines
+    ├── test_lqa.py          <-- Automated unit test suite
+    ├── LQA.md               <-- Dedicated deep technical specification for LQA
 └── mie/                     <-- Embedded AI Service #5: Market Intelligence Engine
     ├── pipeline.py          <-- Consolidated pipeline (Inquiry density, deal velocity, growth score, market risk)
     ├── train_and_eval.py    <-- Dataset manager, calibration CLI, and evaluation benchmarks
@@ -53,14 +60,15 @@ this_is_what_you_need/
 
 ---
 
-## 2. The Five Embedded AI Pipelines Matrix
+## 2. The Six Embedded AI Pipelines Matrix
 
 | Pipeline | Dedicated Docs | Primary Function | Core Models & Runtimes | Required APIs | Latency SLA | DB Schema Target |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **DEE** (Document Extraction Engine) | [`this_is_what_you_need/dee/DEE.md`](file:///C:/Users/Srishika/namasthetu-data-ai/this_is_what_you_need/dee/DEE.md) | Indian title deed OCR, encumbrance verification, ownership chain builder, plain-English summary | PyPDF / Tesseract bilingual OCR + Anthropic Claude 3.5 Sonnet (AI Gateway) | Anthropic API, AWS S3, AWS SQS, State Land Records (Bhoomi/IGRS) | 3–8 s (Async SQS Worker) | `model LegalDocument` (lines 997–1032) |
-| **PAM** (Photo Analysis Module) | [`this_is_what_you_need/pam/PAM.md`](file:///C:/Users/Srishika/namasthetu-data-ai/this_is_what_you_need/pam/PAM.md) | 80-point physical inspection audit, room categorization, defect localization (seepage/cracks), 25m cadastral anti-spoof gate | CLIP ViT-B/32 + ResNet-50 + YOLOv8-Defect localized head + Colorimetric heuristics | AWS S3, AWS SQS, PostGIS Cadastral Geofence API | 200–800 ms (Batch inspection) | `model InspectionPhoto` (lines 964–994), `model Inspection` (lines 900–960) |
-| **VIE / AVM** (Valuation Intelligence Engine) | [`this_is_what_you_need/vie/VIE.md`](file:///C:/Users/Srishika/namasthetu-data-ai/this_is_what_you_need/vie/VIE.md) | Instant fair market valuation (paise), $\pm 15\%$ Tier-1 confidence bands, comparables radar, rental yields, 12m forward forecasts | 13-Feature LightGBM compiled via Treelite C-API + Claude narrative layer | Claude API (via AI Gateway), TimescaleDB price history, PostGIS kNN | **<60 ms P95** (Edge query path) | `model AiValuation` (lines 1166–1205), `model PriceForecast` (lines 1655–1668) |
-| **SSE** (Semantic Search Engine) | [`this_is_what_you_need/sse/SSE.md`](file:///C:/Users/Srishika/namasthetu-data-ai/this_is_what_you_need/sse/SSE.md) | Hybrid discovery (Postgres GIN full-text + 1536-d pgvector), 14-filter structured screening, ONNX edge reranking, autocomplete | OpenAI `text-embedding-3-small` + Postgres GIN + ONNX Edge Cross-Encoder | OpenAI API (via AI Gateway), Postgres 17 + pgvector, Valkey cache, HTTP SSE streaming | **<80 ms P95** (Interactive query path) | `model SavedSearch` (lines 1495–1512), `model Listing`, `model Property` |
+| **DEE** (Document Extraction Engine) | [`this_is_what_you_need/dee/DEE.md`](file:///C:/Users/JSC/namasthetu-ai-workers/this_is_what_you_need/dee/DEE.md) | Indian title deed OCR, encumbrance verification, ownership chain builder, plain-English summary | PyPDF / Tesseract bilingual OCR + Anthropic Claude 3.5 Sonnet (AI Gateway) | Anthropic API, AWS S3, AWS SQS, State Land Records (Bhoomi/IGRS) | 3–8 s (Async SQS Worker) | `model LegalDocument` (lines 997–1032) |
+| **PAM** (Photo Analysis Module) | [`this_is_what_you_need/pam/PAM.md`](file:///C:/Users/JSC/namasthetu-ai-workers/this_is_what_you_need/pam/PAM.md) | 80-point physical inspection audit, room categorization, defect localization (seepage/cracks), 25m cadastral anti-spoof gate | CLIP ViT-B/32 + ResNet-50 + YOLOv8-Defect localized head + Colorimetric heuristics | AWS S3, AWS SQS, PostGIS Cadastral Geofence API | 200–800 ms (Batch inspection) | `model InspectionPhoto` (lines 964–994), `model Inspection` (lines 900–960) |
+| **VIE / AVM** (Valuation Intelligence Engine) | [`this_is_what_you_need/vie/VIE.md`](file:///C:/Users/JSC/namasthetu-ai-workers/this_is_what_you_need/vie/VIE.md) | Instant fair market valuation (paise), $\pm 15\%$ Tier-1 confidence bands, comparables radar, rental yields, 12m forward forecasts | 13-Feature LightGBM compiled via Treelite C-API + Claude narrative layer | Claude API (via AI Gateway), TimescaleDB price history, PostGIS kNN | **<60 ms P95** (Edge query path) | `model AiValuation` (lines 1166–1205), `model PriceForecast` (lines 1655–1668) |
+| **SSE** (Semantic Search Engine) | [`this_is_what_you_need/sse/SSE.md`](file:///C:/Users/JSC/namasthetu-ai-workers/this_is_what_you_need/sse/SSE.md) | Hybrid discovery (Postgres GIN full-text + 1536-d pgvector), 14-filter structured screening, ONNX edge reranking, autocomplete | OpenAI `text-embedding-3-small` + Postgres GIN + ONNX Edge Cross-Encoder | OpenAI API (via AI Gateway), Postgres 17 + pgvector, Valkey cache, HTTP SSE streaming | **<80 ms P95** (Interactive query path) | `model SavedSearch` (lines 1495–1512), `model Listing`, `model Property` |
+| **LQA** (Listing Quality Auditor) | [`this_is_what_you_need/lqa/LQA.md`](file:///C:/Users/JSC/namasthetu-ai-workers/this_is_what_you_need/lqa/LQA.md) | Hard state-machine gatekeeper (0-100 score + categorised flags), transparency scoring, ops spot-check triage routing | Deterministic 4-Pillar Rule Engine + Anthropic Claude 3.5 Sonnet (AI Gateway) | Anthropic API (via AI Gateway), AWS SQS | 5–15 s (Async Queue Worker) | `model Listing` (lines 1035–1065), `model LqaAudit` (lines 1067–1092) |
 | **MIE** (Market Intelligence Engine) | [`this_is_what_you_need/mie/MIE.md`](file:///C:/Users/Srishika/namasthetu-data-ai/this_is_what_you_need/mie/MIE.md) | Micro-market velocity, inquiry density, growth score, market risk index, asking vs registered trends, locality city rankings | Dynamic Sigmoidal Normalizers + Inventory Overhang & Volatility Analyzer | State IGR Registry, Municipal Telemetry, PostGIS transit buffers | **<30 ms P95** (Telemetry refresh) | `model MarketRate` (lines 2121–2156), `model Locality` (lines 2054–2089) |
 
 ---
